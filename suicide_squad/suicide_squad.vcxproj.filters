@@ -27,6 +27,9 @@
     <ClCompile Include="src\Player.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\Map.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Animation.h">
@@ -41,7 +44,7 @@
     <ClInclude Include="include\Player.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="include\level.hpp">
+    <ClInclude Include="include\Map.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

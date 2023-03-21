@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="suicide_squad.cpp" />
   </ItemGroup>
@@ -148,7 +149,7 @@
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Globals.h" />
-    <ClInclude Include="include\level.hpp" />
+    <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,8 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 
-#include "./include/Player.h"
-#include "./include/lvl.hpp"
+#include "include/Player.h"
+#include "include/Map.h"
 
 void controllPlayer(Player* player) {
     player->setState(STAY);
@@ -30,14 +30,15 @@ int main()
 
     std::map<State, sf::Texture> player_textures;
 
+    Map m;
+    m.setMap();
+
+
     player_textures[STAY].loadFromFile("assets/character/Idle.png");
     player_textures[RUN].loadFromFile("assets/character/Walk.png");
     player_textures[ATTACK].loadFromFile("assets/character/Attack.png");
     
     Player* player = new Player(250, 200, RIGHT, player_textures);
-
-    Level lvl;
-    lvl.LoadFromFile("levels/Level1.tmx");
 
     while (window.isOpen())
     {
@@ -52,7 +53,7 @@ int main()
         player->Update();
 
         window.clear(sf::Color::White);
-        lvl.Draw(window);
+        m.drawMap(window);
         window.draw(player->getSprite());
         window.display();
     }

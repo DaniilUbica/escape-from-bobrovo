@@ -7,7 +7,8 @@
 #include "Globals.h"
 
 enum Type {
-	SOLID,
+	WALL,
+	FLOOR,
 };
 
 struct Object {
@@ -17,28 +18,31 @@ struct Object {
 };
 
 
-
 class Map {
 private:
 	std::vector<Object> objects;
-	std::map<char, sf::Texture> tiles;
+	std::map<char, sf::Texture> tiles_textures;
+	std::map<char, sf::Vector2i> tiles_textures_coords;
+	std::map<char, Type> tiles_types;
 	std::string map[MAP_HEIGHT] = {
-	"WWWWWWWWWWWW",
-	"W          W",
-	"W          W",
-	"W          W",
-	"W          W",
-	"W          W",
-	"W          W",
-	"W          W",
-	"W          W",
-	"W     S    W",
-	"W          W",
-	"WWWWWWWWWWWW",
+	"LFFFFFFFFFFR",
+	"L          R",
+	"L          R",
+	"L          R",
+	"L          R",
+	"L          R",
+	"L          R",
+	"L          R",
+	"L          R",
+	"L     S    R",
+	"L          R",
+	"LFFFFFFFFFFR",
 	};
 
 	void fillMap();
 	void fillObjects();
+	void fillTexturesCoords();
+	void fillObjectTypes();
 public:
 	void setMap();
 	void drawMap(sf::RenderWindow& window);

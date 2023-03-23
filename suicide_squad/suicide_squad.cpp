@@ -26,7 +26,7 @@ void controllPlayer(Player* player) {
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(500, 350), "SS!");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SS!");
 
     std::map<State, sf::Texture> player_textures;
 
@@ -50,6 +50,7 @@ int main()
         }
 
         controllPlayer(player);
+        player->checkCollision(m.getObjects());
         player->Update();
 
         window.clear(sf::Color::White);

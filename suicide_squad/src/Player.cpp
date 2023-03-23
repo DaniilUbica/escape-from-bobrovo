@@ -14,7 +14,6 @@ Player::Player(int x, int y, Direction direction, std::map<State, sf::Texture>& 
 
 	sprite = idle_animation->Tick(false);
 	sprite.setPosition(coordX, coordY);
-	sprite.setScale(2, 2);
 }
 
 Player::~Player() {
@@ -35,9 +34,16 @@ void Player::Update() {
 		sprite = run_animation->Tick(false);
 	}
 
-	if (state == JUMP && !isFalling) {
-		coordY -= JUMP_HEIGHT;
-		isFalling = true;
+	if (state == JUMP) {
+		float y = sprite.getPosition().y;
+		while (coordY <= y + JUMP_HEIGHT) {
+			coordY -= JUMP_SPEED;
+		}
+		onGround = false;
+	}
+
+	if (!onGround) {
+		coordY += FALL_SPEED;
 	}
 
 	if (direction == RIGHT && state == ATTACK) {
@@ -50,14 +56,6 @@ void Player::Update() {
 		sprite = attack_animation->Tick(true);
 	}
 
-	if (isFalling) {
-		coordY += FALL_SPEED;
-	}
-
-	if (coordY >= 200) {
-		isFalling = false;
-	}
-
 	if (direction == RIGHT && state == STAY) {
 		sprite = idle_animation->Tick(false);
 	}
@@ -65,8 +63,38 @@ void Player::Update() {
 		sprite = idle_animation->Tick(true);
 	}
 
+	onGround = false;
+
 	sprite.setPosition(coordX, coordY);
-	sprite.setScale(3, 3);
+}
+
+void Player::checkCollision(std::vector<Object> objects) {
+	sf::FloatRect rect = this->sprite.getGlobalBounds();
+	for (Object obj : objects) {
+		if (rect.intersects(obj.r.getGlobalBounds())) {
+			if (obj.type == FLOOR) {
+				if (!onGround && sprite.getPosition().y < obj.r.getPosition().y) {
+					coordY = obj.r.getGlobalBounds().top - height - 0.3;
+					onGround = true;
+				}
+				if (state == JUMP) {
+					coordY = obj.r.getGlobalBounds().top + obj.r.getGlobalBounds().height;
+				}
+			}
+			if (obj.type == WALL || (obj.type == FLOOR && obj.r.getPosition().y <= sprite.getPosition().y)) {
+				if (direction == LEFT && state == RUN) {
+					if (obj.r.getGlobalBounds().top - TILE_SIZE >= rect.top - height) {
+						coordX = obj.r.getGlobalBounds().left + obj.r.getGlobalBounds().width + 1;
+					}
+				}
+				if (direction == RIGHT && state == RUN) {
+					if (obj.r.getGlobalBounds().top - TILE_SIZE <= rect.top - height) {
+						coordX = obj.r.getGlobalBounds().left - width - 1;
+					}
+				}
+			}
+		}
+	}
 }
 
 sf::Sprite Player::getSprite() {

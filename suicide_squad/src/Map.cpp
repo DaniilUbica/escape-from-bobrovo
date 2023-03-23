@@ -3,12 +3,12 @@
 void Map::fillMap() {
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		for (int j = 0; j < MAP_WIDTH; j++) {
-			if (!tiles.count(map[i][j])) {
+			if (!tiles_textures.count(map[i][j])) {
 				sf::Texture tile_texture;
-				tile_texture.loadFromFile("assets/Tiles.png", sf::IntRect(0, 0, TILE_SIZE, TILE_SIZE));
+				tile_texture.loadFromFile("assets/Tiles.png", sf::IntRect(tiles_textures_coords[map[i][j]].x, tiles_textures_coords[map[i][j]].y, TILE_SIZE, TILE_SIZE));
 				tile_texture.setRepeated(true);
 				std::pair<char, sf::Texture> elem = { map[i][j], tile_texture };
-				tiles.insert(elem);
+				tiles_textures.insert(elem);
 			}
 			else {
 				continue;
@@ -30,12 +30,16 @@ void Map::fillObjects() {
 			}
 			if (map[i][j] != next || next == '\0') {
 				count++;
+
 				sf::RectangleShape r;
 				r.setPosition(startX * TILE_SIZE, startY * TILE_SIZE);
 				r.setSize(sf::Vector2f(count * TILE_SIZE, 1 * TILE_SIZE ));
-				r.setFillColor(sf::Color::Black);
-				Object obj = { SOLID, map[i][j], r};
+				r.setTexture(&tiles_textures[map[i][j]]);
+				r.setTextureRect(sf::IntRect(0, 0, count * TILE_SIZE, TILE_SIZE));
+
+				Object obj = { tiles_types[map[i][j]], map[i][j], r};
 				objects.push_back(obj);
+
 				startX = j + 1;
 				count = 0;
 			}
@@ -46,12 +50,59 @@ void Map::fillObjects() {
 	}
 }
 
+void Map::fillTexturesCoords() {
+	sf::Vector2i coords;
+	for (int i = 0; i < MAP_HEIGHT; i++) {
+		for (int j = 0; j < MAP_WIDTH; j++) {
+			// Take coordinates from "Tiles.png"
+			switch (map[i][j]) {
+			case 'W':
+				coords = { 1 * TILE_SIZE, 6 * TILE_SIZE };
+				break;
+			case 'L':
+				coords = { 0 * TILE_SIZE, 6 * TILE_SIZE };
+				break;
+			case 'R':
+				coords = { 2 * TILE_SIZE, 6 * TILE_SIZE };
+				break;
+			case 'S':
+				coords = { 4 * TILE_SIZE, 0 * TILE_SIZE };
+				break;
+			}
+			tiles_textures_coords.insert(std::make_pair(map[i][j], coords));
+		}
+	}
+}
+
+void Map::fillObjectTypes() {
+	Type type;
+	for (int i = 0; i < MAP_HEIGHT; i++) {
+		for (int j = 0; j < MAP_WIDTH; j++) {
+			// Take coordinates from "Tiles.png"
+			switch (map[i][j]) {
+			case 'F':
+				type = FLOOR;
+				break;
+			case 'L':
+				type = WALL;
+				break;
+			case 'R':
+				type = WALL;
+				break;
+			case 'S':
+				type = FLOOR;
+				break;
+			}
+			tiles_types.insert(std::make_pair(map[i][j], type));
+		}
+	}
+}
+
 void Map::setMap() {
+	fillTexturesCoords();
+	fillObjectTypes();
 	fillMap();
 	fillObjects();
-	for (Object obj : objects) {
-		obj.r.setTexture(&tiles[obj.ch]);
-	}
 }
 
 void Map::drawMap(sf::RenderWindow& window) {

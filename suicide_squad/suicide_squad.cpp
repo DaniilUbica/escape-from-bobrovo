@@ -17,7 +17,12 @@ void controllPlayer(Player* player) {
         player->setState(RUN);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        player->setState(JUMP);
+        player->setDirection(UP);
+        player->setState(RUN);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        player->setDirection(DOWN);
+        player->setState(RUN);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         player->setState(ATTACK);

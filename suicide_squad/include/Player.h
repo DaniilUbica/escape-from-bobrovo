@@ -9,10 +9,8 @@
 
 enum State {
 	RUN,
-	JUMP,
 	STAY,
 	ATTACK,
-	FALL,
 };
 
 class Player : public GameObject {

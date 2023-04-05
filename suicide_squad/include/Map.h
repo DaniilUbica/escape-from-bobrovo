@@ -9,6 +9,7 @@
 enum Type {
 	WALL,
 	FLOOR,
+	SOLID
 };
 
 struct Object {
@@ -34,7 +35,7 @@ private:
 	"L          R",
 	"L          R",
 	"L          R",
-	"L     S    R",
+	"L     SS   R",
 	"L          R",
 	"LFFFFFFFFFFR",
 	};

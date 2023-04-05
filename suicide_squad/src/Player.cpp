@@ -1,5 +1,7 @@
 #include "../include/Player.h"
 
+#include <iostream>
+
 Player::Player(int x, int y, Direction direction, std::map<State, sf::Texture>& textures) {
 	coordX = x;
 	coordY = y;
@@ -34,16 +36,12 @@ void Player::Update() {
 		sprite = run_animation->Tick(false);
 	}
 
-	if (state == JUMP) {
-		float y = sprite.getPosition().y;
-		while (coordY <= y + JUMP_HEIGHT) {
-			coordY -= JUMP_SPEED;
-		}
-		onGround = false;
+	if (direction == UP && state == RUN) {
+		coordY -= PLAYER_SPEED;
 	}
 
-	if (!onGround) {
-		coordY += FALL_SPEED;
+	if (direction == DOWN && state == RUN) {
+		coordY += PLAYER_SPEED;
 	}
 
 	if (direction == RIGHT && state == ATTACK) {
@@ -63,8 +61,6 @@ void Player::Update() {
 		sprite = idle_animation->Tick(true);
 	}
 
-	onGround = false;
-
 	sprite.setPosition(coordX, coordY);
 }
 
@@ -72,25 +68,22 @@ void Player::checkCollision(std::vector<Object> objects) {
 	sf::FloatRect rect = this->sprite.getGlobalBounds();
 	for (Object obj : objects) {
 		if (rect.intersects(obj.r.getGlobalBounds())) {
-			if (obj.type == FLOOR) {
-				if (!onGround && sprite.getPosition().y < obj.r.getPosition().y) {
-					coordY = obj.r.getGlobalBounds().top - height - 0.3;
-					onGround = true;
-				}
-				if (state == JUMP) {
-					coordY = obj.r.getGlobalBounds().top + obj.r.getGlobalBounds().height;
-				}
-			}
-			if (obj.type == WALL || (obj.type == FLOOR && obj.r.getPosition().y <= sprite.getPosition().y)) {
-				if (direction == LEFT && state == RUN) {
-					if (obj.r.getGlobalBounds().top - TILE_SIZE >= rect.top - height) {
-						coordX = obj.r.getGlobalBounds().left + obj.r.getGlobalBounds().width + 1;
+			if (obj.type == SOLID) {
+				if ((sprite.getPosition().x > obj.r.getGlobalBounds().left) &&
+					(sprite.getPosition().x < obj.r.getGlobalBounds().left + obj.r.getGlobalBounds().width)) {
+
+					if (sprite.getPosition().y < obj.r.getPosition().y) {
+						coordY = obj.r.getGlobalBounds().top - height;
+					}
+					if (sprite.getPosition().y > obj.r.getPosition().y) {
+						coordY = obj.r.getGlobalBounds().top + obj.r.getGlobalBounds().height;
 					}
 				}
-				if (direction == RIGHT && state == RUN) {
-					if (obj.r.getGlobalBounds().top - TILE_SIZE <= rect.top - height) {
-						coordX = obj.r.getGlobalBounds().left - width - 1;
-					}
+				if (sprite.getPosition().x > obj.r.getGlobalBounds().left + obj.r.getGlobalBounds().width) {
+					coordX = obj.r.getGlobalBounds().left + obj.r.getGlobalBounds().width;
+				}
+				if (sprite.getPosition().x < obj.r.getPosition().x) {
+					coordX = obj.r.getGlobalBounds().left - width;
 				}
 			}
 		}

@@ -22,12 +22,10 @@ private:
 public:
 	Player(int x, int y, Direction direction, std::map<State, sf::Texture>& textures);
 	~Player();
+
 	void Update() override;
 	void checkCollision(std::vector<Object> objects);
 
-	sf::Sprite getSprite();
-
-	void setDirection(Direction direction);
 	void setState(State state);
 };
 

@@ -22,5 +22,12 @@ protected:
 	Animation* attack_animation;
 public:
 	virtual void Update() = 0;
+
+	Direction getDirection();
+	sf::Sprite getSprite();
+	sf::Vector2f getPosition();
+	sf::Vector2f getSize();
+
+	void setDirection(Direction direction);
 };
 

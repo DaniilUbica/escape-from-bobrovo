@@ -34,9 +34,8 @@ void Map::fillObjects() {
 				sf::RectangleShape r;
 				r.setPosition(startX * TILE_SIZE, startY * TILE_SIZE);
 				r.setSize(sf::Vector2f(count * TILE_SIZE, 1 * TILE_SIZE ));
-				/*r.setTexture(&tiles_textures[map[i][j]]);
-				r.setTextureRect(sf::IntRect(0, 0, count * TILE_SIZE, TILE_SIZE));*/
-				r.setFillColor(sf::Color::Black);
+				r.setTexture(&tiles_textures[map[i][j]]);
+				r.setTextureRect(sf::IntRect(0, 0, count * TILE_SIZE, TILE_SIZE));
 
 				Object obj = { tiles_types[map[i][j]], map[i][j], r};
 				objects.push_back(obj);

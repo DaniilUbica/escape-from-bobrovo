@@ -18,7 +18,6 @@ struct Object {
 	sf::RectangleShape r;
 };
 
-
 class Map {
 private:
 	std::vector<Object> objects;

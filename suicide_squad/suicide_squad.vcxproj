@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\Bullet.h" />
+    <ClInclude Include="include\CircleBuffer.hpp" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Globals.h" />
     <ClInclude Include="include\Map.h" />

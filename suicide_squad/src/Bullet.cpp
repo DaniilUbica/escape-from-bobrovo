@@ -10,22 +10,51 @@ Bullet::Bullet(GameObject* obj, sf::Texture& texture) {
 	this->sprite.setPosition(coordX, coordY);
 }
 
+Bullet::Bullet(GameObject* obj) {
+	this->direction = obj->getDirection();
+
+	coordX = obj->getPosition().x;
+	coordY = obj->getPosition().y + obj->getSize().y / 2;
+
+	rect.setPosition(coordX, coordY);
+	rect.setSize(sf::Vector2f(6, 6));
+	rect.setFillColor(sf::Color::Black);
+}
+
+Bullet::Bullet(int coordX, int coordY) {
+	this->coordX = coordX;
+	this->coordY = coordY;
+
+	rect.setPosition(coordX, coordY);
+	rect.setSize(sf::Vector2f(6, 6));
+	rect.setFillColor(sf::Color::Black);
+}
+
+void Bullet::Launch() {
+	isLaunched = true;
+}
+
 void Bullet::Update() {
-	if (direction == LEFT) {
-		coordX -= BULLET_SPEED;
+	if (isLaunched) {
+		if (direction == LEFT) {
+			coordX -= BULLET_SPEED;
+		}
+		if (direction == RIGHT) {
+			coordX += BULLET_SPEED;
+		}
+		if (direction == UP) {
+			coordY -= BULLET_SPEED;
+		}
+		if (direction == DOWN) {
+			coordY += BULLET_SPEED;
+		}
 	}
-	if (direction == RIGHT) {
-		coordX += BULLET_SPEED;
-	}
-	if (direction == UP) {
-		coordY -= BULLET_SPEED;
-	}
-	if (direction == DOWN) {
-		coordY += BULLET_SPEED;
-	}
-	std::cout << coordX << " " << coordY << "\n";
+
+	//std::cout << coordX << " " << coordY << "\n";
+
 	sprite.setScale(0.01, 0.01);
-	this->sprite.setPosition(coordX, coordY);
+	sprite.setPosition(coordX, coordY);
+	rect.setPosition(coordX, coordY);
 }
 
 void Bullet::checkCollision() {

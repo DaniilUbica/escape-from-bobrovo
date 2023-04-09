@@ -19,3 +19,8 @@ sf::Vector2f GameObject::getSize() {
 void GameObject::setDirection(Direction direction) {
     this->direction = direction;
 }
+
+void GameObject::setPosition(int coordX, int coordY) {
+    this->coordX = coordX;
+    this->coordY = coordY;
+}

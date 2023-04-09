@@ -6,6 +6,8 @@
 #include "GameObject.h"
 #include "Globals.h"
 #include "Map.h"
+#include "Bullet.h"
+#include "CircleBuffer.hpp"
 
 enum State {
 	RUN,
@@ -16,16 +18,21 @@ enum State {
 class Player : public GameObject {
 private:
 	State state;
-	bool isFalling = false;
-	bool isAttacking = false;
-	bool onGround = false;
+	bool canShoot = true;
+	cique<Bullet*> bullets;
 public:
+	bool isAttacking = false;
 	Player(int x, int y, Direction direction, std::map<State, sf::Texture>& textures);
 	~Player();
 
 	void Update() override;
 	void checkCollision(std::vector<Object> objects);
+	void initBullets();
+
+	std::deque<Bullet*> getBullets();
 
 	void setState(State state);
+
+	void Shoot();
 };
 

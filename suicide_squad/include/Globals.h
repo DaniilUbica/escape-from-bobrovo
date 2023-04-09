@@ -16,3 +16,4 @@ const int TILE_SIZE = 32;
 
 const float BULLET_SPEED = 0.2;
 const int BULLET_DISTANCE = 5;
+const int BULLETS_AMOUNT = 6;

@@ -1,8 +1,12 @@
 #include "../include/Player.h"
 
 #include <iostream>
+#include <deque>
 
 Player::Player(int x, int y, Direction direction, std::map<State, sf::Texture>& textures) {
+	bullets.setSize(BULLETS_AMOUNT);
+	initBullets();
+
 	coordX = x;
 	coordY = y;
 	width = 28;
@@ -22,12 +26,16 @@ Player::~Player() {
 	delete idle_animation;
 	delete run_animation;
 	delete attack_animation;
+	for (Bullet* b : bullets.elems) {
+		delete b;
+	}
 }
 
 void Player::Update() {
 
 	if (direction == LEFT && state == RUN) {
 		coordX -= PLAYER_SPEED;
+		canShoot = true;
 		sprite = run_animation->Tick(true);
 	}
 
@@ -44,14 +52,16 @@ void Player::Update() {
 		coordY += PLAYER_SPEED;
 	}
 
-	if (direction == RIGHT && state == ATTACK) {
-		isAttacking = true;
+	if (direction == RIGHT && state == ATTACK && canShoot) {
 		sprite = attack_animation->Tick(false);
+		Shoot();
+		canShoot = false;
 	}
 
-	if (direction == LEFT && state == ATTACK) {
-		isAttacking = true;
+	if (direction == LEFT && state == ATTACK && canShoot) {
 		sprite = attack_animation->Tick(true);
+		Shoot();
+		canShoot = false;
 	}
 
 	if (direction == RIGHT && state == STAY) {
@@ -59,6 +69,12 @@ void Player::Update() {
 	}
 	if (direction == LEFT && state == STAY) {
 		sprite = idle_animation->Tick(true);
+	}
+
+	for (int i = 0; i < BULLETS_AMOUNT; i++) {
+		bullets.elems[i]->Update();
+		
+		bullets.elems[i]->checkCollision();
 	}
 
 	sprite.setPosition(coordX, coordY);
@@ -90,6 +106,23 @@ void Player::checkCollision(std::vector<Object> objects) {
 	}
 }
 
+void Player::initBullets() {
+	for (int i = 0; i < BULLETS_AMOUNT; i++) {
+		bullets.push(new Bullet(-10, 10));
+	}
+}
+
+std::deque<Bullet*> Player::getBullets() {
+	return bullets.elems;
+}
+
 void Player::setState(State state) {
 	this->state = state;
+}
+
+void Player::Shoot() {
+	bullets.back()->Launch();
+	bullets.back()->setPosition(coordX + width/2, coordY + height/2);
+	bullets.back()->setDirection(direction);
+	bullets.pop();
 }

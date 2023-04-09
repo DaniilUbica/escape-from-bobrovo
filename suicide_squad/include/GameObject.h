@@ -29,5 +29,6 @@ public:
 	sf::Vector2f getSize();
 
 	void setDirection(Direction direction);
+	void setPosition(int coordX, int coordY);
 };
 

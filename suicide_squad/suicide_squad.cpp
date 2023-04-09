@@ -35,7 +35,6 @@ int main()
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SS!");
 
     std::map<State, sf::Texture> player_textures;
-    sf::Texture bullet_texture;
 
     Map m;
     m.setMap();
@@ -44,11 +43,10 @@ int main()
     player_textures[RUN].loadFromFile("assets/character/Walk.png");
     player_textures[ATTACK].loadFromFile("assets/character/Attack.png");
     
-    bullet_texture.loadFromFile("assets/Bullet.png");
-
     Player* player = new Player(250, 200, RIGHT, player_textures);
-    Bullet* bullet = new Bullet(player, bullet_texture);
 
+    auto bullets = player->getBullets();
+    
     while (window.isOpen())
     {
         sf::Event event;
@@ -61,12 +59,14 @@ int main()
         controllPlayer(player);
         player->checkCollision(m.getObjects());
         player->Update();
-        bullet->Update();
 
         window.clear(sf::Color::White);
         m.drawMap(window);
+        for (int i = 0; i < BULLETS_AMOUNT; i++) {
+            window.draw(bullets[i]->rect);
+        }
         window.draw(player->getSprite());
-        window.draw(bullet->getSprite());
+
         window.display();
     }
     delete player;

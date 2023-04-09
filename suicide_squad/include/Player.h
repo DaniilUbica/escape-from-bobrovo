@@ -20,6 +20,7 @@ private:
 	State state;
 	bool canShoot = true;
 	cique<Bullet*> bullets;
+	sf::Clock clock;
 public:
 	bool isAttacking = false;
 	Player(int x, int y, Direction direction, std::map<State, sf::Texture>& textures);

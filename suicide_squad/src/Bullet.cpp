@@ -34,6 +34,11 @@ void Bullet::Launch() {
 	isLaunched = true;
 }
 
+void Bullet::Destroy() {
+	this->setPosition(-10, 10);
+	isLaunched = false;
+}
+
 void Bullet::Update() {
 	if (isLaunched) {
 		if (direction == LEFT) {
@@ -50,13 +55,15 @@ void Bullet::Update() {
 		}
 	}
 
-	//std::cout << coordX << " " << coordY << "\n";
-
 	sprite.setScale(0.01, 0.01);
 	sprite.setPosition(coordX, coordY);
 	rect.setPosition(coordX, coordY);
 }
 
-void Bullet::checkCollision() {
-
+void Bullet::checkCollision(std::vector<Object> obj) {
+	for (Object o : obj) {
+		if (rect.getGlobalBounds().intersects(o.r.getGlobalBounds())) {
+			this->Destroy();
+		}
+	}
 }

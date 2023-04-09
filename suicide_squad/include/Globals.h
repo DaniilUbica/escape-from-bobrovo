@@ -3,7 +3,7 @@
 const float JUMP_HEIGHT = 1;
 const float JUMP_SPEED = 1.0;
 
-const float PLAYER_SPEED = 0.045;
+const float PLAYER_SPEED = 0.2;
 const float FALL_SPEED = 0.03;
 
 const int MAP_HEIGHT = 12;

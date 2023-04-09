@@ -66,7 +66,6 @@ int main()
             window.draw(bullets[i]->rect);
         }
         window.draw(player->getSprite());
-
         window.display();
     }
     delete player;

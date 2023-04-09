@@ -4,6 +4,7 @@
 
 #include "GameObject.h"
 #include "Globals.h"
+#include "Map.h"
 
 class Bullet : public GameObject {
 private:
@@ -15,9 +16,10 @@ public:
 	Bullet(int coordX, int coordY);
 
 	void Launch();
+	void Destroy();
 
 	void Update() override;
-	void checkCollision();
+	void checkCollision(std::vector<Object> obj);
 };
 
 

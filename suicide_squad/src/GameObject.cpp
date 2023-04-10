@@ -1,5 +1,9 @@
 #include "../include/GameObject.h"
 
+void GameObject::takeDamage() {
+    health--;
+}
+
 Direction GameObject::getDirection() {
     return direction;
 }
@@ -14,6 +18,10 @@ sf::Vector2f GameObject::getPosition() {
 
 sf::Vector2f GameObject::getSize() {
     return sf::Vector2f(width, height);
+}
+
+int GameObject::getHP() {
+    return health;
 }
 
 void GameObject::setDirection(Direction direction) {

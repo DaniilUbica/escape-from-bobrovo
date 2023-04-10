@@ -144,6 +144,7 @@
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Turret.cpp" />
     <ClCompile Include="suicide_squad.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +155,7 @@
     <ClInclude Include="include\Globals.h" />
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\Turret.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

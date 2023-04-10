@@ -1,5 +1,4 @@
 #include "..\include\Bullet.h"
-#include <iostream>
 
 Bullet::Bullet(GameObject* obj, sf::Texture& texture) {
 	this->direction = obj->getDirection();
@@ -63,7 +62,16 @@ void Bullet::Update() {
 void Bullet::checkCollision(std::vector<Object> obj) {
 	for (Object o : obj) {
 		if (rect.getGlobalBounds().intersects(o.r.getGlobalBounds())) {
-			this->Destroy();
+			if (o.type == SOLID) {
+				this->Destroy();
+			}
 		}
+	}
+}
+
+void Bullet::checkCollision(GameObject* obj) {
+	if (rect.getGlobalBounds().intersects(obj->getSprite().getGlobalBounds())) {
+		obj->takeDamage();
+		this->Destroy();
 	}
 }

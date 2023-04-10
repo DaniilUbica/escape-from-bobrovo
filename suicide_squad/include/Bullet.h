@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Globals.h"
 #include "Map.h"
+#include "GameObject.h"
 
 class Bullet : public GameObject {
 private:
@@ -20,6 +21,7 @@ public:
 
 	void Update() override;
 	void checkCollision(std::vector<Object> obj);
+	void checkCollision(GameObject* obj);
 };
 
 

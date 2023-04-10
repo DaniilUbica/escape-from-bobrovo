@@ -19,8 +19,11 @@ class Player : public GameObject {
 private:
 	State state;
 	bool canShoot = true;
+	bool canTakeDamage = true;
 	cique<Bullet*> bullets;
 	sf::Clock clock;
+
+	void Shoot();
 public:
 	bool isAttacking = false;
 	Player(int x, int y, Direction direction, std::map<State, sf::Texture>& textures);
@@ -34,6 +37,5 @@ public:
 
 	void setState(State state);
 
-	void Shoot();
 };
 

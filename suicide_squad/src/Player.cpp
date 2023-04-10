@@ -7,6 +7,7 @@ Player::Player(int x, int y, Direction direction, std::map<State, sf::Texture>& 
 	bullets.setSize(BULLETS_AMOUNT);
 	initBullets();
 
+	health = 5;
 	coordX = x;
 	coordY = y;
 	width = 28;
@@ -119,6 +120,13 @@ void Player::checkCollision(std::vector<Object> objects) {
 					}
 				}
 			}
+			if (obj.type == TRAP && canTakeDamage) {
+				health--;
+				canTakeDamage = false;
+			}
+		}
+		if (!rect.intersects(obj.r.getGlobalBounds()) && obj.type == TRAP) {
+			canTakeDamage = true;
 		}
 	}
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {

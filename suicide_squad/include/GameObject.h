@@ -14,6 +14,7 @@ enum Direction {
 
 class GameObject {
 protected:
+	int health;
 	float coordX, coordY, width, height;
 	sf::Sprite sprite;
 	Direction direction;
@@ -22,11 +23,13 @@ protected:
 	Animation* attack_animation;
 public:
 	virtual void Update() = 0;
+	void takeDamage();
 
 	Direction getDirection();
 	sf::Sprite getSprite();
 	sf::Vector2f getPosition();
 	sf::Vector2f getSize();
+	int getHP();
 
 	void setDirection(Direction direction);
 	void setPosition(int coordX, int coordY);

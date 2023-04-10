@@ -68,6 +68,9 @@ void Map::fillTexturesCoords() {
 			case 'S':
 				coords = { 4 * TILE_SIZE, 0 * TILE_SIZE };
 				break;
+			case 'T':
+				coords = { 4 * TILE_SIZE, 7 * TILE_SIZE };
+				break;
 			}
 			tiles_textures_coords.insert(std::make_pair(map[i][j], coords));
 		}
@@ -91,6 +94,9 @@ void Map::fillObjectTypes() {
 				break;
 			case 'S':
 				type = SOLID;
+				break;
+			case 'T':
+				type = TRAP;
 				break;
 			}
 			tiles_types.insert(std::make_pair(map[i][j], type));

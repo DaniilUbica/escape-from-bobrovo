@@ -21,20 +21,7 @@ Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& te
 	width = 28;
 	height = 48;
 
-	right_border.setPosition(coordX + width + field_of_view_size, coordY - height/2);
-	left_border.setPosition(coordX - field_of_view_size, coordY - height / 2);
-	top_border.setPosition(coordX - width, coordY - field_of_view_size);
-	down_border.setPosition(coordX - width, coordY + height + field_of_view_size);
-
-	right_border.setSize(sf::Vector2f(2.0, 100.0));
-	left_border.setSize(sf::Vector2f(2.0, 100.0));
-	top_border.setSize(sf::Vector2f(80.0, 2.0));
-	down_border.setSize(sf::Vector2f(80.0, 2.0));
-
-	right_border.setFillColor(sf::Color::Blue);
-	left_border.setFillColor(sf::Color::Blue);
-	top_border.setFillColor(sf::Color::Blue);
-	down_border.setFillColor(sf::Color::Blue);
+	borders = new ViewBorder(coordX, coordY, width, height);
 
 	this->direction = direction;
 	state = STAY;
@@ -48,11 +35,20 @@ Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& te
 
 Enemy::~Enemy() {
 	delete idle_animation;
+	delete borders;
 }
 
 void Enemy::Update() {
 
 	if (health > 0) {
+
+		if (player->getPosition().x < coordX) {
+			direction = LEFT;
+		}
+		if (player->getPosition().x > coordX) {
+			direction = RIGHT;
+		}
+
 		if ((direction == RIGHT || direction == BOT_RIGHT || direction == TOP_RIGHT) && state == STAY) {
 			sprite = idle_animation->Tick(false);
 		}
@@ -60,80 +56,13 @@ void Enemy::Update() {
 			sprite = idle_animation->Tick(true);
 		}
 
-		if (player->getSprite().getGlobalBounds().intersects(top_border.getGlobalBounds()) && canShoot) {
-			if (player->getSprite().getPosition().x >= coordX + width / 2) {
-				direction = TOP_RIGHT;
-				Shoot();
-				canShoot = false;
-			}
-			else if (player->getSprite().getPosition().x + player->getSize().x / 2 <= coordX) {
-				direction = TOP_LEFT;
-				Shoot();
-				canShoot = false;
-			}
-			else {
-				direction = UP;
-				Shoot();
-				canShoot = false;
-			}
-		}
+		lookForPlayer();
+		borders->Update(coordX, coordY, width, height);
 
-		if (player->getSprite().getGlobalBounds().intersects(down_border.getGlobalBounds()) && canShoot) {
-			if (player->getSprite().getPosition().x >= coordX + width / 2) {
-				direction = BOT_RIGHT;
-				Shoot();
-				canShoot = false;
-			}
-			else if (player->getSprite().getPosition().x + player->getSize().x / 2 <= coordX) {
-				direction = BOT_LEFT;
-				Shoot();
-				canShoot = false;
-			}
-			else {
-				direction = DOWN;
-				Shoot();
-				canShoot = false;
-			}
-		}
-
-		if (player->getSprite().getGlobalBounds().intersects(right_border.getGlobalBounds()) && canShoot) {
-			if (player->getSprite().getPosition().y + player->getSize().y <= coordY + height / 2) {
-				direction = TOP_RIGHT;
-				Shoot();
-				canShoot = false;
-			}
-			else if (player->getSprite().getPosition().y >= coordY + height / 2) {
-				direction = BOT_RIGHT;
-				Shoot();
-				canShoot = false;
-			}
-			else {
-				direction = RIGHT;
-				Shoot();
-				canShoot = false;
-			}
-		}
-
-		if (player->getSprite().getGlobalBounds().intersects(left_border.getGlobalBounds()) && canShoot) {
-			if (player->getSprite().getPosition().y + player->getSize().y <= coordY + height / 2) {
-				direction = TOP_LEFT;
-				Shoot();
-				canShoot = false;
-			}
-			else if (player->getSprite().getPosition().y >= coordY + height / 2) {
-				direction = BOT_LEFT;
-				Shoot();
-				canShoot = false;
-			}
-			else {
-				direction = LEFT;
-				Shoot();
-				canShoot = false;
-			}
-		}
-
-		for (int i = 0; i < BULLETS_AMOUNT; i++) {
-			bullets.elems[i]->Update();
+		if (canShoot && borders->isIntersects(player)) {
+			direction = borders->getDirection(coordX, coordY, width, height, player);
+			Shoot();
+			canShoot = false;
 		}
 
 		sf::Time time;
@@ -144,6 +73,10 @@ void Enemy::Update() {
 		}
 
 		sprite.setPosition(coordX, coordY);
+	}
+
+	for (int i = 0; i < BULLETS_AMOUNT; i++) {
+		bullets.elems[i]->Update();
 	}
 }
 
@@ -162,6 +95,27 @@ void Enemy::checkBulletsCollision(std::vector<Object> objects) {
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
 		bullets.elems[i]->checkCollision(player);
 		bullets.elems[i]->checkCollision(objects);
+	}
+}
+
+void Enemy::lookForPlayer() {
+	int p_x = player->getPosition().x;
+	int p_y = player->getPosition().y;
+
+	if (!borders->isIntersects(player)) {
+
+		if (p_x > coordX) {
+			coordX += ENEMY_SPEED;
+		}
+		if (p_x < coordX) {
+			coordX -= ENEMY_SPEED;
+		}
+		if (p_y > coordY) {
+			coordY += ENEMY_SPEED;
+		}
+		if (p_y < coordY) {
+			coordY -= ENEMY_SPEED;
+		}
 	}
 }
 

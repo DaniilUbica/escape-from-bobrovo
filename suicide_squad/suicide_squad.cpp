@@ -7,6 +7,7 @@
 #include "include/Bullet.h"
 #include "include/Turret.h"
 #include "include/Enemy.h"
+#include "include/ViewBorder.h"
 
 void controllPlayer(Player* player) {
     player->setState(STAY);
@@ -117,11 +118,6 @@ int main()
 
         m.drawMap(window);
 
-        window.draw(enemy->right_border);
-        window.draw(enemy->left_border);
-        window.draw(enemy->top_border);
-        window.draw(enemy->down_border);
-
         for (int i = 0; i < BULLETS_AMOUNT; i++) {
             window.draw(bullets[i]->getSprite());
 
@@ -131,6 +127,11 @@ int main()
             window.draw(t_bullets2[i]->getSprite());
             window.draw(t_bullets3[i]->getSprite());
             window.draw(t_bullets4[i]->getSprite());
+
+            window.draw(enemy->borders->down_border);
+            window.draw(enemy->borders->top_border);
+            window.draw(enemy->borders->right_border);
+            window.draw(enemy->borders->left_border);
         }
 
         window.draw(enemy->getSprite());

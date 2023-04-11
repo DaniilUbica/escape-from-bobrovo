@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Bullet.h"
 #include "Player.h"
+#include "ViewBorder.h"
 #include "CircleBuffer.hpp"
 
 class Enemy : public GameObject {
@@ -18,15 +19,9 @@ private:
 	cique<Bullet*> bullets;
 	sf::Clock clock;
 
-	const float field_of_view_size = 50.0;
-
-
 	void Shoot();
 public:
-	sf::RectangleShape top_border;
-	sf::RectangleShape down_border;
-	sf::RectangleShape left_border;
-	sf::RectangleShape right_border;
+	ViewBorder* borders;
 	Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures);
 	~Enemy();
 
@@ -34,6 +29,7 @@ public:
 	void takePlayer(Player* player);
 	void initBullets();
 	void checkBulletsCollision(std::vector<Object> objects);
+	void lookForPlayer();
 
 	std::deque<Bullet*> getBullets();
 };

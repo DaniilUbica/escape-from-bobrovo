@@ -15,9 +15,9 @@ Player::Player(int x, int y, Direction direction, std::map<State, sf::Texture>& 
 	this->direction = direction;
 	state = STAY;
 
-	idle_animation = new Animation(textures[STAY], 0, 0, 22, 48, 4, 0.02, 22);
-	run_animation = new Animation(textures[RUN], 0, 0, 26, 48, 6, 0.02, 26);
-	attack_animation = new Animation(textures[ATTACK], 0, 0, 28, 48, 5, 0.02, 28);
+	idle_animation = new Animation(textures[STAY], 0, 0, 22, 48, 4, 0.03, 22);
+	run_animation = new Animation(textures[RUN], 0, 0, 26, 48, 6, 0.03, 26);
+	attack_animation = new Animation(textures[ATTACK], 0, 0, 28, 48, 5, 0.03, 28);
 
 	sprite = idle_animation->Tick(false);
 	sprite.setPosition(coordX, coordY);
@@ -36,7 +36,6 @@ void Player::Update() {
 
 	if (direction == LEFT && state == RUN) {
 		coordX -= PLAYER_SPEED;
-		canShoot = true;
 		sprite = run_animation->Tick(true);
 	}
 
@@ -54,9 +53,9 @@ void Player::Update() {
 	}
 
 	if (direction == RIGHT && state == ATTACK && canShoot) {
-		canShoot = false;
 		sprite = attack_animation->Tick(false);
 		Shoot();
+		canShoot = false;
 	}
 
 	if (direction == LEFT && state == ATTACK && canShoot) {

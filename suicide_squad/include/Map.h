@@ -11,6 +11,7 @@ enum Type {
 	FLOOR,
 	SOLID,
 	TRAP,
+	SPRITE,
 };
 
 struct Object {
@@ -26,18 +27,18 @@ private:
 	std::map<char, sf::Vector2i> tiles_textures_coords;
 	std::map<char, Type> tiles_types;
 	std::string map[MAP_HEIGHT] = {
-	"LFFFFFFFFFFR",
-	"L          R",
-	"L          R",
-	"L          R",
-	"L          R",
-	"L          R",
-	"L          R",
-	"L          R",
-	"L          R",
-	"L          R",
-	"L          R",
-	"LFFFFFFFFFFR",
+	"FFFFFFFFFFFFFFFFFFFFWF",
+	"F                    F",
+	"F                    F",
+	"F                    F",
+	"F                    F",
+	"F                    F",
+	"F                    W",
+	"F                    W",
+	"F                    F",
+	"F                    F",
+	"F                    F",
+	"FFFFFFWWWWWFFFFFFFFFFF",
 	};
 
 	void fillMap();

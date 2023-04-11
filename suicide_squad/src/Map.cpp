@@ -24,10 +24,10 @@ void Map::fillObjects() {
 		int startY = i;
 		for (int j = 0; j < MAP_WIDTH; j++) {
 			char next = map[i][j + 1];
-			if (map[i][j] == ' ') {
-				startX = j + 1;
-				continue;
-			}
+			//if (map[i][j] == ' ') {
+			//	startX = j + 1;
+			//	continue;
+			//}
 			if (map[i][j] != next || next == '\0') {
 				count++;
 
@@ -56,8 +56,8 @@ void Map::fillTexturesCoords() {
 		for (int j = 0; j < MAP_WIDTH; j++) {
 			// Take coordinates from "Tiles.png"
 			switch (map[i][j]) {
-			case 'W':
-				coords = { 1 * TILE_SIZE, 6 * TILE_SIZE };
+			case 'F':
+				coords = { 2 * TILE_SIZE, 0 * TILE_SIZE };
 				break;
 			case 'L':
 				coords = { 0 * TILE_SIZE, 6 * TILE_SIZE };
@@ -71,6 +71,12 @@ void Map::fillTexturesCoords() {
 			case 'T':
 				coords = { 4 * TILE_SIZE, 7 * TILE_SIZE };
 				break;
+			case 'W':
+				coords = { 0 * TILE_SIZE, 3 * TILE_SIZE };
+				break;
+			case ' ':
+				coords = { 0 * TILE_SIZE, 1 * TILE_SIZE };
+				break;
 			}
 			tiles_textures_coords.insert(std::make_pair(map[i][j], coords));
 		}
@@ -81,7 +87,6 @@ void Map::fillObjectTypes() {
 	Type type;
 	for (int i = 0; i < MAP_HEIGHT; i++) {
 		for (int j = 0; j < MAP_WIDTH; j++) {
-			// Take coordinates from "Tiles.png"
 			switch (map[i][j]) {
 			case 'F':
 				type = SOLID;
@@ -97,6 +102,12 @@ void Map::fillObjectTypes() {
 				break;
 			case 'T':
 				type = TRAP;
+				break;
+			case 'W':
+				type = SOLID;
+				break;
+			case ' ':
+				type = SPRITE;
 				break;
 			}
 			tiles_types.insert(std::make_pair(map[i][j], type));

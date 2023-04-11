@@ -9,12 +9,6 @@
 #include "Bullet.h"
 #include "CircleBuffer.hpp"
 
-enum State {
-	RUN,
-	STAY,
-	ATTACK,
-};
-
 class Player : public GameObject {
 private:
 	State state;

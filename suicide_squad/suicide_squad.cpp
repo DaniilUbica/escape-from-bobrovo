@@ -6,6 +6,7 @@
 #include "include/Map.h"
 #include "include/Bullet.h"
 #include "include/Turret.h"
+#include "include/Enemy.h"
 
 void controllPlayer(Player* player) {
     player->setState(STAY);
@@ -36,6 +37,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SS!");
 
     std::map<State, sf::Texture> player_textures;
+    std::map<State, sf::Texture> enemy_texture;
 
     sf::Texture heart_texture;
     heart_texture.loadFromFile("assets/heart.png");
@@ -57,12 +59,18 @@ int main()
     player_textures[RUN].loadFromFile("assets/character/Walk.png");
     player_textures[ATTACK].loadFromFile("assets/character/Attack.png");
     
+    enemy_texture[STAY].loadFromFile("assets/character/Idle.png");
+
     Player* player = new Player(250, 200, RIGHT, player_textures);
+
+    Enemy* enemy = new Enemy(50, 200, RIGHT, enemy_texture);
 
     Turret* turret = new Turret(150, 100, turret_texture);
 
     auto bullets = player->getBullets();
     
+    auto e_bullets = enemy->getBullets();
+
     auto t_bullets1 = turret->getBullets1();
     auto t_bullets2 = turret->getBullets2();
     auto t_bullets3 = turret->getBullets3();
@@ -85,12 +93,22 @@ int main()
             player->Update();
         }
 
+        enemy->takePlayer(player);
+        enemy->Update();
+
         turret->Update(m.getObjects(), player);
 
         m.drawMap(window);
 
+        window.draw(enemy->right_border);
+        window.draw(enemy->left_border);
+        window.draw(enemy->top_border);
+        window.draw(enemy->down_border);
+
         for (int i = 0; i < BULLETS_AMOUNT; i++) {
             window.draw(bullets[i]->rect);
+
+            window.draw(e_bullets[i]->rect);
 
             window.draw(t_bullets1[i]->rect);
             window.draw(t_bullets2[i]->rect);
@@ -98,6 +116,7 @@ int main()
             window.draw(t_bullets4[i]->rect);
         }
 
+        window.draw(enemy->getSprite());
         window.draw(turret->getSprite());
         window.draw(player->getSprite());
 

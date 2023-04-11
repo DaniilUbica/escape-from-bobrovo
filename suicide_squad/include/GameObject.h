@@ -12,6 +12,12 @@ enum Direction {
 	DOWN
 };
 
+enum State {
+	RUN,
+	STAY,
+	ATTACK,
+};
+
 class GameObject {
 protected:
 	int health;

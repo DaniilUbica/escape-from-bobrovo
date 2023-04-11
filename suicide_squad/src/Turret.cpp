@@ -10,8 +10,8 @@ Turret::Turret(int coordX, int coordY, sf::Texture& texture) {
 	this->coordX = coordX;
 	this->coordY = coordY;
 
-	height = 55;
-	width = 65;
+	height = 50;
+	width = 46;
 
 	sprite.setTexture(texture);
 
@@ -59,7 +59,7 @@ void Turret::Update(std::vector<Object> objects, Player* player) {
 
 	sf::Time time;
 	time = clock.getElapsedTime();
-	if (time.asSeconds() >= 1.5) {
+	if (time.asSeconds() >= 2) {
 		clock.restart();
 		canShoot = true;
 	}

@@ -25,6 +25,7 @@ public:
 
 	void Update() override;
 	void checkCollision(std::vector<Object> objects);
+	void checkBulletCollision(std::vector<Object> objects, GameObject* obj);
 	void initBullets();
 
 	std::deque<Bullet*> getBullets();

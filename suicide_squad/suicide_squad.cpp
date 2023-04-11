@@ -45,6 +45,9 @@ int main()
     sf::Texture turret_texture;
     turret_texture.loadFromFile("assets/Turret.png");
 
+    sf::Texture bullet_texture;
+    bullet_texture.loadFromFile("assets/Bullet.png");
+
     sf::Sprite heart_sprites[PLAYER_MAX_HP];
 
     for (int i = 0; i < PLAYER_MAX_HP; i++) {
@@ -63,9 +66,9 @@ int main()
 
     Player* player = new Player(250, 200, RIGHT, player_textures);
 
-    Enemy* enemy = new Enemy(50, 200, RIGHT, enemy_texture);
+    Enemy* enemy = new Enemy(100, 200, RIGHT, enemy_texture);
 
-    Turret* turret = new Turret(150, 100, turret_texture);
+    Turret* turret = new Turret(300, 100, turret_texture);
 
     auto bullets = player->getBullets();
     
@@ -75,6 +78,17 @@ int main()
     auto t_bullets2 = turret->getBullets2();
     auto t_bullets3 = turret->getBullets3();
     auto t_bullets4 = turret->getBullets4();
+
+    for (int i = 0; i < BULLETS_AMOUNT; i++) {
+        bullets[i]->setTexture(bullet_texture);
+
+        e_bullets[i]->setTexture(bullet_texture);
+
+        t_bullets1[i]->setTexture(bullet_texture);
+        t_bullets2[i]->setTexture(bullet_texture);
+        t_bullets3[i]->setTexture(bullet_texture);
+        t_bullets4[i]->setTexture(bullet_texture);
+    }
 
     while (window.isOpen())
     {
@@ -93,8 +107,11 @@ int main()
             player->Update();
         }
 
+        player->checkBulletCollision(m.getObjects(), enemy);
+
         enemy->takePlayer(player);
         enemy->Update();
+        enemy->checkBulletsCollision(m.getObjects());
 
         turret->Update(m.getObjects(), player);
 
@@ -106,14 +123,14 @@ int main()
         window.draw(enemy->down_border);
 
         for (int i = 0; i < BULLETS_AMOUNT; i++) {
-            window.draw(bullets[i]->rect);
+            window.draw(bullets[i]->getSprite());
 
-            window.draw(e_bullets[i]->rect);
+            window.draw(e_bullets[i]->getSprite());
 
-            window.draw(t_bullets1[i]->rect);
-            window.draw(t_bullets2[i]->rect);
-            window.draw(t_bullets3[i]->rect);
-            window.draw(t_bullets4[i]->rect);
+            window.draw(t_bullets1[i]->getSprite());
+            window.draw(t_bullets2[i]->getSprite());
+            window.draw(t_bullets3[i]->getSprite());
+            window.draw(t_bullets4[i]->getSprite());
         }
 
         window.draw(enemy->getSprite());

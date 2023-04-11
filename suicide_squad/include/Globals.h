@@ -1,5 +1,7 @@
 #pragma once
 
+const float PI = 3.14;
+
 const float JUMP_HEIGHT = 1;
 const float JUMP_SPEED = 1.0;
 

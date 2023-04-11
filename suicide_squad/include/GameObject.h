@@ -9,7 +9,11 @@ enum Direction {
 	LEFT,
 	RIGHT,
 	UP,
-	DOWN
+	DOWN,
+	TOP_LEFT,
+	TOP_RIGHT,
+	BOT_LEFT,
+	BOT_RIGHT,
 };
 
 enum State {

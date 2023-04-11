@@ -30,7 +30,7 @@ private:
 	"L          R",
 	"L          R",
 	"L          R",
-	"L   T      R",
+	"L          R",
 	"L          R",
 	"L          R",
 	"L          R",

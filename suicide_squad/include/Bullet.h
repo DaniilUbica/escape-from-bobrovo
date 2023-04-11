@@ -22,6 +22,8 @@ public:
 	void Update() override;
 	void checkCollision(std::vector<Object> obj);
 	void checkCollision(GameObject* obj);
+
+	void setTexture(sf::Texture& texture);
 };
 
 

@@ -42,19 +42,43 @@ void Bullet::Update() {
 	if (isLaunched) {
 		if (direction == LEFT) {
 			coordX -= BULLET_SPEED;
+			sprite.setRotation(0);
 		}
 		if (direction == RIGHT) {
 			coordX += BULLET_SPEED;
+			sprite.setRotation(180);
 		}
 		if (direction == UP) {
 			coordY -= BULLET_SPEED;
+			sprite.setRotation(90);
 		}
 		if (direction == DOWN) {
 			coordY += BULLET_SPEED;
+			sprite.setRotation(270);
+		}
+		if (direction == TOP_LEFT) {
+			coordX -= BULLET_SPEED;
+			coordY -= BULLET_SPEED;
+			sprite.setRotation(45);
+		}
+		if (direction == TOP_RIGHT) {
+			coordX += BULLET_SPEED;
+			coordY -= BULLET_SPEED;
+			sprite.setRotation(135);
+		}
+		if (direction == BOT_LEFT) {
+			coordX -= BULLET_SPEED;
+			coordY += BULLET_SPEED;
+			sprite.setRotation(315);
+		}
+		if (direction == BOT_RIGHT) {
+			coordX += BULLET_SPEED;
+			coordY += BULLET_SPEED;
+			sprite.setRotation(225);
 		}
 	}
 
-	sprite.setScale(0.01, 0.01);
+	sprite.setScale(0.013, 0.013);
 	sprite.setPosition(coordX, coordY);
 	rect.setPosition(coordX, coordY);
 }
@@ -70,8 +94,12 @@ void Bullet::checkCollision(std::vector<Object> obj) {
 }
 
 void Bullet::checkCollision(GameObject* obj) {
-	if (rect.getGlobalBounds().intersects(obj->getSprite().getGlobalBounds())) {
+	if (sprite.getGlobalBounds().intersects(obj->getSprite().getGlobalBounds())) {
 		obj->takeDamage();
 		this->Destroy();
 	}
+}
+
+void Bullet::setTexture(sf::Texture& texture) {
+	sprite.setTexture(texture);
 }

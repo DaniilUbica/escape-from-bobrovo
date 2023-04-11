@@ -28,8 +28,8 @@ Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& te
 
 	right_border.setSize(sf::Vector2f(2.0, 100.0));
 	left_border.setSize(sf::Vector2f(2.0, 100.0));
-	top_border.setSize(sf::Vector2f(100.0, 2.0));
-	down_border.setSize(sf::Vector2f(100.0, 2.0));
+	top_border.setSize(sf::Vector2f(80.0, 2.0));
+	down_border.setSize(sf::Vector2f(80.0, 2.0));
 
 	right_border.setFillColor(sf::Color::Blue);
 	left_border.setFillColor(sf::Color::Blue);
@@ -52,49 +52,99 @@ Enemy::~Enemy() {
 
 void Enemy::Update() {
 
-	if (direction == RIGHT && state == STAY) {
-		sprite = idle_animation->Tick(false);
-	}
-	if (direction == LEFT && state == STAY) {
-		sprite = idle_animation->Tick(true);
-	}
+	if (health > 0) {
+		if ((direction == RIGHT || direction == BOT_RIGHT || direction == TOP_RIGHT) && state == STAY) {
+			sprite = idle_animation->Tick(false);
+		}
+		if ((direction == LEFT || direction == BOT_LEFT || direction == TOP_LEFT) && state == STAY) {
+			sprite = idle_animation->Tick(true);
+		}
 
-	if (player->getSprite().getGlobalBounds().intersects(top_border.getGlobalBounds()) && canShoot) {
-		direction = UP;
-		Shoot();
-		canShoot = false;
-	}
+		if (player->getSprite().getGlobalBounds().intersects(top_border.getGlobalBounds()) && canShoot) {
+			if (player->getSprite().getPosition().x >= coordX + width / 2) {
+				direction = TOP_RIGHT;
+				Shoot();
+				canShoot = false;
+			}
+			else if (player->getSprite().getPosition().x + player->getSize().x / 2 <= coordX) {
+				direction = TOP_LEFT;
+				Shoot();
+				canShoot = false;
+			}
+			else {
+				direction = UP;
+				Shoot();
+				canShoot = false;
+			}
+		}
 
-	if (player->getSprite().getGlobalBounds().intersects(down_border.getGlobalBounds()) && canShoot) {
-		direction = DOWN;
-		Shoot();
-		canShoot = false;
-	}
+		if (player->getSprite().getGlobalBounds().intersects(down_border.getGlobalBounds()) && canShoot) {
+			if (player->getSprite().getPosition().x >= coordX + width / 2) {
+				direction = BOT_RIGHT;
+				Shoot();
+				canShoot = false;
+			}
+			else if (player->getSprite().getPosition().x + player->getSize().x / 2 <= coordX) {
+				direction = BOT_LEFT;
+				Shoot();
+				canShoot = false;
+			}
+			else {
+				direction = DOWN;
+				Shoot();
+				canShoot = false;
+			}
+		}
 
-	if (player->getSprite().getGlobalBounds().intersects(left_border.getGlobalBounds()) && canShoot) {
-		direction = LEFT;
-		Shoot();
-		canShoot = false;
-	}
+		if (player->getSprite().getGlobalBounds().intersects(right_border.getGlobalBounds()) && canShoot) {
+			if (player->getSprite().getPosition().y + player->getSize().y <= coordY + height / 2) {
+				direction = TOP_RIGHT;
+				Shoot();
+				canShoot = false;
+			}
+			else if (player->getSprite().getPosition().y >= coordY + height / 2) {
+				direction = BOT_RIGHT;
+				Shoot();
+				canShoot = false;
+			}
+			else {
+				direction = RIGHT;
+				Shoot();
+				canShoot = false;
+			}
+		}
 
-	if (player->getSprite().getGlobalBounds().intersects(right_border.getGlobalBounds()) && canShoot) {
-		direction = RIGHT;
-		Shoot();
-		canShoot = false;
-	}
+		if (player->getSprite().getGlobalBounds().intersects(left_border.getGlobalBounds()) && canShoot) {
+			if (player->getSprite().getPosition().y + player->getSize().y <= coordY + height / 2) {
+				direction = TOP_LEFT;
+				Shoot();
+				canShoot = false;
+			}
+			else if (player->getSprite().getPosition().y >= coordY + height / 2) {
+				direction = BOT_LEFT;
+				Shoot();
+				canShoot = false;
+			}
+			else {
+				direction = LEFT;
+				Shoot();
+				canShoot = false;
+			}
+		}
 
-	for (int i = 0; i < BULLETS_AMOUNT; i++) {
-		bullets.elems[i]->Update();
-	}
+		for (int i = 0; i < BULLETS_AMOUNT; i++) {
+			bullets.elems[i]->Update();
+		}
 
-	sf::Time time;
-	time = clock.getElapsedTime();
-	if (time.asSeconds() >= 0.5) {
-		clock.restart();
-		canShoot = true;
-	}
+		sf::Time time;
+		time = clock.getElapsedTime();
+		if (time.asSeconds() >= 1.0) {
+			clock.restart();
+			canShoot = true;
+		}
 
-	sprite.setPosition(coordX, coordY);
+		sprite.setPosition(coordX, coordY);
+	}
 }
 
 void Enemy::takePlayer(Player* p) {
@@ -104,6 +154,14 @@ void Enemy::takePlayer(Player* p) {
 void Enemy::initBullets() {
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
 		bullets.push(new Bullet(-10, 10));
+	}
+}
+
+void Enemy::checkBulletsCollision(std::vector<Object> objects) {
+
+	for (int i = 0; i < BULLETS_AMOUNT; i++) {
+		bullets.elems[i]->checkCollision(player);
+		bullets.elems[i]->checkCollision(objects);
 	}
 }
 

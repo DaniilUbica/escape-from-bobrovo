@@ -129,8 +129,12 @@ void Player::checkCollision(std::vector<Object> objects) {
 			canTakeDamage = true;
 		}
 	}
+}
+
+void Player::checkBulletCollision(std::vector<Object> objects, GameObject* obj) {
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
 		bullets.elems[i]->checkCollision(objects);
+		bullets.elems[i]->checkCollision(obj);
 	}
 }
 

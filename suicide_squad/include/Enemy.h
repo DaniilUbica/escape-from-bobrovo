@@ -18,7 +18,7 @@ private:
 	cique<Bullet*> bullets;
 	sf::Clock clock;
 
-	const float field_of_view_size = 15.0;
+	const float field_of_view_size = 50.0;
 
 
 	void Shoot();
@@ -33,6 +33,7 @@ public:
 	void Update() override;
 	void takePlayer(Player* player);
 	void initBullets();
+	void checkBulletsCollision(std::vector<Object> objects);
 
 	std::deque<Bullet*> getBullets();
 };

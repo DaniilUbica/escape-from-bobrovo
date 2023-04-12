@@ -69,7 +69,7 @@ void Map::fillTexturesCoords() {
 				coords = { 4 * TILE_SIZE, 0 * TILE_SIZE };
 				break;
 			case 'T':
-				coords = { 4 * TILE_SIZE, 7 * TILE_SIZE };
+				coords = { 1 * TILE_SIZE, 2 * TILE_SIZE };
 				break;
 			case 'W':
 				coords = { 0 * TILE_SIZE, 3 * TILE_SIZE };

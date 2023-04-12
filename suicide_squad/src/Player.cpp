@@ -119,14 +119,16 @@ void Player::checkCollision(std::vector<Object> objects) {
 					}
 				}
 			}
-			if (obj.type == TRAP && canTakeDamage) {
-				health--;
-				canTakeDamage = false;
+			if (obj.type == TRAP) {
+				if (canTakeDamage) {
+					health--;
+					canTakeDamage = false;
+				}
 			}
 		}
-		if (!rect.intersects(obj.r.getGlobalBounds()) && obj.type == TRAP) {
-			canTakeDamage = true;
-		}
+		//if (!rect.intersects(obj.r.getGlobalBounds()) && obj.type == TRAP) {
+		//	canTakeDamage = true;
+		//}
 	}
 }
 

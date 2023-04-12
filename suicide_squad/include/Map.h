@@ -7,8 +7,6 @@
 #include "Globals.h"
 
 enum Type {
-	WALL,
-	FLOOR,
 	SOLID,
 	TRAP,
 	SPRITE,
@@ -29,14 +27,14 @@ private:
 	std::string map[MAP_HEIGHT] = {
 	"FFFFFFFFFFFFFFFFFFFFWF",
 	"F                    F",
+	"F              FF    F",
 	"F                    F",
 	"F                    F",
 	"F                    F",
-	"F                    F",
-	"F                    W",
-	"F                    W",
-	"F                    F",
-	"F                    F",
+	"F       FF           W",
+	"F      F         T   W",
+	"F      F             F",
+	"F               T    F",
 	"F                    F",
 	"FFFFFFWWWWWFFFFFFFFFFF",
 	};

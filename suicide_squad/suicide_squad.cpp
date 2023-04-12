@@ -67,7 +67,9 @@ int main()
 
     Player* player = new Player(250, 200, RIGHT, player_textures);
 
-    Enemy* enemy = new Enemy(100, 200, RIGHT, enemy_texture);
+    Enemy* enemy = new Enemy(100, 200, RIGHT, player_textures);
+
+    enemy->setPatrolPoints(150, 300, 50, 100);
 
     Turret* turret = new Turret(300, 100, turret_texture);
 
@@ -104,8 +106,8 @@ int main()
 
         if (player->getHP() > 0) {
             controllPlayer(player);
-            player->checkCollision(m.getObjects());
             player->Update();
+            player->checkCollision(m.getObjects());
         }
 
         player->checkBulletCollision(m.getObjects(), enemy);
@@ -113,6 +115,7 @@ int main()
         enemy->takePlayer(player);
         enemy->Update();
         enemy->checkBulletsCollision(m.getObjects());
+        enemy->checkCollision(m.getObjects());
 
         turret->Update(m.getObjects(), player);
 
@@ -128,10 +131,15 @@ int main()
             window.draw(t_bullets3[i]->getSprite());
             window.draw(t_bullets4[i]->getSprite());
 
-            window.draw(enemy->borders->down_border);
-            window.draw(enemy->borders->top_border);
-            window.draw(enemy->borders->right_border);
-            window.draw(enemy->borders->left_border);
+            //window.draw(enemy->shoot_borders->down_border);
+            //window.draw(enemy->shoot_borders->top_border);
+            //window.draw(enemy->shoot_borders->right_border);
+            //window.draw(enemy->shoot_borders->left_border);
+
+            //window.draw(enemy->view_borders->down_border);
+            //window.draw(enemy->view_borders->top_border);
+            //window.draw(enemy->view_borders->right_border);
+            //window.draw(enemy->view_borders->left_border);
         }
 
         window.draw(enemy->getSprite());

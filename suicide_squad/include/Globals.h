@@ -21,4 +21,4 @@ const float BULLET_SPEED = 0.7;
 const int BULLET_DISTANCE = 5;
 const int BULLETS_AMOUNT = 6;
 
-const float ENEMY_SPEED = 0.05;
+const float ENEMY_SPEED = 0.2;

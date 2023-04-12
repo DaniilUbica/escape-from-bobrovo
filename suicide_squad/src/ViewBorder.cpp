@@ -1,15 +1,15 @@
 #include "../include/ViewBorder.h"
 
-ViewBorder::ViewBorder(int coordX, int coordY, int width, int height, float border_width, float border_height) {
-		right_border.setPosition(coordX + width + field_of_view_size, coordY - height / 2);
-		left_border.setPosition(coordX - field_of_view_size, coordY - height / 2);
-		top_border.setPosition(coordX - width, coordY - field_of_view_size);
-		down_border.setPosition(coordX - width, coordY + height + field_of_view_size);
+ViewBorder::ViewBorder(int coordX, int coordY, int width, int height, float border_width, float border_height, float range) {
+		right_border.setPosition(coordX + width + range, coordY - height / 2);
+		left_border.setPosition(coordX - range, coordY - height / 2);
+		top_border.setPosition(coordX - width, coordY - range);
+		down_border.setPosition(coordX - width, coordY + height + range);
 
-		right_border.setSize(sf::Vector2f(border_width, border_height));
-		left_border.setSize(sf::Vector2f(border_width, border_height));
-		top_border.setSize(sf::Vector2f(border_height, border_width));
-		down_border.setSize(sf::Vector2f(border_height, border_width));
+		right_border.setSize(sf::Vector2f(-border_width/2, border_height));
+		left_border.setSize(sf::Vector2f(border_width/2, border_height));
+		top_border.setSize(sf::Vector2f(border_height, border_width/2));
+		down_border.setSize(sf::Vector2f(border_height, -border_width/2));
 
 		right_border.setFillColor(sf::Color::Blue);
 		left_border.setFillColor(sf::Color::Blue);
@@ -17,11 +17,11 @@ ViewBorder::ViewBorder(int coordX, int coordY, int width, int height, float bord
 		down_border.setFillColor(sf::Color::Blue);
 }
 
-void ViewBorder::Update(int coordX, int coordY, int width, int height) {
-	right_border.setPosition(coordX + width + field_of_view_size, coordY - height / 2);
-	left_border.setPosition(coordX - field_of_view_size, coordY - height / 2);
-	top_border.setPosition(coordX - width, coordY - field_of_view_size);
-	down_border.setPosition(coordX - width, coordY + height + field_of_view_size);
+void ViewBorder::Update(int coordX, int coordY, int width, int height, float range) {
+	right_border.setPosition(coordX + width + range, coordY - height / 2);
+	left_border.setPosition(coordX - range, coordY - height / 2);
+	top_border.setPosition(coordX - width, coordY - range);
+	down_border.setPosition(coordX - width, coordY + height + range);
 }
 
 Direction ViewBorder::getDirection(int coordX, int coordY, int width, int height, Player* player) {

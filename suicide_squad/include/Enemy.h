@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <map>
+#include <cmath>
 
 #include "GameObject.h"
 #include "Globals.h"
@@ -16,21 +17,29 @@ private:
 	State state;
 	Player* player;
 	bool canShoot = false;
+	bool goToFirstPoint = true;
+	bool goToSecondPoint = false;
 	cique<Bullet*> bullets;
 	sf::Clock clock;
 
+	int point1_x, point2_x, point1_y, point2_y;
+
 	void Shoot();
+	void initBullets();
+	void lookForPlayer();
+	void Patrol();
+
 public:
-	ViewBorder* borders;
+	ViewBorder* shoot_borders;
+	ViewBorder* view_borders;
 	Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures);
 	~Enemy();
 
 	void Update() override;
 	void takePlayer(Player* player);
-	void initBullets();
 	void checkBulletsCollision(std::vector<Object> objects);
-	void lookForPlayer();
-	void Patrol(int x1, int x2, int y1, int y2);
+	void setPatrolPoints(int x1, int y1, int x2, int y2);
+	void checkCollision(std::vector<Object> objects);
 
 	std::deque<Bullet*> getBullets();
 };

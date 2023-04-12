@@ -1,7 +1,7 @@
 #include "../include/GameObject.h"
 
-void GameObject::takeDamage() {
-    health--;
+void GameObject::takeDamage(int damage) {
+    health-=damage;
 }
 
 Direction GameObject::getDirection() {

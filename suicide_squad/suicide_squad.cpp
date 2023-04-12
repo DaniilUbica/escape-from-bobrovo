@@ -8,6 +8,7 @@
 #include "include/Turret.h"
 #include "include/Enemy.h"
 #include "include/ViewBorder.h"
+#include "include/Consumable.h"
 
 void controllPlayer(Player* player) {
     player->setState(STAY);
@@ -38,7 +39,6 @@ int main()
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SS!");
 
     std::map<State, sf::Texture> player_textures;
-    std::map<State, sf::Texture> enemy_texture;
 
     sf::Texture heart_texture;
     heart_texture.loadFromFile("assets/heart.png");
@@ -63,7 +63,7 @@ int main()
     player_textures[RUN].loadFromFile("assets/character/Walk.png");
     player_textures[ATTACK].loadFromFile("assets/character/Attack.png");
     
-    enemy_texture[STAY].loadFromFile("assets/character/Idle.png");
+    
 
     Player* player = new Player(250, 200, RIGHT, player_textures);
 
@@ -72,6 +72,8 @@ int main()
     enemy->setPatrolPoints(150, 300, 50, 100);
 
     Turret* turret = new Turret(300, 100, turret_texture);
+
+    Consumable* heal = new Consumable(DAMAGE, 600, 300, heart_texture);
 
     auto bullets = player->getBullets();
     
@@ -111,6 +113,7 @@ int main()
         }
 
         player->checkBulletCollision(m.getObjects(), enemy);
+        player->checkCollisionConsumable(heal);
 
         enemy->takePlayer(player);
         enemy->Update();
@@ -120,6 +123,10 @@ int main()
         turret->Update(m.getObjects(), player);
 
         m.drawMap(window);
+
+        if (!heal->getUsed()) {
+            window.draw(heal->getSprite());
+        }
 
         for (int i = 0; i < BULLETS_AMOUNT; i++) {
             window.draw(bullets[i]->getSprite());
@@ -156,6 +163,8 @@ int main()
 
     delete player;
     delete turret;
+    delete enemy;
+    delete heal;
 
     return 0;
 }

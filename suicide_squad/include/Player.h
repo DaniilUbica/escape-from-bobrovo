@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Bullet.h"
 #include "CircleBuffer.hpp"
+#include "Consumable.h"
 
 class Player : public GameObject {
 private:
@@ -16,6 +17,7 @@ private:
 	bool canTakeDamage = true;
 	cique<Bullet*> bullets;
 	sf::Clock clock;
+	int damage = 1;
 
 	void Shoot();
 public:
@@ -26,6 +28,7 @@ public:
 	void Update() override;
 	void checkCollision(std::vector<Object> objects);
 	void checkBulletCollision(std::vector<Object> objects, GameObject* obj);
+	void checkCollisionConsumable(Consumable* consumable);
 	void initBullets();
 
 	std::deque<Bullet*> getBullets();

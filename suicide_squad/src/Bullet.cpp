@@ -95,7 +95,14 @@ void Bullet::checkCollision(std::vector<Object> obj) {
 
 void Bullet::checkCollision(GameObject* obj) {
 	if (sprite.getGlobalBounds().intersects(obj->getSprite().getGlobalBounds())) {
-		obj->takeDamage();
+		obj->takeDamage(1);
+		this->Destroy();
+	}
+}
+
+void Bullet::checkCollision(GameObject* obj, int damage) {
+	if (sprite.getGlobalBounds().intersects(obj->getSprite().getGlobalBounds())) {
+		obj->takeDamage(damage);
 		this->Destroy();
 	}
 }

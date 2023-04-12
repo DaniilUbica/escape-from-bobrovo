@@ -33,7 +33,7 @@ Player::~Player() {
 }
 
 void Player::Update() {
-
+	std::cout << damage;
 	if (direction == LEFT && state == RUN) {
 		coordX -= PLAYER_SPEED;
 		sprite = run_animation->Tick(true);
@@ -135,7 +135,7 @@ void Player::checkCollision(std::vector<Object> objects) {
 void Player::checkBulletCollision(std::vector<Object> objects, GameObject* obj) {
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
 		bullets.elems[i]->checkCollision(objects);
-		bullets.elems[i]->checkCollision(obj);
+		bullets.elems[i]->checkCollision(obj, damage);
 	}
 }
 
@@ -144,6 +144,29 @@ void Player::initBullets() {
 		bullets.push(new Bullet(-10, 10));
 	}
 }
+
+void Player::checkCollisionConsumable(Consumable* consumable) {
+	sf::Clock buffs_clock;
+	if (sprite.getGlobalBounds().intersects(consumable->getSprite().getGlobalBounds()) && !consumable->getUsed()) {
+		buffs_clock.restart();
+		if (consumable->getType() == HEALTH) {
+			if (health < 5) {
+				health++;
+			}
+		}
+		if (consumable->getType() == DAMAGE) {
+			damage++;
+		}
+		consumable->Destroy();
+	}
+	sf::Time time;
+	time = buffs_clock.getElapsedTime();
+	if (time.asSeconds() >= 5) {
+		buffs_clock.restart();
+		damage--;
+	}
+}
+
 
 std::deque<Bullet*> Player::getBullets() {
 	return bullets.elems;

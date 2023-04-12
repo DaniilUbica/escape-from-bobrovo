@@ -33,7 +33,7 @@ protected:
 	Animation* attack_animation;
 public:
 	virtual void Update() = 0;
-	void takeDamage();
+	void takeDamage(int damage);
 
 	Direction getDirection();
 	sf::Sprite getSprite();

@@ -13,7 +13,7 @@ struct ViewBorder {
 	sf::RectangleShape left_border;
 	sf::RectangleShape right_border;
 
-	ViewBorder(int coordX, int coordY, int width, int height);
+	ViewBorder(int coordX, int coordY, int width, int height, float border_width, float border_height);
 
 	void Update(int coordX, int coordY, int width, int height);
 	Direction getDirection(int coordX, int coordY, int width, int height, Player* player);

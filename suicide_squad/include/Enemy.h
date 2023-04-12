@@ -30,6 +30,7 @@ public:
 	void initBullets();
 	void checkBulletsCollision(std::vector<Object> objects);
 	void lookForPlayer();
+	void Patrol(int x1, int x2, int y1, int y2);
 
 	std::deque<Bullet*> getBullets();
 };

@@ -21,7 +21,7 @@ Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& te
 	width = 28;
 	height = 48;
 
-	borders = new ViewBorder(coordX, coordY, width, height);
+	borders = new ViewBorder(coordX, coordY, width, height, 2.0, 100.0);
 
 	this->direction = direction;
 	state = STAY;
@@ -56,7 +56,7 @@ void Enemy::Update() {
 			sprite = idle_animation->Tick(true);
 		}
 
-		lookForPlayer();
+		//lookForPlayer();
 		borders->Update(coordX, coordY, width, height);
 
 		if (canShoot && borders->isIntersects(player)) {
@@ -117,6 +117,10 @@ void Enemy::lookForPlayer() {
 			coordY -= ENEMY_SPEED;
 		}
 	}
+}
+
+void Enemy::Patrol(int x1, int x2, int y1, int y2) {
+
 }
 
 std::deque<Bullet*> Enemy::getBullets() {

@@ -80,12 +80,12 @@ void Bullet::Update() {
 
 	sprite.setScale(0.013, 0.013);
 	sprite.setPosition(coordX, coordY);
-	rect.setPosition(coordX, coordY);
+	//rect.setPosition(coordX, coordY);
 }
 
 void Bullet::checkCollision(std::vector<Object> obj) {
 	for (Object o : obj) {
-		if (rect.getGlobalBounds().intersects(o.r.getGlobalBounds())) {
+		if (sprite.getGlobalBounds().intersects(o.r.getGlobalBounds())) {
 			if (o.type == SOLID) {
 				this->Destroy();
 			}

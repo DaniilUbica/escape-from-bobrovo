@@ -1,15 +1,15 @@
 #include "../include/ViewBorder.h"
 
-ViewBorder::ViewBorder(int coordX, int coordY, int width, int height) {
+ViewBorder::ViewBorder(int coordX, int coordY, int width, int height, float border_width, float border_height) {
 		right_border.setPosition(coordX + width + field_of_view_size, coordY - height / 2);
 		left_border.setPosition(coordX - field_of_view_size, coordY - height / 2);
 		top_border.setPosition(coordX - width, coordY - field_of_view_size);
 		down_border.setPosition(coordX - width, coordY + height + field_of_view_size);
 
-		right_border.setSize(sf::Vector2f(2.0, 100.0));
-		left_border.setSize(sf::Vector2f(2.0, 100.0));
-		top_border.setSize(sf::Vector2f(100.0, 2.0));
-		down_border.setSize(sf::Vector2f(100.0, 2.0));
+		right_border.setSize(sf::Vector2f(border_width, border_height));
+		left_border.setSize(sf::Vector2f(border_width, border_height));
+		top_border.setSize(sf::Vector2f(border_height, border_width));
+		down_border.setSize(sf::Vector2f(border_height, border_width));
 
 		right_border.setFillColor(sf::Color::Blue);
 		left_border.setFillColor(sf::Color::Blue);

@@ -9,6 +9,9 @@
 #include "include/Enemy.h"
 #include "include/ViewBorder.h"
 #include "include/Consumable.h"
+#include "include/Textures.h"
+
+const int CONSUMABLES_AMOUNT = 2;
 
 void controllPlayer(Player* player) {
     player->setState(STAY);
@@ -38,18 +41,9 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SS!");
 
-    std::map<State, sf::Texture> player_textures;
-
-    sf::Texture heart_texture;
-    heart_texture.loadFromFile("assets/heart.png");
-
-    sf::Texture turret_texture;
-    turret_texture.loadFromFile("assets/Turret.png");
-
-    sf::Texture bullet_texture;
-    bullet_texture.loadFromFile("assets/Bullet.png");
-
     sf::Sprite heart_sprites[PLAYER_MAX_HP];
+
+    setTextures();
 
     for (int i = 0; i < PLAYER_MAX_HP; i++) {
         heart_sprites[i].setTexture(heart_texture);
@@ -59,21 +53,17 @@ int main()
     Map m;
     m.setMap();
 
-    player_textures[STAY].loadFromFile("assets/character/Idle.png");
-    player_textures[RUN].loadFromFile("assets/character/Walk.png");
-    player_textures[ATTACK].loadFromFile("assets/character/Attack.png");
-    
-    
-
-    Player* player = new Player(250, 200, RIGHT, player_textures);
+    Player* player = new Player(300, 250, VOLKOV, RIGHT, player_textures);
 
     Enemy* enemy = new Enemy(100, 200, RIGHT, player_textures);
 
-    enemy->setPatrolPoints(150, 300, 50, 100);
-
     Turret* turret = new Turret(300, 100, turret_texture);
 
-    Consumable* heal = new Consumable(DAMAGE, 600, 300, heart_texture);
+    std::vector<Consumable*> consumables;
+    consumables.push_back(new Consumable(DAMAGE, 600, 300, double_damage_texture));
+    consumables.push_back(new Consumable(HEALTH, 550, 40, heal_texture));
+
+    enemy->setPatrolPoints(150, 300, 50, 100);
 
     auto bullets = player->getBullets();
     
@@ -113,7 +103,7 @@ int main()
         }
 
         player->checkBulletCollision(m.getObjects(), enemy);
-        player->checkCollisionConsumable(heal);
+        player->checkCollisionConsumable(consumables);
 
         enemy->takePlayer(player);
         enemy->Update();
@@ -124,8 +114,11 @@ int main()
 
         m.drawMap(window);
 
-        if (!heal->getUsed()) {
-            window.draw(heal->getSprite());
+        for (Consumable* c : consumables) {
+            if (!c->getUsed()) {
+                c->Update();
+                window.draw(c->getSprite());
+            }
         }
 
         for (int i = 0; i < BULLETS_AMOUNT; i++) {
@@ -164,7 +157,9 @@ int main()
     delete player;
     delete turret;
     delete enemy;
-    delete heal;
+    for (Consumable* c : consumables) {
+        delete c;
+    }
 
     return 0;
 }

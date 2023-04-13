@@ -3,7 +3,7 @@
 
 #include "../include/Player.h"
 
-Player::Player(int x, int y, Direction direction, std::map<State, sf::Texture>& textures) {
+Player::Player(int x, int y, Person person, Direction direction, std::map<State, sf::Texture>& textures) {
 	bullets.setSize(BULLETS_AMOUNT);
 	initBullets();
 
@@ -11,13 +11,14 @@ Player::Player(int x, int y, Direction direction, std::map<State, sf::Texture>& 
 	coordX = x;
 	coordY = y;
 	width = 28;
-	height = 48;
+	height = 40;
 	this->direction = direction;
 	state = STAY;
+	this->person = person;
 
-	idle_animation = new Animation(textures[STAY], 0, 0, 22, 48, 4, 0.03, 22);
-	run_animation = new Animation(textures[RUN], 0, 0, 26, 48, 6, 0.03, 26);
-	attack_animation = new Animation(textures[ATTACK], 0, 0, 28, 48, 5, 0.03, 28);
+	idle_animation = new Animation(textures[STAY], 0, 0, 22, 40, 4, 0.03, 22);
+	run_animation = new Animation(textures[RUN], 0, 0, 26, 40, 6, 0.03, 26);
+	attack_animation = new Animation(textures[ATTACK], 0, 0, 28, 40, 5, 0.03, 28);
 
 	sprite = idle_animation->Tick(false);
 	sprite.setPosition(coordX, coordY);
@@ -33,7 +34,6 @@ Player::~Player() {
 }
 
 void Player::Update() {
-	std::cout << damage;
 	if (direction == LEFT && state == RUN) {
 		coordX -= PLAYER_SPEED;
 		sprite = run_animation->Tick(true);
@@ -94,6 +94,18 @@ void Player::Update() {
 		canShoot = true;
 	}
 
+	sf::Time buff_time;
+	buff_time = buffs_clock.getElapsedTime();
+	if (buff_time.asSeconds() >= 5) {
+		buffs_clock.restart();
+		if (damage > 1) {
+			damage--;
+		}
+	}
+
+	if (damage > 1) {
+		sprite.setColor(sf::Color(103, 127, 158));
+	}
 	sprite.setPosition(coordX, coordY);
 }
 
@@ -126,9 +138,9 @@ void Player::checkCollision(std::vector<Object> objects) {
 				}
 			}
 		}
-		//if (!rect.intersects(obj.r.getGlobalBounds()) && obj.type == TRAP) {
-		//	canTakeDamage = true;
-		//}
+		if (!rect.intersects(obj.r.getGlobalBounds()) && obj.type == TRAP) {
+			canTakeDamage = true;
+		}
 	}
 }
 
@@ -145,25 +157,21 @@ void Player::initBullets() {
 	}
 }
 
-void Player::checkCollisionConsumable(Consumable* consumable) {
-	sf::Clock buffs_clock;
-	if (sprite.getGlobalBounds().intersects(consumable->getSprite().getGlobalBounds()) && !consumable->getUsed()) {
-		buffs_clock.restart();
-		if (consumable->getType() == HEALTH) {
-			if (health < 5) {
-				health++;
+void Player::checkCollisionConsumable(std::vector<Consumable*> consumable) {
+	for (Consumable* c : consumable) {
+		if (sprite.getGlobalBounds().intersects(c->getSprite().getGlobalBounds()) && !c->getUsed()) {
+			buffs_clock.restart();
+			if (c->getType() == HEALTH) {
+				if (health < 5) {
+					health++;
+					sprite.setColor(sf::Color::Green);
+				}
 			}
+			if (c->getType() == DAMAGE) {
+				damage++;
+			}
+			c->Destroy();
 		}
-		if (consumable->getType() == DAMAGE) {
-			damage++;
-		}
-		consumable->Destroy();
-	}
-	sf::Time time;
-	time = buffs_clock.getElapsedTime();
-	if (time.asSeconds() >= 5) {
-		buffs_clock.restart();
-		damage--;
 	}
 }
 
@@ -174,6 +182,18 @@ std::deque<Bullet*> Player::getBullets() {
 
 void Player::setState(State state) {
 	this->state = state;
+}
+
+void Player::setVisible(bool v) {
+	isVisible = v;
+}
+
+Person Player::getPerson() {
+	return person;
+}
+
+bool Player::getVisible() {
+	return isVisible;
 }
 
 void Player::Shoot() {

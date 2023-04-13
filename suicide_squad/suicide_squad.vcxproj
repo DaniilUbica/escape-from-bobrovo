@@ -160,6 +160,7 @@
     <ClInclude Include="include\Globals.h" />
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\Textures.h" />
     <ClInclude Include="include\Turret.h" />
     <ClInclude Include="include\ViewBorder.h" />
   </ItemGroup>

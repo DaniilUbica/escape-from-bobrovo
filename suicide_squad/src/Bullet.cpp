@@ -5,7 +5,7 @@ Bullet::Bullet(GameObject* obj, sf::Texture& texture) {
 	sprite.setTexture(texture);
 
 	coordX = obj->getPosition().x;
-	coordY = obj->getPosition().y + obj->getSize().y / 2;
+	coordY = obj->getPosition().y;
 	this->sprite.setPosition(coordX, coordY);
 }
 
@@ -78,6 +78,9 @@ void Bullet::Update() {
 		}
 	}
 
+	sf::FloatRect rect = sprite.getGlobalBounds();
+
+	sprite.setOrigin(rect.left + rect.width / 2, rect.top + rect.height / 2);
 	sprite.setScale(0.013, 0.013);
 	sprite.setPosition(coordX, coordY);
 	//rect.setPosition(coordX, coordY);

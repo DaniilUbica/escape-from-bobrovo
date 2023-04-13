@@ -20,7 +20,7 @@ Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& te
 	coordY = y;
 
 	width = 28;
-	height = 48;
+	height = 40;
 
 	shoot_borders = new ViewBorder(coordX, coordY, width, height, 2.0, 100.0, 50.0);
 	view_borders = new ViewBorder(coordX, coordY, width, height, 200.0, 200.0, 150.0);
@@ -28,9 +28,9 @@ Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& te
 	this->direction = direction;
 	state = STAY;
 
-	idle_animation = new Animation(textures[STAY], 0, 0, 22, 48, 4, 0.02, 22);
-	run_animation = new Animation(textures[RUN], 0, 0, 26, 48, 6, 0.03, 26);
-	attack_animation = new Animation(textures[ATTACK], 0, 0, 28, 48, 5, 0.03, 28);
+	idle_animation = new Animation(textures[STAY], 0, 0, 22, 40, 4, 0.03, 22);
+	run_animation = new Animation(textures[RUN], 0, 0, 26, 40, 6, 0.03, 26);
+	attack_animation = new Animation(textures[ATTACK], 0, 0, 28, 40, 5, 0.03, 28);
 
 	sprite = idle_animation->Tick(false);
 

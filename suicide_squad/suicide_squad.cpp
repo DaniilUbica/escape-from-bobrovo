@@ -145,7 +145,7 @@ int main()
         window.draw(enemy->getSprite());
         window.draw(turret->getSprite());
         window.draw(player->getSprite());
-
+        window.draw(enemy->getHealthBar()->getRect());
         for (int i = 0; i < player->getHP(); i++) {
             heart_sprites[i].setPosition(10 + 15 * i, 5);
             window.draw(heart_sprites[i]);

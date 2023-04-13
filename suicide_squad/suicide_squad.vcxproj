@@ -144,6 +144,7 @@
     <ClCompile Include="src\Consumable.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\HealthBar.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Turret.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Globals.h" />
+    <ClInclude Include="include\HealthBar.h" />
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Textures.h" />

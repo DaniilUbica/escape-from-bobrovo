@@ -22,6 +22,8 @@ Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& te
 	width = 28;
 	height = 40;
 
+	health_bar = new HealthBar(coordX, coordY, health, width);
+
 	shoot_borders = new ViewBorder(coordX, coordY, width, height, 2.0, 100.0, 50.0);
 	view_borders = new ViewBorder(coordX, coordY, width, height, 200.0, 200.0, 150.0);
 
@@ -43,6 +45,7 @@ Enemy::~Enemy() {
 	delete attack_animation;
 	delete shoot_borders;
 	delete view_borders;
+	delete health_bar;
 }
 
 void Enemy::Update() {
@@ -97,6 +100,8 @@ void Enemy::Update() {
 
 		sprite.setPosition(coordX, coordY);
 	}
+
+	health_bar->Update(coordX, coordY, health);
 
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
 		bullets.elems[i]->Update();
@@ -232,4 +237,8 @@ void Enemy::Patrol() {
 
 std::deque<Bullet*> Enemy::getBullets() {
 	return bullets.elems;
+}
+
+HealthBar* Enemy::getHealthBar() {
+	return health_bar;
 }

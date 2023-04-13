@@ -28,6 +28,7 @@ private:
 	sf::Clock clock;
 	sf::Clock buffs_clock;
 	sf::Clock ultimate_duration;
+	sf::Clock ultimate_cooldown;
 
 	int damage = 1;
 

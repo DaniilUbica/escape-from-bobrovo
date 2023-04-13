@@ -23,6 +23,4 @@ void setTextures() {
     player_textures[STAY].loadFromFile("assets/character/Idle.png");
     player_textures[RUN].loadFromFile("assets/character/Walk.png");
     player_textures[ATTACK].loadFromFile("assets/character/Attack.png");
-
-
 }

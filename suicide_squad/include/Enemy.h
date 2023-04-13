@@ -11,6 +11,9 @@
 #include "Player.h"
 #include "ViewBorder.h"
 #include "CircleBuffer.hpp"
+#include "HealthBar.h"
+
+const int HP = 3;
 
 class Enemy : public GameObject {
 private:
@@ -21,6 +24,8 @@ private:
 	bool goToSecondPoint = false;
 	cique<Bullet*> bullets;
 	sf::Clock clock;
+	sf::Sprite hp[HP];
+	HealthBar* health_bar;
 
 	int point1_x, point2_x, point1_y, point2_y;
 
@@ -42,5 +47,6 @@ public:
 	void checkCollision(std::vector<Object> objects);
 
 	std::deque<Bullet*> getBullets();
+	HealthBar* getHealthBar();
 };
 

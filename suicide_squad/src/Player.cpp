@@ -134,6 +134,7 @@ void Player::checkCollision(std::vector<Object> objects) {
 			if (obj.type == TRAP) {
 				if (canTakeDamage) {
 					health--;
+					sprite.setColor(sf::Color::Red);
 					canTakeDamage = false;
 				}
 			}

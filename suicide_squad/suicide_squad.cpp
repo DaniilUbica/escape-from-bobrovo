@@ -55,7 +55,9 @@ int main()
 
     Player* player = new Player(300, 250, VOLKOV, RIGHT, player_textures);
 
-    Enemy* enemy = new Enemy(100, 200, RIGHT, player_textures);
+    Enemy* enemy = new Enemy(100, 200, RIGHT, player_textures, 3);
+
+    Enemy* enemy2 = new Enemy(600, 300, RIGHT, player_textures, 5);
 
     Turret* turret = new Turret(300, 100, turret_texture);
 
@@ -64,10 +66,12 @@ int main()
     consumables.push_back(new Consumable(HEALTH, 550, 40, heal_texture));
 
     enemy->setPatrolPoints(150, 300, 50, 100);
+    enemy2->setPatrolPoints(600, 300, 600, 50);
 
     auto bullets = player->getBullets();
     
     auto e_bullets = enemy->getBullets();
+    auto e2_bullets = enemy2->getBullets();
 
     auto t_bullets1 = turret->getBullets1();
     auto t_bullets2 = turret->getBullets2();
@@ -78,6 +82,7 @@ int main()
         bullets[i]->setTexture(bullet_texture);
 
         e_bullets[i]->setTexture(bullet_texture);
+        e2_bullets[i]->setTexture(bullet_texture);
 
         t_bullets1[i]->setTexture(bullet_texture);
         t_bullets2[i]->setTexture(bullet_texture);
@@ -103,12 +108,18 @@ int main()
         }
 
         player->checkBulletCollision(m.getObjects(), enemy);
+        player->checkBulletCollision(m.getObjects(), enemy2);
         player->checkCollisionConsumable(consumables);
 
         enemy->takePlayer(player);
         enemy->Update();
         enemy->checkBulletsCollision(m.getObjects());
         enemy->checkCollision(m.getObjects());
+
+        enemy2->takePlayer(player);
+        enemy2->Update();
+        enemy2->checkBulletsCollision(m.getObjects());
+        enemy2->checkCollision(m.getObjects());
 
         turret->Update(m.getObjects(), player);
 
@@ -125,27 +136,22 @@ int main()
             window.draw(bullets[i]->getSprite());
 
             window.draw(e_bullets[i]->getSprite());
+            window.draw(e2_bullets[i]->getSprite());
 
             window.draw(t_bullets1[i]->getSprite());
             window.draw(t_bullets2[i]->getSprite());
             window.draw(t_bullets3[i]->getSprite());
             window.draw(t_bullets4[i]->getSprite());
-
-            //window.draw(enemy->shoot_borders->down_border);
-            //window.draw(enemy->shoot_borders->top_border);
-            //window.draw(enemy->shoot_borders->right_border);
-            //window.draw(enemy->shoot_borders->left_border);
-
-            //window.draw(enemy->view_borders->down_border);
-            //window.draw(enemy->view_borders->top_border);
-            //window.draw(enemy->view_borders->right_border);
-            //window.draw(enemy->view_borders->left_border);
         }
 
         window.draw(enemy->getSprite());
+        window.draw(enemy2->getSprite());
         window.draw(turret->getSprite());
         window.draw(player->getSprite());
+
         window.draw(enemy->getHealthBar()->getRect());
+        window.draw(enemy2->getHealthBar()->getRect());
+
         for (int i = 0; i < player->getHP(); i++) {
             heart_sprites[i].setPosition(10 + 15 * i, 5);
             window.draw(heart_sprites[i]);
@@ -157,6 +163,7 @@ int main()
     delete player;
     delete turret;
     delete enemy;
+    delete enemy2;
     for (Consumable* c : consumables) {
         delete c;
     }

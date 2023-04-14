@@ -37,7 +37,7 @@ private:
 public:
 	ViewBorder* shoot_borders;
 	ViewBorder* view_borders;
-	Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures);
+	Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health);
 	~Enemy();
 
 	void Update() override;

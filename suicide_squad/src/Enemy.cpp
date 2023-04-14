@@ -10,11 +10,11 @@ void Enemy::Shoot() {
 	}
 }
 
-Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures) {
+Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health) {
 	bullets.setSize(BULLETS_AMOUNT);
 	initBullets();
 
-	health = 3;
+	this->health = health;
 
 	coordX = x;
 	coordY = y;

@@ -67,21 +67,25 @@ void Enemy::Update() {
 			sprite = run_animation->Tick(true);
 		}
 
-		if (!view_borders->isIntersects(player)) {
+		if (!view_borders->isIntersects(player) || !player->getVisible()) {
 			Patrol();
 		}
 		if (view_borders->isIntersects(player)) {
-			lookForPlayer();
+			if (player->getVisible()) {
+				lookForPlayer();
+			}
 		}
 
 		shoot_borders->Update(coordX, coordY, width, height, 50.0);
 		view_borders->Update(coordX, coordY, width, height, 150.0);
 
 		if (canShoot && shoot_borders->isIntersects(player)) {
-			state = ATTACK;
-			direction = shoot_borders->getDirection(coordX, coordY, width, height, player);
-			Shoot();
-			canShoot = false;
+			if (player->getVisible()) {
+				state = ATTACK;
+				direction = shoot_borders->getDirection(coordX, coordY, width, height, player);
+				Shoot();
+				canShoot = false;
+			}
 		}
 
 		if (state == ATTACK && (direction == LEFT || direction == BOT_LEFT || direction == TOP_LEFT)) {
@@ -161,30 +165,31 @@ void Enemy::checkBulletsCollision(std::vector<Object> objects) {
 }
 
 void Enemy::lookForPlayer() {
-	int p_x = player->getPosition().x;
-	int p_y = player->getPosition().y;
 
-	if (!shoot_borders->isIntersects(player)) {
-		state = RUN;
-	}
+		int p_x = player->getPosition().x;
+		int p_y = player->getPosition().y;
 
-	if (!shoot_borders->isIntersects(player)) {
+		if (!shoot_borders->isIntersects(player)) {
+			state = RUN;
+		}
 
-		if (p_x > coordX) {
-			direction = RIGHT;
-			coordX += ENEMY_SPEED;
+		if (!shoot_borders->isIntersects(player)) {
+
+			if (p_x > coordX) {
+				direction = RIGHT;
+				coordX += ENEMY_SPEED;
+			}
+			if (p_x < coordX) {
+				direction = LEFT;
+				coordX -= ENEMY_SPEED;
+			}
+			if (p_y > coordY) {
+				coordY += ENEMY_SPEED;
+			}
+			if (p_y < coordY) {
+				coordY -= ENEMY_SPEED;
+			}
 		}
-		if (p_x < coordX) {
-			direction = LEFT;
-			coordX -= ENEMY_SPEED;
-		}
-		if (p_y > coordY) {
-			coordY += ENEMY_SPEED;
-		}
-		if (p_y < coordY) {
-			coordY -= ENEMY_SPEED;
-		}
-	}
 }
 
 void Enemy::Patrol() {

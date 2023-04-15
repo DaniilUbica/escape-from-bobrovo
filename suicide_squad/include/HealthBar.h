@@ -3,8 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 class HealthBar {
+private:
 	sf::RectangleShape rect;
-	sf::RectangleShape border;
 	int hp;
 	float frame_size;
 	const float BAR_HEIGHT = 5.0;

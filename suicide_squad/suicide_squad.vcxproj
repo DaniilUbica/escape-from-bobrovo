@@ -147,6 +147,7 @@
     <ClCompile Include="src\HealthBar.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Turret.cpp" />
     <ClCompile Include="src\ViewBorder.cpp" />
     <ClCompile Include="suicide_squad.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Textures.h" />
+    <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Turret.h" />
     <ClInclude Include="include\ViewBorder.h" />
   </ItemGroup>

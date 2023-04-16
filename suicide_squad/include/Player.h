@@ -13,6 +13,8 @@
 
 enum Person {
 	VOLKOV,
+	FEDARKOV,
+	ROMKA,
 };
 
 class Player : public GameObject {

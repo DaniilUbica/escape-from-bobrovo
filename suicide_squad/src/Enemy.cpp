@@ -39,6 +39,10 @@ RangeEnemy::RangeEnemy(int x, int y, Direction direction, std::map<State, sf::Te
 	sprite.setPosition(coordX, coordY);
 }
 
+RangeEnemy::RangeEnemy(int x, int y, Direction direction, sf::Texture& texture, int health) {
+
+}
+
 Enemy::~Enemy() {
 	delete idle_animation;
 	delete run_animation;
@@ -154,6 +158,12 @@ void Enemy::checkCollision(std::vector<Object> objects) {
 					if (sprite.getPosition().x < obj.r.getPosition().x) {
 						coordX = obj.r.getGlobalBounds().left - width;
 					}
+					if (sprite.getPosition().y < obj.r.getPosition().y) {
+						coordY = obj.r.getGlobalBounds().top - height;
+					}
+					if (sprite.getPosition().y > obj.r.getPosition().y) {
+						coordY = obj.r.getGlobalBounds().top + obj.r.getGlobalBounds().height;
+					}
 				}
 			}
 		}
@@ -267,24 +277,24 @@ void Enemy::Patrol() {
 			}
 		}
 		if (point1_x > int(coordX)) {
-			if (point1_y > coordY) {
+			if (point1_y > int(coordY)) {
 				direction = BOT_RIGHT;
 				coordY += ENEMY_SPEED;
 				coordX += ENEMY_SPEED;
 			}
-			if (point1_y < coordY) {
+			if (point1_y < int(coordY)) {
 				direction = TOP_RIGHT;
 				coordY -= ENEMY_SPEED;
 				coordX += ENEMY_SPEED;
 			}
 		}
 		if (point1_x < int(coordX)) {
-			if (point1_y > coordY) {
+			if (point1_y > int(coordY)) {
 				direction = BOT_LEFT;
 				coordY += ENEMY_SPEED;
 				coordX -= ENEMY_SPEED;
 			}
-			if (point1_y < coordY) {
+			if (point1_y < int(coordY)) {
 				direction = TOP_LEFT;
 				coordY -= ENEMY_SPEED;
 				coordX -= ENEMY_SPEED;
@@ -314,24 +324,24 @@ void Enemy::Patrol() {
 			}
 		}
 		if (point2_x > int(coordX)) {
-			if (point2_y > coordY) {
+			if (point2_y > int(coordY)) {
 				direction = BOT_RIGHT;
 				coordY += ENEMY_SPEED;
 				coordX += ENEMY_SPEED;
 			}
-			if (point2_y < coordY) {
+			if (point2_y < int(coordY)) {
 				direction = TOP_RIGHT;
 				coordY -= ENEMY_SPEED;
 				coordX += ENEMY_SPEED;
 			}
 		}
 		if (point2_x < int(coordX)) {
-			if (point2_y > coordY) {
+			if (point2_y > int(coordY)) {
 				direction = BOT_LEFT;
 				coordY += ENEMY_SPEED;
 				coordX -= ENEMY_SPEED;
 			}
-			if (point2_y < coordY) {
+			if (point2_y < int(coordY)) {
 				direction = TOP_LEFT;
 				coordY -= ENEMY_SPEED;
 				coordX -= ENEMY_SPEED;
@@ -360,6 +370,9 @@ HealthBar* Enemy::getHealthBar() {
 void MeleeEnemy::Hit() {
 	state = ATTACK;
 	player->takeDamage(1);
+}
+
+MeleeEnemy::MeleeEnemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health) {
 }
 
 MeleeEnemy::MeleeEnemy(int x, int y, Direction direction, sf::Texture& texture, int health) {

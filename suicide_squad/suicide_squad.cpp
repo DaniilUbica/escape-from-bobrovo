@@ -59,25 +59,36 @@ int main()
     Map m;
     m.setMap();
 
-    Player* player = new Player(300, 250, VOLKOV, RIGHT, player_textures, volkov_ult_texture);
+    Player* player = new Player(640, 608, VOLKOV, RIGHT, player_textures, volkov_ult_texture);
 
-    RangeEnemy* enemy = new RangeEnemy(100, 200, RIGHT, player_textures, 3);
-    MeleeEnemy* m_enemy = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
+    RangeEnemy* r_enemy1 = new RangeEnemy(100, 200, RIGHT, player_textures, 3);
+    RangeEnemy* r_enemy2 = new RangeEnemy(1000, 500, RIGHT, player_textures, 3);
+    RangeEnemy* r_enemy3 = new RangeEnemy(100, 600, RIGHT, player_textures, 3);
+    MeleeEnemy* m_enemy1 = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
+    MeleeEnemy* m_enemy2 = new MeleeEnemy(1200, 224, RIGHT, melee_enemy_texture, 5);
+    //MeleeEnemy* m_enemy3 = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
+    //MeleeEnemy* m_enemy4 = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
+    //MeleeEnemy* m_enemy5 = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
+    //MeleeEnemy* m_enemy6 = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
     //Enemy* enemy2 = new Enemy(600, 300, RIGHT, player_textures, 5);
 
-    Turret* turret = new Turret(300, 100, turret_texture);
+    Turret* turret = new Turret(500, 100, turret_texture);
 
     std::vector<Consumable*> consumables;
     consumables.push_back(new Consumable(DAMAGE, 600, 300, double_damage_texture));
     consumables.push_back(new Consumable(HEALTH, 550, 40, heal_texture));
 
-    enemy->setPatrolPoints(150, 300, 50, 100);
-    m_enemy->setPatrolPoints(600, 300, 450, 200);
+    r_enemy1->setPatrolPoints(150, 300, 50, 100);
+    r_enemy2->setPatrolPoints(1100, 500, 850, 600);
+    r_enemy3->setPatrolPoints(50, 630, 250, 630);
+    m_enemy1->setPatrolPoints(600, 300, 450, 200);
+    m_enemy2->setPatrolPoints(1050, 282, 1200, 200);
 
     auto bullets = player->getBullets();
-    
-    auto e_bullets = enemy->getBullets();
-    //auto e2_bullets = enemy2->getBullets();
+
+    auto e1_bullets = r_enemy1->getBullets();
+    auto e2_bullets = r_enemy2->getBullets();
+    auto e3_bullets = r_enemy3->getBullets();
 
     auto t_bullets1 = turret->getBullets1();
     auto t_bullets2 = turret->getBullets2();
@@ -87,8 +98,9 @@ int main()
     for (int i = 0; i < BULLETS_AMOUNT; i++) {
         bullets[i]->setTexture(bullet_texture);
 
-        e_bullets[i]->setTexture(bullet_texture);
-        //e2_bullets[i]->setTexture(bullet_texture);
+        e1_bullets[i]->setTexture(bullet_texture);
+        e2_bullets[i]->setTexture(bullet_texture);
+        e3_bullets[i]->setTexture(bullet_texture);
 
         t_bullets1[i]->setTexture(bullet_texture);
         t_bullets2[i]->setTexture(bullet_texture);
@@ -113,18 +125,35 @@ int main()
             player->checkCollision(m.getObjects());
         }
 
-        player->checkBulletCollision(m.getObjects(), enemy);
-        player->checkBulletCollision(m.getObjects(), m_enemy);
+        player->checkBulletCollision(m.getObjects(), r_enemy1);
+        player->checkBulletCollision(m.getObjects(), r_enemy2);
+        player->checkBulletCollision(m.getObjects(), r_enemy3);
+        player->checkBulletCollision(m.getObjects(), m_enemy1);
+        player->checkBulletCollision(m.getObjects(), m_enemy2);
         player->checkCollisionConsumable(consumables);
 
-        enemy->takePlayer(player);
-        enemy->Update();
-        enemy->checkBulletsCollision(m.getObjects());
-        enemy->checkCollision(m.getObjects());
+        r_enemy1->takePlayer(player);
+        r_enemy1->Update();
+        r_enemy1->checkBulletsCollision(m.getObjects());
+        r_enemy1->checkCollision(m.getObjects());
 
-        m_enemy->takePlayer(player);
-        m_enemy->Update();
-        m_enemy->checkCollision(m.getObjects());
+        r_enemy2->takePlayer(player);
+        r_enemy2->Update();
+        r_enemy2->checkBulletsCollision(m.getObjects());
+        r_enemy2->checkCollision(m.getObjects());
+
+        r_enemy3->takePlayer(player);
+        r_enemy3->Update();
+        r_enemy3->checkBulletsCollision(m.getObjects());
+        r_enemy3->checkCollision(m.getObjects());
+
+        m_enemy1->takePlayer(player);
+        m_enemy1->Update();
+        m_enemy1->checkCollision(m.getObjects());
+
+        m_enemy2->takePlayer(player);
+        m_enemy2->Update();
+        m_enemy2->checkCollision(m.getObjects());
 
         turret->Update(m.getObjects(), player);
 
@@ -140,8 +169,9 @@ int main()
         for (int i = 0; i < BULLETS_AMOUNT; i++) {
             window.draw(bullets[i]->getSprite());
 
-            window.draw(e_bullets[i]->getSprite());
-            //window.draw(e2_bullets[i]->getSprite());
+            window.draw(e1_bullets[i]->getSprite());
+            window.draw(e2_bullets[i]->getSprite());
+            window.draw(e3_bullets[i]->getSprite());
 
             window.draw(t_bullets1[i]->getSprite());
             window.draw(t_bullets2[i]->getSprite());
@@ -169,16 +199,22 @@ int main()
             //window.draw(m_enemy->view_borders->left_border);
         }
 
-        window.draw(enemy->getSprite());
-        window.draw(m_enemy->getSprite());
+        window.draw(r_enemy1->getSprite());
+        window.draw(r_enemy2->getSprite());
+        window.draw(r_enemy3->getSprite());
+        window.draw(m_enemy1->getSprite());
+        window.draw(m_enemy2->getSprite());
         window.draw(turret->getSprite());
         window.draw(player->getSprite());
 
         window.draw(player->getUltTimer().getSprite());
         window.draw(player->getUltTimer().getRect());
 
-        window.draw(enemy->getHealthBar()->getRect());
-        window.draw(m_enemy->getHealthBar()->getRect());
+        window.draw(r_enemy1->getHealthBar()->getRect());
+        window.draw(r_enemy2->getHealthBar()->getRect());
+        window.draw(r_enemy3->getHealthBar()->getRect());
+        window.draw(m_enemy1->getHealthBar()->getRect());
+        window.draw(m_enemy2->getHealthBar()->getRect());
 
         for (int i = 0; i < player->getHP(); i++) {
             heart_sprites[i].setPosition(10 + 15 * i, 5);
@@ -190,8 +226,11 @@ int main()
 
     delete player;
     delete turret;
-    delete enemy;
-    //delete enemy2;
+    delete r_enemy1;
+    delete r_enemy2;
+    delete r_enemy3;
+    delete m_enemy1;
+    delete m_enemy2;
     for (Consumable* c : consumables) {
         delete c;
     }

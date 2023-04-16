@@ -50,6 +50,7 @@ private:
 	void initBullets();
 public:
 	RangeEnemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health);
+	RangeEnemy(int x, int y, Direction direction, sf::Texture& texture, int health);
 
 	void checkBulletsCollision(std::vector<Object> objects);
 	void Update() override;
@@ -61,6 +62,7 @@ class MeleeEnemy : public Enemy {
 private:
 	void Hit();
 public:
+	MeleeEnemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health);
 	MeleeEnemy(int x, int y, Direction direction, sf::Texture& texture, int health);
 	void Update() override;
 };

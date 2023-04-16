@@ -24,3 +24,5 @@ const int BULLETS_AMOUNT = 6;
 const float ENEMY_SPEED = 0.2;
 
 const float CONSUMABLES_SPEED = 0.03;
+
+const int SPRITE_SIZE = 32;

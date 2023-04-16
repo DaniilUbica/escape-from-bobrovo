@@ -8,6 +8,7 @@ sf::Texture bullet_texture;
 sf::Texture double_damage_texture;
 sf::Texture heal_texture;
 sf::Texture volkov_ult_texture;
+sf::Texture melee_enemy_texture;
 
 std::map<State, sf::Texture> player_textures;
 
@@ -22,6 +23,8 @@ void setTextures() {
     heal_texture.loadFromFile("assets/consumable/regeneration.png");
 
     volkov_ult_texture.loadFromFile("assets/character/volkov_ult.png");
+
+    melee_enemy_texture.loadFromFile("assets/Knight.png");
 
     player_textures[STAY].loadFromFile("assets/character/Idle.png");
     player_textures[RUN].loadFromFile("assets/character/Walk.png");

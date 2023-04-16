@@ -1,11 +1,6 @@
 #include "../include/ViewBorder.h"
 
 ViewBorder::ViewBorder(int coordX, int coordY, int width, int height, float border_width, float border_height, float range) {
-		right_border.setPosition(coordX + width + range, coordY - height / 2);
-		left_border.setPosition(coordX - range, coordY - height / 2);
-		top_border.setPosition(coordX - width, coordY - range);
-		down_border.setPosition(coordX - width, coordY + height + range);
-
 		right_border.setSize(sf::Vector2f(-border_width/2, border_height));
 		left_border.setSize(sf::Vector2f(border_width/2, border_height));
 		top_border.setSize(sf::Vector2f(border_height, border_width/2));
@@ -18,10 +13,10 @@ ViewBorder::ViewBorder(int coordX, int coordY, int width, int height, float bord
 }
 
 void ViewBorder::Update(int coordX, int coordY, int width, int height, float range) {
-	right_border.setPosition(coordX + width + range, coordY - height / 2);
-	left_border.setPosition(coordX - range, coordY - height / 2);
-	top_border.setPosition(coordX - width, coordY - range);
-	down_border.setPosition(coordX - width, coordY + height + range);
+	top_border.setPosition(coordX - SPRITE_SIZE/2 - range, coordY - SPRITE_SIZE / 2 - range);
+	down_border.setPosition(coordX - SPRITE_SIZE / 2 - range, coordY + SPRITE_SIZE / 2 + range);
+	right_border.setPosition(coordX + SPRITE_SIZE / 2 + range, coordY- SPRITE_SIZE / 2 - range);
+	left_border.setPosition(coordX - SPRITE_SIZE / 2 - range, coordY- SPRITE_SIZE / 2 - range);
 }
 
 Direction ViewBorder::getDirection(int coordX, int coordY, int width, int height, Player* player) {

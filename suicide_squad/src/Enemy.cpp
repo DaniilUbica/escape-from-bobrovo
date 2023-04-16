@@ -1,6 +1,6 @@
 #include "../include/Enemy.h"
 
-void Enemy::Shoot() {
+void RangeEnemy::Shoot() {
 	state = ATTACK;
 	if (bullets.back()->getPosition().x == -10 && bullets.back()->getPosition().y == 10) {
 		bullets.back()->Launch();
@@ -10,7 +10,7 @@ void Enemy::Shoot() {
 	}
 }
 
-Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health) {
+RangeEnemy::RangeEnemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health) {
 	bullets.setSize(BULLETS_AMOUNT);
 	initBullets();
 
@@ -24,8 +24,8 @@ Enemy::Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& te
 
 	health_bar = new HealthBar(coordX, coordY, health, width);
 
-	shoot_borders = new ViewBorder(coordX, coordY, width, height, 2.0, 100.0, 50.0);
-	view_borders = new ViewBorder(coordX, coordY, width, height, 200.0, 200.0, 150.0);
+	attack_borders = new ViewBorder(coordX, coordY, width, height, 100.0, 130, 50.0);
+	view_borders = new ViewBorder(coordX, coordY, width, height, 300.0, 340.0, 150.0);
 
 	this->direction = direction;
 	state = STAY;
@@ -43,12 +43,12 @@ Enemy::~Enemy() {
 	delete idle_animation;
 	delete run_animation;
 	delete attack_animation;
-	delete shoot_borders;
+	delete attack_borders;
 	delete view_borders;
 	delete health_bar;
 }
 
-void Enemy::Update() {
+void RangeEnemy::Update() {
 
 	if (health > 0) {
 
@@ -68,7 +68,9 @@ void Enemy::Update() {
 		}
 
 		if (!view_borders->isIntersects(player) || !player->getVisible()) {
-			Patrol();
+			if (!attack_borders->isIntersects(player)) {
+				Patrol();
+			}
 		}
 		if (view_borders->isIntersects(player)) {
 			if (player->getVisible()) {
@@ -76,15 +78,15 @@ void Enemy::Update() {
 			}
 		}
 
-		shoot_borders->Update(coordX, coordY, width, height, 50.0);
+		attack_borders->Update(coordX, coordY, width, height, 50.0);
 		view_borders->Update(coordX, coordY, width, height, 150.0);
 
-		if (canShoot && shoot_borders->isIntersects(player)) {
+		if (canAttack && attack_borders->isIntersects(player)) {
 			if (player->getVisible()) {
 				state = ATTACK;
-				direction = shoot_borders->getDirection(coordX, coordY, width, height, player);
+				direction = attack_borders->getDirection(coordX, coordY, width, height, player);
 				Shoot();
-				canShoot = false;
+				canAttack = false;
 			}
 		}
 
@@ -99,7 +101,7 @@ void Enemy::Update() {
 		time = clock.getElapsedTime();
 		if (time.asSeconds() >= 1.0) {
 			clock.restart();
-			canShoot = true;
+			canAttack = true;
 		}
 
 		sprite.setPosition(coordX, coordY);
@@ -145,18 +147,26 @@ void Enemy::checkCollision(std::vector<Object> objects) {
 						coordX = obj.r.getGlobalBounds().left - width;
 					}
 				}
+				if (direction == TOP_LEFT || direction == TOP_RIGHT || direction == BOT_LEFT || direction == BOT_RIGHT) {
+					if (sprite.getPosition().x > obj.r.getGlobalBounds().left) {
+						coordX = obj.r.getGlobalBounds().left + obj.r.getGlobalBounds().width;
+					}
+					if (sprite.getPosition().x < obj.r.getPosition().x) {
+						coordX = obj.r.getGlobalBounds().left - width;
+					}
+				}
 			}
 		}
 	}
 }
 
-void Enemy::initBullets() {
+void RangeEnemy::initBullets() {
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
 		bullets.push(new Bullet(-10, 10));
 	}
 }
 
-void Enemy::checkBulletsCollision(std::vector<Object> objects) {
+void RangeEnemy::checkBulletsCollision(std::vector<Object> objects) {
 
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
 		bullets.elems[i]->checkCollision(player);
@@ -166,15 +176,15 @@ void Enemy::checkBulletsCollision(std::vector<Object> objects) {
 
 void Enemy::lookForPlayer() {
 
-		int p_x = player->getPosition().x;
-		int p_y = player->getPosition().y;
+	int p_x = player->getPosition().x;
+	int p_y = player->getPosition().y;
 
-		if (!shoot_borders->isIntersects(player)) {
-			state = RUN;
-		}
+	if (!attack_borders->isIntersects(player)) {
+		state = RUN;
+	}
 
-		if (!shoot_borders->isIntersects(player)) {
-
+	if (!attack_borders->isIntersects(player)) {
+		if (p_y == int(coordY)) {
 			if (p_x > coordX) {
 				direction = RIGHT;
 				coordX += ENEMY_SPEED;
@@ -183,13 +193,52 @@ void Enemy::lookForPlayer() {
 				direction = LEFT;
 				coordX -= ENEMY_SPEED;
 			}
+		}
+		if (p_x == int(coordX)) {
 			if (p_y > coordY) {
+				direction = DOWN;
 				coordY += ENEMY_SPEED;
 			}
 			if (p_y < coordY) {
+				direction = UP;
 				coordY -= ENEMY_SPEED;
 			}
 		}
+		if (p_y == int(coordY)) {
+			if (p_x > coordX) {
+				direction = RIGHT;
+				coordX += ENEMY_SPEED;
+			}
+			if (p_x < coordX) {
+				direction = LEFT;
+				coordX -= ENEMY_SPEED;
+			}
+		}
+		if (p_x > int(coordX)) {
+			if (p_y > coordY) {
+				direction = BOT_RIGHT;
+				coordY += ENEMY_SPEED;
+				coordX += ENEMY_SPEED;
+			}
+			if (p_y < coordY) {
+				direction = TOP_RIGHT;
+				coordY -= ENEMY_SPEED;
+				coordX += ENEMY_SPEED;
+			}
+		}
+		if (p_x < int(coordX)) {
+			if (p_y > coordY) {
+				direction = BOT_LEFT;
+				coordY += ENEMY_SPEED;
+				coordX -= ENEMY_SPEED;
+			}
+			if (p_y < coordY) {
+				direction = TOP_LEFT;
+				coordY -= ENEMY_SPEED;
+				coordX -= ENEMY_SPEED;
+			}
+		}
+	}
 }
 
 void Enemy::Patrol() {
@@ -197,36 +246,96 @@ void Enemy::Patrol() {
 	state = RUN;
 
 	if (goToFirstPoint) {
-		if (point1_x < coordX) {
-			direction = LEFT;
-			coordX -= ENEMY_SPEED;
+		if (point1_y == int(coordY)) {
+			if (point1_x < coordX) {
+				direction = LEFT;
+				coordX -= ENEMY_SPEED;
+			}
+			if (point1_x > coordX) {
+				direction = RIGHT;
+				coordX += ENEMY_SPEED;
+			}
 		}
-		if (point1_x > coordX) {
-			direction = RIGHT;
-			coordX += ENEMY_SPEED;
+		if (point1_x == int(coordX)) {
+			if (point1_y < coordY) {
+				direction = UP;
+				coordY -= ENEMY_SPEED;
+			}
+			if (point1_y > coordY) {
+				direction = DOWN;
+				coordY += ENEMY_SPEED;
+			}
 		}
-		if (point1_y < coordY) {
-			coordY -= ENEMY_SPEED;
+		if (point1_x > int(coordX)) {
+			if (point1_y > coordY) {
+				direction = BOT_RIGHT;
+				coordY += ENEMY_SPEED;
+				coordX += ENEMY_SPEED;
+			}
+			if (point1_y < coordY) {
+				direction = TOP_RIGHT;
+				coordY -= ENEMY_SPEED;
+				coordX += ENEMY_SPEED;
+			}
 		}
-		if (point1_y > coordY) {
-			coordY += ENEMY_SPEED;
+		if (point1_x < int(coordX)) {
+			if (point1_y > coordY) {
+				direction = BOT_LEFT;
+				coordY += ENEMY_SPEED;
+				coordX -= ENEMY_SPEED;
+			}
+			if (point1_y < coordY) {
+				direction = TOP_LEFT;
+				coordY -= ENEMY_SPEED;
+				coordX -= ENEMY_SPEED;
+			}
 		}
 	}
 
 	if (goToSecondPoint) {
-		if (point2_x < coordX) {
-			direction = LEFT;
-			coordX -= ENEMY_SPEED;
+		if (point2_y == int(coordY)) {
+			if (point2_x < coordX) {
+				direction = LEFT;
+				coordX -= ENEMY_SPEED;
+			}
+			if (point2_x > coordX) {
+				direction = RIGHT;
+				coordX += ENEMY_SPEED;
+			}
 		}
-		if (point2_x > coordX) {
-			direction = RIGHT;
-			coordX += ENEMY_SPEED;
+		if (point2_x == int(coordX)) {
+			if (point2_y < coordY) {
+				direction = UP;
+				coordY -= ENEMY_SPEED;
+			}
+			if (point2_y > coordY) {
+				direction = DOWN;
+				coordY += ENEMY_SPEED;
+			}
 		}
-		if (point2_y < coordY) {
-			coordY -= ENEMY_SPEED;
+		if (point2_x > int(coordX)) {
+			if (point2_y > coordY) {
+				direction = BOT_RIGHT;
+				coordY += ENEMY_SPEED;
+				coordX += ENEMY_SPEED;
+			}
+			if (point2_y < coordY) {
+				direction = TOP_RIGHT;
+				coordY -= ENEMY_SPEED;
+				coordX += ENEMY_SPEED;
+			}
 		}
-		if (point2_y > coordY) {
-			coordY += ENEMY_SPEED;
+		if (point2_x < int(coordX)) {
+			if (point2_y > coordY) {
+				direction = BOT_LEFT;
+				coordY += ENEMY_SPEED;
+				coordX -= ENEMY_SPEED;
+			}
+			if (point2_y < coordY) {
+				direction = TOP_LEFT;
+				coordY -= ENEMY_SPEED;
+				coordX -= ENEMY_SPEED;
+			}
 		}
 	}
 
@@ -240,10 +349,110 @@ void Enemy::Patrol() {
 	}
 }
 
-std::deque<Bullet*> Enemy::getBullets() {
+std::deque<Bullet*> RangeEnemy::getBullets() {
 	return bullets.elems;
 }
 
 HealthBar* Enemy::getHealthBar() {
 	return health_bar;
+}
+
+void MeleeEnemy::Hit() {
+	state = ATTACK;
+	player->takeDamage(1);
+}
+
+MeleeEnemy::MeleeEnemy(int x, int y, Direction direction, sf::Texture& texture, int health) {
+	this->health = health;
+
+	coordX = x;
+	coordY = y;
+
+	width = 32;
+	height = 32;
+
+	health_bar = new HealthBar(coordX, coordY, health, width);
+
+	attack_borders = new ViewBorder(coordX, coordY, width, height, 20.0, 52.0, 10.0);
+	view_borders = new ViewBorder(coordX, coordY, width, height, 300.0, 332.0, 150.0);
+
+	this->direction = direction;
+	state = STAY;
+
+	sprite.setTexture(texture);
+	sprite.setOrigin(16, 16);
+	sprite.setPosition(coordX, coordY);
+}
+
+void MeleeEnemy::Update() {
+	if (health > 0) {
+
+		if (state == ATTACK) {
+			sprite.setColor(sf::Color::Yellow);
+		}
+
+		if (state != ATTACK) {
+			sprite.setColor(sf::Color::White);
+		}
+
+		if (!view_borders->isIntersects(player) || !player->getVisible()) {
+			if (!attack_borders->isIntersects(player)) {
+				Patrol();
+			}
+		}
+		if (view_borders->isIntersects(player)) {
+			if (player->getVisible()) {
+				lookForPlayer();
+			}
+		}
+
+		attack_borders->Update(coordX, coordY, width, height, 10.0);
+		view_borders->Update(coordX, coordY, width, height, 150.0);
+
+		if (canAttack && attack_borders->isIntersects(player)) {
+			if (player->getVisible()) {
+				direction = attack_borders->getDirection(coordX, coordY, width, height, player);
+				Hit();
+				canAttack = false;
+			}
+		}
+
+		if (direction == UP) {
+			sprite.setRotation(0);
+		}
+		if (direction == DOWN) {
+			sprite.setRotation(180);
+		}
+
+		if (direction == LEFT) {
+			sprite.setRotation(270);
+		}
+		if (direction == RIGHT) {
+			sprite.setRotation(90);
+		}
+
+		if (direction == TOP_LEFT) {
+			sprite.setRotation(315);
+		}
+		if (direction == BOT_LEFT) {
+			sprite.setRotation(225);
+		}
+
+		if (direction == TOP_RIGHT) {
+			sprite.setRotation(45);
+		}
+		if (direction == BOT_RIGHT) {
+			sprite.setRotation(135);
+		}
+
+		sf::Time time;
+		time = clock.getElapsedTime();
+		if (time.asSeconds() >= 2.0) {
+			clock.restart();
+			canAttack = true;
+		}
+		sprite.setPosition(coordX, coordY);
+	}
+
+	health_bar->Update(coordX - SPRITE_SIZE/2, coordY-SPRITE_SIZE/2, health);
 }

@@ -61,8 +61,8 @@ int main()
 
     Player* player = new Player(300, 250, VOLKOV, RIGHT, player_textures, volkov_ult_texture);
 
-    Enemy* enemy = new Enemy(100, 200, RIGHT, player_textures, 3);
-
+    RangeEnemy* enemy = new RangeEnemy(100, 200, RIGHT, player_textures, 3);
+    MeleeEnemy* m_enemy = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
     //Enemy* enemy2 = new Enemy(600, 300, RIGHT, player_textures, 5);
 
     Turret* turret = new Turret(300, 100, turret_texture);
@@ -72,7 +72,7 @@ int main()
     consumables.push_back(new Consumable(HEALTH, 550, 40, heal_texture));
 
     enemy->setPatrolPoints(150, 300, 50, 100);
-    //enemy2->setPatrolPoints(600, 300, 600, 50);
+    m_enemy->setPatrolPoints(600, 300, 450, 200);
 
     auto bullets = player->getBullets();
     
@@ -114,6 +114,7 @@ int main()
         }
 
         player->checkBulletCollision(m.getObjects(), enemy);
+        player->checkBulletCollision(m.getObjects(), m_enemy);
         player->checkCollisionConsumable(consumables);
 
         enemy->takePlayer(player);
@@ -121,10 +122,9 @@ int main()
         enemy->checkBulletsCollision(m.getObjects());
         enemy->checkCollision(m.getObjects());
 
-        //enemy2->takePlayer(player);
-        //enemy2->Update();
-        //enemy2->checkBulletsCollision(m.getObjects());
-        //enemy2->checkCollision(m.getObjects());
+        m_enemy->takePlayer(player);
+        m_enemy->Update();
+        m_enemy->checkCollision(m.getObjects());
 
         turret->Update(m.getObjects(), player);
 
@@ -147,10 +147,30 @@ int main()
             window.draw(t_bullets2[i]->getSprite());
             window.draw(t_bullets3[i]->getSprite());
             window.draw(t_bullets4[i]->getSprite());
+
+            //window.draw(enemy->attack_borders->down_border);
+            //window.draw(enemy->attack_borders->top_border);
+            //window.draw(enemy->attack_borders->right_border);
+            //window.draw(enemy->attack_borders->left_border);
+
+            //window.draw(m_enemy->attack_borders->down_border);
+            //window.draw(m_enemy->attack_borders->top_border);
+            //window.draw(m_enemy->attack_borders->right_border);
+            //window.draw(m_enemy->attack_borders->left_border);
+
+            //window.draw(enemy->view_borders->down_border);
+            //window.draw(enemy->view_borders->top_border);
+            //window.draw(enemy->view_borders->right_border);
+            //window.draw(enemy->view_borders->left_border);
+
+            //window.draw(m_enemy->view_borders->down_border);
+            //window.draw(m_enemy->view_borders->top_border);
+            //window.draw(m_enemy->view_borders->right_border);
+            //window.draw(m_enemy->view_borders->left_border);
         }
 
         window.draw(enemy->getSprite());
-        //window.draw(enemy2->getSprite());
+        window.draw(m_enemy->getSprite());
         window.draw(turret->getSprite());
         window.draw(player->getSprite());
 
@@ -158,7 +178,7 @@ int main()
         window.draw(player->getUltTimer().getRect());
 
         window.draw(enemy->getHealthBar()->getRect());
-        //window.draw(enemy2->getHealthBar()->getRect());
+        window.draw(m_enemy->getHealthBar()->getRect());
 
         for (int i = 0; i < player->getHP(); i++) {
             heart_sprites[i].setPosition(10 + 15 * i, 5);

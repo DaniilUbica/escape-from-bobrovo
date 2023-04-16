@@ -13,40 +13,54 @@
 #include "CircleBuffer.hpp"
 #include "HealthBar.h"
 
-const int HP = 3;
-
 class Enemy : public GameObject {
-private:
+protected:
 	State state;
 	Player* player;
-	bool canShoot = false;
+	bool canAttack = false;
 	bool goToFirstPoint = true;
 	bool goToSecondPoint = false;
-	cique<Bullet*> bullets;
 	sf::Clock clock;
-	sf::Sprite hp[HP];
 	HealthBar* health_bar;
 
 	int point1_x, point2_x, point1_y, point2_y;
 
-	void Shoot();
-	void initBullets();
 	void lookForPlayer();
 	void Patrol();
 
 public:
-	ViewBorder* shoot_borders;
+	ViewBorder* attack_borders;
 	ViewBorder* view_borders;
-	Enemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health);
+
 	~Enemy();
 
-	void Update() override;
+	virtual void Update() = 0;
 	void takePlayer(Player* player);
-	void checkBulletsCollision(std::vector<Object> objects);
 	void setPatrolPoints(int x1, int y1, int x2, int y2);
 	void checkCollision(std::vector<Object> objects);
 
-	std::deque<Bullet*> getBullets();
 	HealthBar* getHealthBar();
 };
 
+class RangeEnemy : public Enemy {
+private:
+	cique<Bullet*> bullets;
+
+	void Shoot();
+	void initBullets();
+public:
+	RangeEnemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health);
+
+	void checkBulletsCollision(std::vector<Object> objects);
+	void Update() override;
+
+	std::deque<Bullet*> getBullets();
+};
+
+class MeleeEnemy : public Enemy {
+private:
+	void Hit();
+public:
+	MeleeEnemy(int x, int y, Direction direction, sf::Texture& texture, int health);
+	void Update() override;
+};

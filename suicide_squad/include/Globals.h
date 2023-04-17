@@ -22,6 +22,7 @@ const float BULLET_SPEED = 0.9 * GAME_SPEED*2;
 const int BULLETS_AMOUNT = 6;
 
 const float ENEMY_SPEED = 0.2 * GAME_SPEED;
+const float MELEE_ENEMY_SPEED = 0.3 * GAME_SPEED;
 
 const float CONSUMABLES_SPEED = 0.03 * GAME_SPEED;
 

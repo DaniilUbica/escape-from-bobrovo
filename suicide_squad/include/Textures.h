@@ -28,7 +28,7 @@ void setTextures() {
     melee_enemy_texture.loadFromFile("assets/Knight.png");
     range_enemy_texture.loadFromFile("assets/r_enemy.png");
 
-    player_textures[STAY].loadFromFile("assets/r_enemy.png");
+    player_textures[STAY].loadFromFile("assets/character/Idle4.png");
     player_textures[RUN].loadFromFile("assets/character/Walk.png");
     player_textures[ATTACK].loadFromFile("assets/character/Attack.png");
 }

@@ -25,8 +25,8 @@ protected:
 
 	int point1_x, point2_x, point1_y, point2_y;
 
-	void lookForPlayer();
-	void Patrol();
+	void lookForPlayer(float speed);
+	void Patrol(float speed);
 
 public:
 	ViewBorder* attack_borders;

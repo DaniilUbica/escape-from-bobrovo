@@ -18,7 +18,7 @@ Player::Player(int x, int y, Person person, Direction direction, std::map<State,
 
 	ult_timer = new Timer(30.0, 100.0, 0.0, 32.0, 32.0, ult_texture);
 
-	idle_animation = new Animation(textures[STAY], 0, 0, 32, 32, 4, 0.03, 0);
+	idle_animation = new Animation(textures[STAY], 0, 0, 32, 32, 4, 0.03, 34);
 	run_animation = new Animation(textures[RUN], 0, 0, 26, 40, 6, 0.03, 26);
 	attack_animation = new Animation(textures[ATTACK], 0, 0, 28, 40, 5, 0.03, 28);
 
@@ -80,13 +80,6 @@ void Player::Update() {
 		Shoot();
 	}
 
-	if (direction == RIGHT && state == STAY) {
-		//sprite = idle_animation->Tick(false);
-	}
-	if (direction == LEFT && state == STAY) {
-		//sprite = idle_animation->Tick(true);
-	}
-
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
 		bullets.elems[i]->Update();
 	}
@@ -120,11 +113,12 @@ void Player::Update() {
 	if (direction == RIGHT) {
 		sprite.setRotation(90);
 	}
+
 	if (damage > 1) {
 		sprite.setColor(sf::Color(103, 127, 158));
 	}
 
-	if (!isUltimateWorking) {
+	if (!isUltimateWorking && damage == 1) {
 		sprite.setColor(sf::Color::White);
 	}
 

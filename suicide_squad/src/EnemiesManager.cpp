@@ -35,29 +35,23 @@ void EnemiesManager::checkCollision(std::vector<Object> objects) {
 
 void EnemiesManager::addEnemy(e_type type, float x, float y, Direction direction, std::map<State, sf::Texture>& textures, int health, int p1_x, int p1_y, int p2_x, int p2_y) {
 	if (type == RANGE) {
-		RangeEnemy* temp = new RangeEnemy(x, y, direction, textures, health);
-		temp->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
-		r_enemies.push_back(temp);
+		r_enemies.push_back(new RangeEnemy(x, y, direction, textures, health));
+		r_enemies[r_enemies.size() - 1]->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
 	}
 	if (type == MELEE) {
-		MeleeEnemy* temp = new MeleeEnemy(x, y, direction, textures, health);
-		temp->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
-		m_enemies.push_back(temp);
+		m_enemies.push_back(new MeleeEnemy(x, y, direction, textures, health));
+		m_enemies[m_enemies.size() - 1]->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
 	}
 }
 
 void EnemiesManager::addEnemy(e_type type, float x, float y, Direction direction, sf::Texture& texture, int health, int p1_x, int p1_y, int p2_x, int p2_y) {
 	if (type == RANGE) {
-		RangeEnemy* temp = new RangeEnemy(x, y, direction, texture, health);
-		temp->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
-		r_enemies.push_back(temp);
-		delete temp;
+		r_enemies.push_back(new RangeEnemy(x, y, direction, texture, health));
+		r_enemies[r_enemies.size() - 1]->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
 	}
 	if (type == MELEE) {
-		MeleeEnemy* temp = new MeleeEnemy(x, y, direction, texture, health);
-		temp->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
-		m_enemies.push_back(temp);
-		delete temp;
+		m_enemies.push_back(new MeleeEnemy(x, y, direction, texture, health));
+		m_enemies[m_enemies.size() - 1]->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
 	}
 }
 
@@ -75,6 +69,14 @@ void EnemiesManager::drawEnemies(sf::RenderWindow& window) {
 	for (MeleeEnemy* e : m_enemies) {
 		window.draw(e->getSprite());
 		window.draw(e->getHealthBar()->getRect());
+	}
+}
+
+void EnemiesManager::setBulletsTextures(sf::Texture& texture) {
+	for (RangeEnemy* e : r_enemies) {
+		for (int i = 0; i < BULLETS_AMOUNT; i++) {
+			e->getBullets()[i]->setTexture(texture);
+		}
 	}
 }
 

@@ -142,6 +142,7 @@
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Consumable.cpp" />
+    <ClCompile Include="src\EnemiesManager.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\HealthBar.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\CircleBuffer.hpp" />
     <ClInclude Include="include\Consumable.h" />
+    <ClInclude Include="include\EnemiesManager.h" />
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Globals.h" />

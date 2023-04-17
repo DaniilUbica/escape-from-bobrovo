@@ -61,16 +61,11 @@ int main()
 
     Player* player = new Player(640, 608, VOLKOV, RIGHT, player_textures, volkov_ult_texture);
 
-    RangeEnemy* r_enemy1 = new RangeEnemy(100, 200, RIGHT, player_textures, 3);
-    RangeEnemy* r_enemy2 = new RangeEnemy(1000, 500, RIGHT, player_textures, 3);
-    RangeEnemy* r_enemy3 = new RangeEnemy(100, 600, RIGHT, player_textures, 3);
+    RangeEnemy* r_enemy1 = new RangeEnemy(100, 200, RIGHT, range_enemy_texture, 3);
+    RangeEnemy* r_enemy2 = new RangeEnemy(1000, 500, RIGHT, range_enemy_texture, 3);
+    RangeEnemy* r_enemy3 = new RangeEnemy(100, 600, RIGHT, range_enemy_texture, 3);
     MeleeEnemy* m_enemy1 = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
     MeleeEnemy* m_enemy2 = new MeleeEnemy(1200, 224, RIGHT, melee_enemy_texture, 5);
-    //MeleeEnemy* m_enemy3 = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
-    //MeleeEnemy* m_enemy4 = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
-    //MeleeEnemy* m_enemy5 = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
-    //MeleeEnemy* m_enemy6 = new MeleeEnemy(600, 300, RIGHT, melee_enemy_texture, 5);
-    //Enemy* enemy2 = new Enemy(600, 300, RIGHT, player_textures, 5);
 
     Turret* turret = new Turret(500, 100, turret_texture);
 
@@ -178,25 +173,16 @@ int main()
             window.draw(t_bullets3[i]->getSprite());
             window.draw(t_bullets4[i]->getSprite());
 
-            //window.draw(enemy->attack_borders->down_border);
-            //window.draw(enemy->attack_borders->top_border);
-            //window.draw(enemy->attack_borders->right_border);
-            //window.draw(enemy->attack_borders->left_border);
+            //window.draw(r_enemy1->attack_borders->down_border);
+            //window.draw(r_enemy1->attack_borders->top_border);
+            //window.draw(r_enemy1->attack_borders->right_border);
+            //window.draw(r_enemy1->attack_borders->left_border);
 
-            //window.draw(m_enemy->attack_borders->down_border);
-            //window.draw(m_enemy->attack_borders->top_border);
-            //window.draw(m_enemy->attack_borders->right_border);
-            //window.draw(m_enemy->attack_borders->left_border);
+            //window.draw(r_enemy1->view_borders->down_border);
+            //window.draw(r_enemy1->view_borders->top_border);
+            //window.draw(r_enemy1->view_borders->right_border);
+            //window.draw(r_enemy1->view_borders->left_border);
 
-            //window.draw(enemy->view_borders->down_border);
-            //window.draw(enemy->view_borders->top_border);
-            //window.draw(enemy->view_borders->right_border);
-            //window.draw(enemy->view_borders->left_border);
-
-            //window.draw(m_enemy->view_borders->down_border);
-            //window.draw(m_enemy->view_borders->top_border);
-            //window.draw(m_enemy->view_borders->right_border);
-            //window.draw(m_enemy->view_borders->left_border);
         }
 
         window.draw(r_enemy1->getSprite());

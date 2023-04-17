@@ -80,6 +80,12 @@ void Bullet::Update() {
 
 	sf::FloatRect rect = sprite.getGlobalBounds();
 
+	if (isLaunchedByPlayer) {
+		if (abs(start_x - coordX) >= BULLET_DISTANCE || abs(start_y - coordY) >= BULLET_DISTANCE) {
+			this->Destroy();
+		}
+	}
+
 	sprite.setOrigin(rect.left + rect.width / 2, rect.top + rect.height / 2);
 	sprite.setScale(0.013, 0.013);
 	sprite.setPosition(coordX, coordY);
@@ -112,4 +118,9 @@ void Bullet::checkCollision(GameObject* obj, int damage) {
 
 void Bullet::setTexture(sf::Texture& texture) {
 	sprite.setTexture(texture);
+}
+
+void Bullet::setStartPoint(float x, float y) {
+	start_x = x;
+	start_y = y;
 }

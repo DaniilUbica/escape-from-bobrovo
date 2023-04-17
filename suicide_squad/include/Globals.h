@@ -2,7 +2,7 @@
 
 const float PI = 3.14;
 
-const float GAME_SPEED = 3;
+const float GAME_SPEED = 1;
 
 const float JUMP_HEIGHT = 1;
 const float JUMP_SPEED = 1.0 * GAME_SPEED;
@@ -26,3 +26,5 @@ const float ENEMY_SPEED = 0.2 * GAME_SPEED;
 const float CONSUMABLES_SPEED = 0.03 * GAME_SPEED;
 
 const int SPRITE_SIZE = 32;
+
+const float BULLET_DISTANCE = 200.0;

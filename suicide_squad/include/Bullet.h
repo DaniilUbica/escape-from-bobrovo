@@ -10,7 +10,11 @@
 class Bullet : public GameObject {
 private:
 	bool isLaunched = false;
+	float start_x;
+	float start_y;
 public:
+	bool isLaunchedByPlayer = false;
+
 	sf::RectangleShape rect;
 	Bullet(GameObject* obj, sf::Texture& texture);
 	Bullet(GameObject* obj);
@@ -25,6 +29,7 @@ public:
 	void checkCollision(GameObject* obj, int damage);
 
 	void setTexture(sf::Texture& texture);
+	void setStartPoint(float x, float y);
 };
 
 

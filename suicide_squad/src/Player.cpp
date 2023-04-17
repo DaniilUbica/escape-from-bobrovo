@@ -10,19 +10,20 @@ Player::Player(int x, int y, Person person, Direction direction, std::map<State,
 	health = 5;
 	coordX = x;
 	coordY = y;
-	width = 28;
-	height = 40;
+	width = 32;
+	height = 32;
 	this->direction = direction;
 	state = STAY;
 	this->person = person;
 
 	ult_timer = new Timer(30.0, 100.0, 0.0, 32.0, 32.0, ult_texture);
 
-	idle_animation = new Animation(textures[STAY], 0, 0, 22, 40, 4, 0.03, 22);
+	idle_animation = new Animation(textures[STAY], 0, 0, 32, 32, 4, 0.03, 0);
 	run_animation = new Animation(textures[RUN], 0, 0, 26, 40, 6, 0.03, 26);
 	attack_animation = new Animation(textures[ATTACK], 0, 0, 28, 40, 5, 0.03, 28);
 
 	sprite = idle_animation->Tick(false);
+	sprite.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE / 2);
 	sprite.setPosition(coordX, coordY);
 }
 
@@ -39,12 +40,12 @@ Player::~Player() {
 void Player::Update() {
 	if (direction == LEFT && state == RUN) {
 		coordX -= PLAYER_SPEED;
-		sprite = run_animation->Tick(true);
+		//sprite = run_animation->Tick(true);
 	}
 
 	if (direction == RIGHT && state == RUN) {
 		coordX += PLAYER_SPEED;
-		sprite = run_animation->Tick(false);
+		//sprite = run_animation->Tick(false);
 	}
 
 	if (direction == UP && state == RUN) {
@@ -56,34 +57,34 @@ void Player::Update() {
 	}
 
 	if (direction == RIGHT && state == ATTACK && canShoot) {
-		sprite = attack_animation->Tick(false);
+		//sprite = attack_animation->Tick(false);
 		Shoot();
 		canShoot = false;
 	}
 
 	if (direction == LEFT && state == ATTACK && canShoot) {
 		canShoot = false;
-		sprite = attack_animation->Tick(true);
+		//sprite = attack_animation->Tick(true);
 		Shoot();
 	}
 
 	if (direction == UP && state == ATTACK && canShoot) {
 		canShoot = false;
-		sprite = attack_animation->Tick(false);
+		//sprite = attack_animation->Tick(false);
 		Shoot();
 	}
 
 	if (direction == DOWN && state == ATTACK && canShoot) {
 		canShoot = false;
-		sprite = attack_animation->Tick(true);
+		//sprite = attack_animation->Tick(true);
 		Shoot();
 	}
 
 	if (direction == RIGHT && state == STAY) {
-		sprite = idle_animation->Tick(false);
+		//sprite = idle_animation->Tick(false);
 	}
 	if (direction == LEFT && state == STAY) {
-		sprite = idle_animation->Tick(true);
+		//sprite = idle_animation->Tick(true);
 	}
 
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
@@ -106,35 +107,48 @@ void Player::Update() {
 		}
 	}
 
+	if (direction == UP) {
+		sprite.setRotation(0);
+	}
+	if (direction == DOWN) {
+		sprite.setRotation(180);
+	}
+
+	if (direction == LEFT) {
+		sprite.setRotation(270);
+	}
+	if (direction == RIGHT) {
+		sprite.setRotation(90);
+	}
 	if (damage > 1) {
 		sprite.setColor(sf::Color(103, 127, 158));
 	}
 
-	controllUltimate();
+	if (!isUltimateWorking) {
+		sprite.setColor(sf::Color::White);
+	}
 
+	controllUltimate();
 	sprite.setPosition(coordX, coordY);
 }
 
 void Player::checkCollision(std::vector<Object> objects) {
 	sf::FloatRect rect = this->sprite.getGlobalBounds();
 	for (Object obj : objects) {
+		sf::FloatRect o_rect = obj.r.getGlobalBounds();
 		if (rect.intersects(obj.r.getGlobalBounds())) {
 			if (obj.type == SOLID) {
-				if (direction == UP || direction == DOWN) {
-					if (sprite.getPosition().y < obj.r.getPosition().y) {
-						coordY = obj.r.getGlobalBounds().top - height;
-					}
-					if (sprite.getPosition().y > obj.r.getPosition().y) {
-						coordY = obj.r.getGlobalBounds().top + obj.r.getGlobalBounds().height;
-					}
+				if (direction == LEFT && rect.left < o_rect.left + o_rect.width) {
+					coordX = coordX + (o_rect.left + o_rect.width - rect.left);
 				}
-				if (direction == LEFT || direction == RIGHT) {
-					if (sprite.getPosition().x > obj.r.getGlobalBounds().left) {
-						coordX = obj.r.getGlobalBounds().left + obj.r.getGlobalBounds().width;
-					}
-					if (sprite.getPosition().x < obj.r.getPosition().x) {
-						coordX = obj.r.getGlobalBounds().left - width;
-					}
+				if (direction == RIGHT && rect.left + rect.width > o_rect.left) {
+					coordX = coordX - (rect.left + rect.width - o_rect.left);
+				}
+				if (direction == UP && rect.top < o_rect.top + o_rect.height) {
+					coordY = coordY + (o_rect.top + o_rect.height - rect.top);
+				}
+				if (direction == DOWN && rect.top + rect.height > o_rect.top) {
+					coordY = coordY - (rect.top + rect.height - o_rect.top);
 				}
 			}
 			if (obj.type == TRAP) {
@@ -210,8 +224,10 @@ Timer Player::getUltTimer() {
 void Player::Shoot() {
 	if (bullets.back()->getPosition().x == -10 && bullets.back()->getPosition().y == 10) {
 		bullets.back()->Launch();
-		bullets.back()->setPosition(coordX + width / 2, coordY + height / 2);
+		bullets.back()->setPosition(coordX, coordY);
+		bullets.back()->setStartPoint(coordX, coordY);
 		bullets.back()->setDirection(direction);
+		bullets.back()->isLaunchedByPlayer = true;
 		bullets.pop();
 	}
 }

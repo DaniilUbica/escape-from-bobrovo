@@ -32,7 +32,7 @@ private:
 	"F        F                    FFFFFFFFFF",
 	"F        F                    F        F",
 	"F       FF                    F        W",
-	"F      F                      F        W",
+	"F      F                               W",
 	"F      F                               F",
 	"F               T                      F",
 	"FFFF                          FFFFFFFFFF",

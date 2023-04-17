@@ -4,7 +4,7 @@ void RangeEnemy::Shoot() {
 	state = ATTACK;
 	if (bullets.back()->getPosition().x == -10 && bullets.back()->getPosition().y == 10) {
 		bullets.back()->Launch();
-		bullets.back()->setPosition(coordX + width / 2, coordY + height / 2);
+		bullets.back()->setPosition(coordX, coordY);
 		bullets.back()->setDirection(direction);
 		bullets.pop();
 	}
@@ -40,7 +40,28 @@ RangeEnemy::RangeEnemy(int x, int y, Direction direction, std::map<State, sf::Te
 }
 
 RangeEnemy::RangeEnemy(int x, int y, Direction direction, sf::Texture& texture, int health) {
+	bullets.setSize(BULLETS_AMOUNT);
+	initBullets();
 
+	this->health = health;
+
+	coordX = x;
+	coordY = y;
+
+	width = 32;
+	height = 32;
+
+	health_bar = new HealthBar(coordX, coordY, health, width);
+
+	attack_borders = new ViewBorder(coordX, coordY, width, height, 100.0, 130, 50.0);
+	view_borders = new ViewBorder(coordX, coordY, width, height, 300.0, 340.0, 150.0);
+
+	this->direction = direction;
+	state = STAY;
+
+	sprite.setTexture(texture);
+	sprite.setOrigin(SPRITE_SIZE / 2, SPRITE_SIZE / 2);
+	sprite.setPosition(coordX, coordY);
 }
 
 Enemy::~Enemy() {
@@ -55,21 +76,6 @@ Enemy::~Enemy() {
 void RangeEnemy::Update() {
 
 	if (health > 0) {
-
-		if ((direction == RIGHT || direction == BOT_RIGHT || direction == TOP_RIGHT) && state == STAY) {
-			sprite = idle_animation->Tick(false);
-		}
-		if ((direction == LEFT || direction == BOT_LEFT || direction == TOP_LEFT) && state == STAY) {
-			sprite = idle_animation->Tick(true);
-		}
-
-		if (state == RUN && (direction == RIGHT || direction == BOT_RIGHT || direction == TOP_RIGHT)) {
-			sprite = run_animation->Tick(false);
-		}
-
-		if (state == RUN && (direction == LEFT || direction == BOT_LEFT || direction == TOP_LEFT)) {
-			sprite = run_animation->Tick(true);
-		}
 
 		if (!view_borders->isIntersects(player) || !player->getVisible()) {
 			if (!attack_borders->isIntersects(player)) {
@@ -94,18 +100,38 @@ void RangeEnemy::Update() {
 			}
 		}
 
-		if (state == ATTACK && (direction == LEFT || direction == BOT_LEFT || direction == TOP_LEFT)) {
-			sprite = attack_animation->Tick(true);
-		}
-		if (state == ATTACK && (direction == RIGHT || direction == BOT_RIGHT || direction == TOP_RIGHT)) {
-			sprite = attack_animation->Tick(false);
-		}
-
 		sf::Time time;
 		time = clock.getElapsedTime();
 		if (time.asSeconds() >= 1.0) {
 			clock.restart();
 			canAttack = true;
+		}
+
+		if (direction == UP) {
+			sprite.setRotation(0);
+		}
+		if (direction == DOWN) {
+			sprite.setRotation(180);
+		}
+
+		if (direction == LEFT) {
+			sprite.setRotation(270);
+		}
+		if (direction == RIGHT) {
+			sprite.setRotation(90);
+		}
+
+		if (direction == TOP_LEFT) {
+			sprite.setRotation(315);
+		}
+		if (direction == BOT_LEFT) {
+			sprite.setRotation(225);
+		}
+		if (direction == TOP_RIGHT) {
+			sprite.setRotation(45);
+		}
+		if (direction == BOT_RIGHT) {
+			sprite.setRotation(135);
 		}
 
 		sprite.setPosition(coordX, coordY);
@@ -133,38 +159,27 @@ void Enemy::setPatrolPoints(int x1, int y1, int x2, int y2) {
 void Enemy::checkCollision(std::vector<Object> objects) {
 	sf::FloatRect rect = this->sprite.getGlobalBounds();
 	for (Object obj : objects) {
+		sf::FloatRect o_rect = obj.r.getGlobalBounds();
 		if (rect.intersects(obj.r.getGlobalBounds())) {
 			if (obj.type == SOLID) {
-				if (direction == UP || direction == DOWN) {
-					if (sprite.getPosition().y < obj.r.getPosition().y) {
-						coordY = obj.r.getGlobalBounds().top - height;
+				float overlapX = std::min(rect.left + rect.width, o_rect.left + o_rect.width) - std::max(rect.left, o_rect.left);
+				float overlapY = std::min(rect.top + rect.height, o_rect.top + o_rect.height) - std::max(rect.top, o_rect.top);
+				if (overlapX < overlapY) {
+					if (rect.left < o_rect.left) {
+						coordX = o_rect.left - rect.width / 2;
 					}
-					if (sprite.getPosition().y > obj.r.getPosition().y) {
-						coordY = obj.r.getGlobalBounds().top + obj.r.getGlobalBounds().height;
-					}
-				}
-				if (direction == LEFT || direction == RIGHT) {
-					if (sprite.getPosition().x > obj.r.getGlobalBounds().left) {
-						coordX = obj.r.getGlobalBounds().left + obj.r.getGlobalBounds().width;
-					}
-					if (sprite.getPosition().x < obj.r.getPosition().x) {
-						coordX = obj.r.getGlobalBounds().left - width;
+					else {
+						coordX = o_rect.left + o_rect.width + rect.width / 2;
 					}
 				}
-				if (direction == TOP_LEFT || direction == TOP_RIGHT || direction == BOT_LEFT || direction == BOT_RIGHT) {
-					if (sprite.getPosition().x > obj.r.getGlobalBounds().left) {
-						coordX = obj.r.getGlobalBounds().left + obj.r.getGlobalBounds().width;
+				else {
+					if (rect.top < o_rect.top) {
+						coordY = o_rect.top - rect.height / 2;
 					}
-					if (sprite.getPosition().x < obj.r.getPosition().x) {
-						coordX = obj.r.getGlobalBounds().left - width;
+					else {
+						coordY = o_rect.top + o_rect.height + rect.height / 2;
 					}
-					if (sprite.getPosition().y < obj.r.getPosition().y) {
-						coordY = obj.r.getGlobalBounds().top - height;
-					}
-					if (sprite.getPosition().y > obj.r.getPosition().y) {
-						coordY = obj.r.getGlobalBounds().top + obj.r.getGlobalBounds().height;
-					}
-				}
+				}		
 			}
 		}
 	}

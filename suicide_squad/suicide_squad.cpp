@@ -124,6 +124,11 @@ int main()
 
         m.drawMap(window);
 
+        if (!player->getVisible()) {
+            m.changeMap();
+            m.setMap();
+        }
+
         for (Consumable* c : consumables) {
             if (!c->getUsed()) {
                 c->Update();

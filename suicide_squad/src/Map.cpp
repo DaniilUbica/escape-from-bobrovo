@@ -115,7 +115,19 @@ void Map::fillObjectTypes() {
 	}
 }
 
+void Map::changeMap() {
+	for (int i = 0; i < MAP_HEIGHT; i++) {
+		map[i] = "F                                      F";
+	}
+}
+
 void Map::setMap() {
+
+	objects.clear();
+	tiles_textures.clear();
+	tiles_textures_coords.clear();
+	tiles_types.clear();
+
 	fillTexturesCoords();
 	fillObjectTypes();
 	fillMap();

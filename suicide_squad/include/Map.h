@@ -24,6 +24,35 @@ private:
 	std::map<char, sf::Texture> tiles_textures;
 	std::map<char, sf::Vector2i> tiles_textures_coords;
 	std::map<char, Type> tiles_types;
+
+	std::string arr_of_arrs[3][MAP_WIDTH] = {
+		{
+	"FFFFFFFFFFFFFFFFFFFFWFFFFFFFFFFFFFFFFFFF",
+	"F        F                             F",
+	"F        F                             F",
+	"F        F                             F",
+	"F        F                    FFFFFFFFFF",
+	"F        F                    F        F",
+	"F       FF                    F        W",
+	"F      F                               W",
+	"F      F                               F",
+	"F               T                      F",
+	"FFFF                          FFFFFFFFFF",
+	"F                                      F",
+	"F                                      F",
+	"F                                      F",
+	"F                          FFFFFFFFFF  F",
+	"FFFFFFFF                               F",
+	"F      F                               F",
+	"F      F                               F",
+	"F      F       F     F                 F",
+	"F              F     F                 F",
+	"F              F     F                 F",
+	"FFFFFFWWWWWFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+	}
+	};
+
+
 	std::string map[MAP_HEIGHT] = {
 	"FFFFFFFFFFFFFFFFFFFFWFFFFFFFFFFFFFFFFFFF",
 	"F        F                             F",
@@ -54,6 +83,7 @@ private:
 	void fillTexturesCoords();
 	void fillObjectTypes();
 public:
+	void changeMap();
 	void setMap();
 	void drawMap(sf::RenderWindow& window);
 

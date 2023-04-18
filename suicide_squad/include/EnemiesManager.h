@@ -15,6 +15,7 @@ class EnemiesManager {
 private:
 	std::vector<RangeEnemy*> r_enemies;
 	std::vector<MeleeEnemy*> m_enemies;
+	int enemies_amount;
 public:
 	EnemiesManager() = default;
 	~EnemiesManager();
@@ -28,5 +29,6 @@ public:
 
 	std::vector<RangeEnemy*> getRangeEnemies();
 	std::vector<MeleeEnemy*> getMeleeEnemies();
+	int getEnemiesAmount();
 };
 

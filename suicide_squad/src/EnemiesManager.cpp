@@ -89,3 +89,7 @@ std::vector<MeleeEnemy*> EnemiesManager::getMeleeEnemies()
 {
 	return m_enemies;
 }
+
+int EnemiesManager::getEnemiesAmount() {
+	return enemies_amount;
+}

@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Animation.h"
-#include "Map.h"
+#include "MapObject.h"
 
 enum Direction {
 	LEFT,

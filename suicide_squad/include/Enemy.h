@@ -6,7 +6,7 @@
 
 #include "GameObject.h"
 #include "Globals.h"
-#include "Map.h"
+#include "MapObject.h"
 #include "Bullet.h"
 #include "Player.h"
 #include "ViewBorder.h"

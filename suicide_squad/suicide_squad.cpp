@@ -55,17 +55,17 @@ int main()
     }
 
     Map m;
-    m.setMap();
+    m.setMap(range_enemy_texture, melee_enemy_texture);
 
     Player* player = new Player(640, 608, VOLKOV, RIGHT, player_textures, volkov_ult_texture);
 
-    EnemiesManager e_manager;
+    EnemiesManager e_manager = m.getEnemies();
 
-    e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-    e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-    e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
-    e_manager.addEnemy(MELEE, 600, 300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
-    e_manager.addEnemy(MELEE, 1200, 224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
+    //e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
+    //e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
+    //e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
+    //e_manager.addEnemy(MELEE, 600, 300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
+    //e_manager.addEnemy(MELEE, 1200, 224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
 
     Turret* turret = new Turret(500, 100, turret_texture);
 
@@ -108,6 +108,12 @@ int main()
             player->checkCollision(m.getObjects());
         }
 
+        if (!player->getVisible()) {
+            m.changeMap();
+            m.setMap(range_enemy_texture, melee_enemy_texture);
+            e_manager.Copy(m.getEnemies());
+        }
+
         for (Enemy* e : e_manager.getMeleeEnemies()) {
             player->checkBulletCollision(m.getObjects(), e);
         }
@@ -123,11 +129,6 @@ int main()
         turret->Update(m.getObjects(), player);
 
         m.drawMap(window);
-
-        if (!player->getVisible()) {
-            m.changeMap();
-            m.setMap();
-        }
 
         for (Consumable* c : consumables) {
             if (!c->getUsed()) {

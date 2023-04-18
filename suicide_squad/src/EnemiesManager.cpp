@@ -80,6 +80,17 @@ void EnemiesManager::setBulletsTextures(sf::Texture& texture) {
 	}
 }
 
+void EnemiesManager::Clear() {
+	r_enemies.clear();
+	m_enemies.clear();
+}
+
+void EnemiesManager::Copy(EnemiesManager e) {
+	Clear();
+	r_enemies = e.getRangeEnemies();
+	m_enemies = e.getMeleeEnemies();
+}
+
 std::vector<RangeEnemy*> EnemiesManager::getRangeEnemies()
 {
 	return r_enemies;

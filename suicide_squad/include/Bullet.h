@@ -4,7 +4,7 @@
 
 #include "GameObject.h"
 #include "Globals.h"
-#include "Map.h"
+#include "MapObject.h"
 #include "GameObject.h"
 
 class Bullet : public GameObject {

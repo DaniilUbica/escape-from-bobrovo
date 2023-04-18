@@ -250,7 +250,7 @@ void Player::controllUltimate() {
 
 	sf::Time ult_cooldown_timer;
 	ult_cooldown_timer = ultimate_cooldown.getElapsedTime();
-	if (ult_cooldown_timer.asSeconds() >= 30) {
+	if (ult_cooldown_timer.asSeconds() >= 5) {
 		canUseUltimate = true;
 	}
 

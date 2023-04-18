@@ -5,18 +5,8 @@
 #include <vector>
 
 #include "Globals.h"
-
-enum Type {
-	SOLID,
-	TRAP,
-	SPRITE,
-};
-
-struct Object {
-	Type type;
-	char ch;
-	sf::RectangleShape r;
-};
+#include "MapObject.h"
+#include "EnemiesManager.h"
 
 class Map {
 private:
@@ -25,7 +15,9 @@ private:
 	std::map<char, sf::Vector2i> tiles_textures_coords;
 	std::map<char, Type> tiles_types;
 
-	std::string arr_of_arrs[3][MAP_WIDTH] = {
+	int map_index = 0;
+
+	std::string maps[MAPS_AMOUNT][MAP_WIDTH] = {
 		{
 	"FFFFFFFFFFFFFFFFFFFFWFFFFFFFFFFFFFFFFFFF",
 	"F        F                             F",
@@ -49,44 +41,70 @@ private:
 	"F              F     F                 F",
 	"F              F     F                 F",
 	"FFFFFFWWWWWFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
-	}
-	};
-
-
-	std::string map[MAP_HEIGHT] = {
+	},
+	{
 	"FFFFFFFFFFFFFFFFFFFFWFFFFFFFFFFFFFFFFFFF",
-	"F        F                             F",
-	"F        F                             F",
-	"F        F                             F",
-	"F        F                    FFFFFFFFFF",
-	"F        F                    F        F",
-	"F       FF                    F        W",
-	"F      F                               W",
-	"F      F                               F",
+	"F                                      F",
+	"F                                      F",
+	"F                                      F",
+	"F                             FFFFFFFFFF",
+	"F                             F        F",
+	"F                             F        W",
+	"F                                      W",
+	"F                                      F",
 	"F               T                      F",
 	"FFFF                          FFFFFFFFFF",
 	"F                                      F",
 	"F                                      F",
 	"F                                      F",
 	"F                          FFFFFFFFFF  F",
-	"FFFFFFFF                               F",
+	"FFFF                                   F",
 	"F      F                               F",
 	"F      F                               F",
 	"F      F       F     F                 F",
 	"F              F     F                 F",
 	"F              F     F                 F",
 	"FFFFFFWWWWWFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+	},
+	{
+	"FFFFFFFFFFFFFFFFFFFFWFFFFFFFFFFFFFFFFFFF",
+	"F                                      F",
+	"F                                      F",
+	"F                                      F",
+	"F                             FFFFFFFFFF",
+	"F                             F        F",
+	"F                             F        W",
+	"F                                      W",
+	"F                                      F",
+	"F               T                      F",
+	"FFFF                                   F",
+	"F                                      F",
+	"F                                      F",
+	"F                                      F",
+	"F                          FFFFFFFFFF  F",
+	"FFFF                                   F",
+	"F      F                               F",
+	"F      F                               F",
+	"F      F       F     F                 F",
+	"F                                      F",
+	"F              F     F                 F",
+	"FFFFFFWWWWWFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+	}
 	};
+
+	EnemiesManager enemies[MAPS_AMOUNT];
 
 	void fillMap();
 	void fillObjects();
 	void fillTexturesCoords();
 	void fillObjectTypes();
+	void setEnemies(sf::Texture& range_enemy_texture, sf::Texture& melee_enemy_texture);
 public:
 	void changeMap();
-	void setMap();
+	void setMap(sf::Texture& range_enemy_texture, sf::Texture& melee_enemy_texture);
 	void drawMap(sf::RenderWindow& window);
 
 	std::vector<Object> getObjects();
+	EnemiesManager getEnemies();
 };
 

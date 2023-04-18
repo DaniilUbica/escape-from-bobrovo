@@ -29,3 +29,5 @@ const float CONSUMABLES_SPEED = 0.03 * GAME_SPEED;
 const int SPRITE_SIZE = 32;
 
 const float BULLET_DISTANCE = 200.0;
+
+const int MAPS_AMOUNT = 5;

@@ -26,6 +26,8 @@ public:
 	void addEnemy(e_type type, float x, float y, Direction direction, sf::Texture& texture, int health, int p1_x, int p1_y, int p2_x, int p2_y);
 	void drawEnemies(sf::RenderWindow& window);
 	void setBulletsTextures(sf::Texture& texture);
+	void Clear();
+	void Copy(EnemiesManager e);
 
 	std::vector<RangeEnemy*> getRangeEnemies();
 	std::vector<MeleeEnemy*> getMeleeEnemies();

@@ -115,23 +115,6 @@ void Map::fillObjectTypes() {
 	}
 }
 
-void Map::setEnemies(sf::Texture& range_enemy_texture, sf::Texture& melee_enemy_texture) {
-	enemies[0].addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-	enemies[0].addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-	enemies[0].addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
-	enemies[0].addEnemy(MELEE, 600, 300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
-	enemies[0].addEnemy(MELEE, 1200, 224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
-
-	enemies[1].addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-	enemies[1].addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-	enemies[1].addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
-
-	enemies[2].addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-	enemies[2].addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-
-
-}
-
 void Map::changeMap() {
 	srand(time(NULL));
 	int t = map_index;
@@ -144,12 +127,7 @@ void Map::setMap(sf::Texture& range_enemy_texture, sf::Texture& melee_enemy_text
 	tiles_textures.clear();
 	tiles_textures_coords.clear();
 	tiles_types.clear();
-	
-	for (int i = 0; i < MAPS_AMOUNT; i++) {
-		enemies[i].Clear();
-	}
 
-	setEnemies(range_enemy_texture, melee_enemy_texture);
 	fillTexturesCoords();
 	fillObjectTypes();
 	fillMap();
@@ -166,6 +144,6 @@ std::vector<Object> Map::getObjects() {
 	return objects;
 }
 
-EnemiesManager Map::getEnemies() {
-	return enemies[map_index];
+int Map::getIndex() {
+	return map_index;
 }

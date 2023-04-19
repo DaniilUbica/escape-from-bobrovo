@@ -221,7 +221,7 @@ void Player::Shoot() {
 		bullets.back()->setPosition(coordX, coordY);
 		bullets.back()->setStartPoint(coordX, coordY);
 		bullets.back()->setDirection(direction);
-		bullets.back()->isLaunchedByPlayer = true;
+		bullets.back()->setIsLaunchedByPlayer(true);
 		bullets.pop();
 	}
 }
@@ -250,7 +250,7 @@ void Player::controllUltimate() {
 
 	sf::Time ult_cooldown_timer;
 	ult_cooldown_timer = ultimate_cooldown.getElapsedTime();
-	if (ult_cooldown_timer.asSeconds() >= 5) {
+	if (ult_cooldown_timer.asSeconds() >= 30) {
 		canUseUltimate = true;
 	}
 

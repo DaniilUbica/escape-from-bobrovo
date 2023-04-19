@@ -30,4 +30,7 @@ const int SPRITE_SIZE = 32;
 
 const float BULLET_DISTANCE = 200.0;
 
-const int MAPS_AMOUNT = 5;
+const int MAPS_AMOUNT = 3;
+
+const int PLAYER_START_X = 640;
+const int PLAYER_START_Y = 608;

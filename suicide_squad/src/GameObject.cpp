@@ -25,6 +25,10 @@ int GameObject::getHP() {
     return health;
 }
 
+float GameObject::getAngle() {
+    return angle;
+}
+
 void GameObject::setDirection(Direction direction) {
     this->direction = direction;
 }
@@ -32,4 +36,8 @@ void GameObject::setDirection(Direction direction) {
 void GameObject::setPosition(int coordX, int coordY) {
     this->coordX = coordX;
     this->coordY = coordY;
+}
+
+void GameObject::setAngle(float angle) {
+    this->angle = angle;
 }

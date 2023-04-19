@@ -26,6 +26,7 @@ class GameObject {
 protected:
 	int health;
 	float coordX, coordY, width, height;
+	float angle = 0;
 	sf::Sprite sprite;
 	Direction direction;
 	Animation* idle_animation;
@@ -40,8 +41,10 @@ public:
 	sf::Vector2f getPosition();
 	sf::Vector2f getSize();
 	int getHP();
+	float getAngle();
 
 	void setDirection(Direction direction);
 	void setPosition(int coordX, int coordY);
+	void setAngle(float angle);
 };
 

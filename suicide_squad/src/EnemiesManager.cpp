@@ -1,5 +1,7 @@
 #include "..\include\EnemiesManager.h"
 
+#include <algorithm>
+
 EnemiesManager::~EnemiesManager() {
 	for (RangeEnemy* e : r_enemies) {
 		delete e;
@@ -14,11 +16,19 @@ void EnemiesManager::UpdateEnemies(Player* player) {
 	for (RangeEnemy* e : r_enemies) {
 		e->takePlayer(player);
 		e->Update();
+		if (e->getHP() <= 0) {
+			killed_enemies++;
+			r_enemies.erase(find(r_enemies.begin(),r_enemies.end(),e));
+		}
 	}
 
 	for (MeleeEnemy* e : m_enemies) {
 		e->takePlayer(player);
 		e->Update();
+		if (e->getHP() <= 0) {
+			killed_enemies++;
+			m_enemies.erase(find(m_enemies.begin(), m_enemies.end(), e));
+		}
 	}
 }
 
@@ -42,6 +52,7 @@ void EnemiesManager::addEnemy(e_type type, float x, float y, Direction direction
 		m_enemies.push_back(new MeleeEnemy(x, y, direction, textures, health));
 		m_enemies[m_enemies.size() - 1]->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
 	}
+	enemies_amount = r_enemies.size() + m_enemies.size();
 }
 
 void EnemiesManager::addEnemy(e_type type, float x, float y, Direction direction, sf::Texture& texture, int health, int p1_x, int p1_y, int p2_x, int p2_y) {
@@ -53,6 +64,7 @@ void EnemiesManager::addEnemy(e_type type, float x, float y, Direction direction
 		m_enemies.push_back(new MeleeEnemy(x, y, direction, texture, health));
 		m_enemies[m_enemies.size() - 1]->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
 	}
+	enemies_amount = r_enemies.size() + m_enemies.size();
 }
 
 void EnemiesManager::drawEnemies(sf::RenderWindow& window) {
@@ -86,9 +98,13 @@ void EnemiesManager::Clear() {
 }
 
 void EnemiesManager::Copy(EnemiesManager e) {
-	Clear();
+	//Clear();
 	r_enemies = e.getRangeEnemies();
 	m_enemies = e.getMeleeEnemies();
+}
+
+void EnemiesManager::setKilledToNull() {
+	killed_enemies = 0;
 }
 
 std::vector<RangeEnemy*> EnemiesManager::getRangeEnemies()
@@ -103,4 +119,8 @@ std::vector<MeleeEnemy*> EnemiesManager::getMeleeEnemies()
 
 int EnemiesManager::getEnemiesAmount() {
 	return enemies_amount;
+}
+
+int EnemiesManager::getKilledEnemies() {
+	return killed_enemies;
 }

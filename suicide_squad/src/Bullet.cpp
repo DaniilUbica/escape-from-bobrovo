@@ -20,6 +20,14 @@ Bullet::Bullet(GameObject* obj) {
 	rect.setFillColor(sf::Color::Black);
 }
 
+Bullet::Bullet(GameObject* obj, float angle) {
+	coordX = obj->getPosition().x;
+	coordY = obj->getPosition().y;
+	this->sprite.setPosition(coordX, coordY);
+	sprite.setRotation(angle);
+	this->angle = angle;
+}
+
 Bullet::Bullet(int coordX, int coordY) {
 	this->coordX = coordX;
 	this->coordY = coordY;
@@ -89,7 +97,19 @@ void Bullet::Update() {
 	sprite.setOrigin(rect.left + rect.width / 2, rect.top + rect.height / 2);
 	sprite.setScale(0.013, 0.013);
 	sprite.setPosition(coordX, coordY);
-	//rect.setPosition(coordX, coordY);
+}
+
+void Bullet::Update(float angle, float x, float y) {
+	sf::FloatRect rect = sprite.getGlobalBounds();
+	if (isLaunched) {
+		coordX += nx;
+		coordY += ny;
+		sprite.setRotation(this->angle);
+	}
+
+	sprite.setOrigin(rect.left + rect.width / 2, rect.top + rect.height / 2);
+	sprite.setScale(0.013, 0.013);
+	sprite.setPosition(coordX, coordY);
 }
 
 void Bullet::checkCollision(std::vector<Object> obj) {
@@ -123,4 +143,13 @@ void Bullet::setTexture(sf::Texture& texture) {
 void Bullet::setStartPoint(float x, float y) {
 	start_x = x;
 	start_y = y;
+}
+
+void Bullet::setNxNy(float nx, float ny) {
+	this->nx = nx;
+	this->ny = ny;
+}
+
+void Bullet::setIsLaunchedByPlayer(bool a) {
+	isLaunchedByPlayer = a;
 }

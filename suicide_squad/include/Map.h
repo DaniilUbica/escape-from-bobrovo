@@ -14,7 +14,6 @@ private:
 	std::map<char, sf::Texture> tiles_textures;
 	std::map<char, sf::Vector2i> tiles_textures_coords;
 	std::map<char, Type> tiles_types;
-
 	int map_index = 0;
 
 	std::string maps[MAPS_AMOUNT][MAP_WIDTH] = {
@@ -92,19 +91,16 @@ private:
 	}
 	};
 
-	EnemiesManager enemies[MAPS_AMOUNT];
-
 	void fillMap();
 	void fillObjects();
 	void fillTexturesCoords();
 	void fillObjectTypes();
-	void setEnemies(sf::Texture& range_enemy_texture, sf::Texture& melee_enemy_texture);
 public:
 	void changeMap();
 	void setMap(sf::Texture& range_enemy_texture, sf::Texture& melee_enemy_texture);
 	void drawMap(sf::RenderWindow& window);
 
 	std::vector<Object> getObjects();
-	EnemiesManager getEnemies();
+	int getIndex();
 };
 

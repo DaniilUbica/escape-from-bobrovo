@@ -26,7 +26,7 @@ Direction ViewBorder::getDirection(int coordX, int coordY, int width, int height
 		if (player->getSprite().getPosition().x >= coordX + width / 2) {
 			direction = TOP_RIGHT;
 		}
-		else if (player->getSprite().getPosition().x + player->getSize().x / 2 <= coordX) {
+		else if (player->getSprite().getPosition().x <= coordX - width/2) {
 			direction = TOP_LEFT;
 		}
 		else {

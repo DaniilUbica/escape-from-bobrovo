@@ -2,6 +2,16 @@
 
 void RangeEnemy::Shoot() {
 	state = ATTACK;
+
+	float dx = player->getPosition().x - coordX;
+	float dy = player->getPosition().y - coordY;
+
+	float nx = dx / sqrt(dx * dx + dy * dy);
+	float ny = dy / sqrt(dx * dx + dy * dy);
+
+	bullets.back()->setNxNy(nx, ny);
+	bullets.back()->setAngle(angle);
+
 	if (bullets.back()->getPosition().x == -10 && bullets.back()->getPosition().y == 10) {
 		bullets.back()->Launch();
 		bullets.back()->setPosition(coordX, coordY);
@@ -107,33 +117,43 @@ void RangeEnemy::Update() {
 			canAttack = true;
 		}
 
-		if (direction == UP) {
-			sprite.setRotation(0);
-		}
-		if (direction == DOWN) {
-			sprite.setRotation(180);
-		}
-
-		if (direction == LEFT) {
-			sprite.setRotation(270);
-		}
-		if (direction == RIGHT) {
-			sprite.setRotation(90);
+		if (state != RUN) {
+			sf::Vector2f pos = player->getPosition();
+			float dX = pos.x - coordX;
+			float dY = pos.y - coordY;
+			float rotation = (atan2(dY, dX)) * 180 / 3.14159265;
+			sprite.setRotation(rotation);
+			angle = rotation;
 		}
 
-		if (direction == TOP_LEFT) {
-			sprite.setRotation(315);
-		}
-		if (direction == BOT_LEFT) {
-			sprite.setRotation(225);
-		}
-		if (direction == TOP_RIGHT) {
-			sprite.setRotation(45);
-		}
-		if (direction == BOT_RIGHT) {
-			sprite.setRotation(135);
-		}
+		if (state == RUN) {
+			if (direction == UP) {
+				sprite.setRotation(270);
+			}
+			if (direction == DOWN) {
+				sprite.setRotation(90);
+			}
 
+			if (direction == LEFT) {
+				sprite.setRotation(180);
+			}
+			if (direction == RIGHT) {
+				sprite.setRotation(0);
+			}
+
+			if (direction == TOP_LEFT) {
+				sprite.setRotation(225);
+			}
+			if (direction == BOT_LEFT) {
+				sprite.setRotation(135);
+			}
+			if (direction == TOP_RIGHT) {
+				sprite.setRotation(315);
+			}
+			if (direction == BOT_RIGHT) {
+				sprite.setRotation(45);
+			}
+		}
 		sprite.setPosition(coordX, coordY);
 		sprite.setColor(sf::Color::White);
 	}
@@ -141,7 +161,7 @@ void RangeEnemy::Update() {
 	health_bar->Update(coordX - SPRITE_SIZE / 2, coordY - SPRITE_SIZE / 2, health);
 
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
-		bullets.elems[i]->Update();
+		bullets.elems[i]->Update(angle, player_shoot_x, player_shoot_y);
 	}
 }
 

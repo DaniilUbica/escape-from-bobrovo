@@ -16,6 +16,7 @@ private:
 	std::vector<RangeEnemy*> r_enemies;
 	std::vector<MeleeEnemy*> m_enemies;
 	int enemies_amount;
+	int killed_enemies = 0;
 public:
 	EnemiesManager() = default;
 	~EnemiesManager();
@@ -29,8 +30,11 @@ public:
 	void Clear();
 	void Copy(EnemiesManager e);
 
+	void setKilledToNull();
+
 	std::vector<RangeEnemy*> getRangeEnemies();
 	std::vector<MeleeEnemy*> getMeleeEnemies();
 	int getEnemiesAmount();
+	int getKilledEnemies();
 };
 

@@ -161,7 +161,7 @@ void RangeEnemy::Update() {
 	health_bar->Update(coordX - SPRITE_SIZE / 2, coordY - SPRITE_SIZE / 2, health);
 
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
-		bullets.elems[i]->Update(angle, player_shoot_x, player_shoot_y);
+		bullets.elems[i]->Update(angle);
 	}
 }
 
@@ -466,32 +466,43 @@ void MeleeEnemy::Update() {
 			}
 		}
 
-		if (direction == UP) {
-			sprite.setRotation(0);
-		}
-		if (direction == DOWN) {
-			sprite.setRotation(180);
-		}
-
-		if (direction == LEFT) {
-			sprite.setRotation(270);
-		}
-		if (direction == RIGHT) {
-			sprite.setRotation(90);
+		if (state != RUN) {
+			sf::Vector2f pos = player->getPosition();
+			float dX = pos.x - coordX;
+			float dY = pos.y - coordY;
+			float rotation = (atan2(dY, dX)) * 180 / 3.14159265;
+			sprite.setRotation(rotation);
+			angle = rotation;
 		}
 
-		if (direction == TOP_LEFT) {
-			sprite.setRotation(315);
-		}
-		if (direction == BOT_LEFT) {
-			sprite.setRotation(225);
-		}
+		if (state == RUN) {
+			if (direction == UP) {
+				sprite.setRotation(0);
+			}
+			if (direction == DOWN) {
+				sprite.setRotation(180);
+			}
 
-		if (direction == TOP_RIGHT) {
-			sprite.setRotation(45);
-		}
-		if (direction == BOT_RIGHT) {
-			sprite.setRotation(135);
+			if (direction == LEFT) {
+				sprite.setRotation(270);
+			}
+			if (direction == RIGHT) {
+				sprite.setRotation(90);
+			}
+
+			if (direction == TOP_LEFT) {
+				sprite.setRotation(315);
+			}
+			if (direction == BOT_LEFT) {
+				sprite.setRotation(225);
+			}
+
+			if (direction == TOP_RIGHT) {
+				sprite.setRotation(45);
+			}
+			if (direction == BOT_RIGHT) {
+				sprite.setRotation(135);
+			}
 		}
 
 		sf::Time time;

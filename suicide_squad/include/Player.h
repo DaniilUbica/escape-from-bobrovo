@@ -21,6 +21,7 @@ class Player : public GameObject {
 private:
 	Person person;
 	State state;
+	Direction s_direction;
 
 	bool canShoot = true;
 	bool canTakeDamage = true;
@@ -28,11 +29,15 @@ private:
 	bool canUseUltimate = false;
 	bool isUltimateWorking = false;
 
+	float nx, ny;
+
 	cique<Bullet*> bullets;
 	sf::Clock clock;
 	sf::Clock buffs_clock;
 	sf::Clock ultimate_duration;
 	sf::Clock ultimate_cooldown;
+
+	sf::RenderWindow window;
 
 	Timer* ult_timer;
 
@@ -51,11 +56,14 @@ public:
 	void checkCollisionConsumable(std::vector<Consumable*> consumable);
 	void initBullets();
 	void useUltimate();
+	void countAngle(sf::RenderWindow& window);
+	void countNxNy(sf::RenderWindow& window);
 
 	std::deque<Bullet*> getBullets();
 
 	void setState(State state);
 	void setVisible(bool v);
+	void setSDirection(Direction d);
 
 	Person getPerson();
 	bool getVisible();

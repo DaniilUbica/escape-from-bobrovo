@@ -27,7 +27,7 @@ public:
 	void Destroy();
 
 	void Update() override;
-	void Update(float angle, float x, float y);
+	void Update(float angle);
 	void checkCollision(std::vector<Object> obj);
 	void checkCollision(GameObject* obj);
 	void checkCollision(GameObject* obj, int damage);

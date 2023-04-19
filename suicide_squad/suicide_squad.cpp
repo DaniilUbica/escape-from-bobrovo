@@ -13,13 +13,16 @@
 
 void controllPlayer(Player* player) {
     player->setState(STAY);
+    player->setSDirection(NONE);
+    player->setDirection(NONE);
+    player->isAttacking = false;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        player->setDirection(LEFT);
+        player->setSDirection(LEFT);
         player->setState(RUN);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        player->setDirection(RIGHT);
+        player->setSDirection(RIGHT);
         player->setState(RUN);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
@@ -30,11 +33,8 @@ void controllPlayer(Player* player) {
         player->setDirection(DOWN);
         player->setState(RUN);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        player->setState(ATTACK);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        player->setState(ATTACK);
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        player->isAttacking = true;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
         player->useUltimate();
@@ -104,6 +104,8 @@ int main()
 
         if (player->getHP() > 0) {
             controllPlayer(player);
+            player->countAngle(window);
+            player->countNxNy(window);
             player->Update();
             player->checkCollision(m.getObjects());
         }

@@ -99,12 +99,18 @@ void Bullet::Update() {
 	sprite.setPosition(coordX, coordY);
 }
 
-void Bullet::Update(float angle, float x, float y) {
+void Bullet::Update(float angle) {
 	sf::FloatRect rect = sprite.getGlobalBounds();
 	if (isLaunched) {
 		coordX += nx;
 		coordY += ny;
 		sprite.setRotation(this->angle);
+	}
+
+	if (isLaunchedByPlayer) {
+		if (abs(start_x - coordX) >= BULLET_DISTANCE || abs(start_y - coordY) >= BULLET_DISTANCE) {
+			this->Destroy();
+		}
 	}
 
 	sprite.setOrigin(rect.left + rect.width / 2, rect.top + rect.height / 2);

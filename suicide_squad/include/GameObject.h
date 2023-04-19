@@ -14,6 +14,7 @@ enum Direction {
 	TOP_RIGHT,
 	BOT_LEFT,
 	BOT_RIGHT,
+	NONE,
 };
 
 enum State {

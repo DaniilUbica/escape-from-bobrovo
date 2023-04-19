@@ -38,50 +38,34 @@ Player::~Player() {
 }
 
 void Player::Update() {
-	if (direction == LEFT && state == RUN) {
-		coordX -= PLAYER_SPEED;
-		//sprite = run_animation->Tick(true);
-	}
 
-	if (direction == RIGHT && state == RUN) {
-		coordX += PLAYER_SPEED;
-		//sprite = run_animation->Tick(false);
-	}
+	//if (s_direction == RIGHT && state == RUN) {
+	//	coordX -= PLAYER_SPEED;
+	//	coordY += PLAYER_SPEED * nx;
+	//}
+
+	//if (s_direction == LEFT && state == RUN) {
+	//	coordX += PLAYER_SPEED;
+	//	coordY -= PLAYER_SPEED * nx;
+	//}
 
 	if (direction == UP && state == RUN) {
-		coordY -= PLAYER_SPEED;
+		coordX += PLAYER_SPEED * nx;
+		coordY += PLAYER_SPEED * ny;
 	}
 
 	if (direction == DOWN && state == RUN) {
-		coordY += PLAYER_SPEED;
+		coordX -= PLAYER_SPEED * nx;
+		coordY -= PLAYER_SPEED * ny;
 	}
 
-	if (direction == RIGHT && state == ATTACK && canShoot) {
-		//sprite = attack_animation->Tick(false);
-		Shoot();
+	if (isAttacking && canShoot) {
 		canShoot = false;
-	}
-
-	if (direction == LEFT && state == ATTACK && canShoot) {
-		canShoot = false;
-		//sprite = attack_animation->Tick(true);
-		Shoot();
-	}
-
-	if (direction == UP && state == ATTACK && canShoot) {
-		canShoot = false;
-		//sprite = attack_animation->Tick(false);
-		Shoot();
-	}
-
-	if (direction == DOWN && state == ATTACK && canShoot) {
-		canShoot = false;
-		//sprite = attack_animation->Tick(true);
 		Shoot();
 	}
 
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
-		bullets.elems[i]->Update();
+		bullets.elems[i]->Update(angle);
 	}
 
 	sf::Time time;
@@ -100,20 +84,6 @@ void Player::Update() {
 		}
 	}
 
-	if (direction == UP) {
-		sprite.setRotation(0);
-	}
-	if (direction == DOWN) {
-		sprite.setRotation(180);
-	}
-
-	if (direction == LEFT) {
-		sprite.setRotation(270);
-	}
-	if (direction == RIGHT) {
-		sprite.setRotation(90);
-	}
-
 	if (damage > 1) {
 		sprite.setColor(sf::Color(103, 127, 158));
 	}
@@ -121,8 +91,10 @@ void Player::Update() {
 	if (!isUltimateWorking && damage == 1) {
 		sprite.setColor(sf::Color::White);
 	}
-
+	bullets.back()->setStartPoint(coordX, coordY);
 	controllUltimate();
+
+	sprite.setRotation(angle);
 	sprite.setPosition(coordX, coordY);
 }
 
@@ -132,17 +104,23 @@ void Player::checkCollision(std::vector<Object> objects) {
 		sf::FloatRect o_rect = obj.r.getGlobalBounds();
 		if (rect.intersects(obj.r.getGlobalBounds())) {
 			if (obj.type == SOLID) {
-				if (direction == LEFT && rect.left < o_rect.left + o_rect.width) {
-					coordX = coordX + (o_rect.left + o_rect.width - rect.left);
+				float overlapX = std::min(rect.left + rect.width, o_rect.left + o_rect.width) - std::max(rect.left, o_rect.left);
+				float overlapY = std::min(rect.top + rect.height, o_rect.top + o_rect.height) - std::max(rect.top, o_rect.top);
+				if (overlapX < overlapY) {
+					if (rect.left < o_rect.left) {
+						coordX = o_rect.left - rect.width / 2;
+					}
+					else {
+						coordX = o_rect.left + o_rect.width + rect.width / 2;
+					}
 				}
-				if (direction == RIGHT && rect.left + rect.width > o_rect.left) {
-					coordX = coordX - (rect.left + rect.width - o_rect.left);
-				}
-				if (direction == UP && rect.top < o_rect.top + o_rect.height) {
-					coordY = coordY + (o_rect.top + o_rect.height - rect.top);
-				}
-				if (direction == DOWN && rect.top + rect.height > o_rect.top) {
-					coordY = coordY - (rect.top + rect.height - o_rect.top);
+				else {
+					if (rect.top < o_rect.top) {
+						coordY = o_rect.top - rect.height / 2;
+					}
+					else {
+						coordY = o_rect.top + o_rect.height + rect.height / 2;
+					}
 				}
 			}
 			if (obj.type == TRAP) {
@@ -211,15 +189,20 @@ bool Player::getVisible() {
 	return isVisible;
 }
 
+void Player::setSDirection(Direction d) {
+	s_direction = d;
+}
+
 Timer Player::getUltTimer() {
 	return *ult_timer;
 }
 
 void Player::Shoot() {
+	bullets.back()->setNxNy(nx, ny);
+	bullets.back()->setAngle(angle);
 	if (bullets.back()->getPosition().x == -10 && bullets.back()->getPosition().y == 10) {
 		bullets.back()->Launch();
 		bullets.back()->setPosition(coordX, coordY);
-		bullets.back()->setStartPoint(coordX, coordY);
 		bullets.back()->setDirection(direction);
 		bullets.back()->setIsLaunchedByPlayer(true);
 		bullets.pop();
@@ -237,6 +220,22 @@ void Player::useUltimate() {
 			canUseUltimate = false;
 		}
 	}
+}
+
+void Player::countAngle(sf::RenderWindow& window) {
+	sf::Vector2i pos = sf::Mouse::getPosition(window);
+	float dX = pos.x - coordX;
+	float dY = pos.y - coordY;
+	this->angle = (atan2(dY, dX)) * 180 / 3.14159265;
+}
+
+void Player::countNxNy(sf::RenderWindow& window) {
+	sf::Vector2i pos = sf::Mouse::getPosition(window);
+	float dx = pos.x - coordX;
+	float dy = pos.y - coordY;
+
+	nx = dx / sqrt(dx * dx + dy * dy);
+	ny = dy / sqrt(dx * dx + dy * dy);
 }
 
 void Player::controllUltimate() {

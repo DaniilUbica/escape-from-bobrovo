@@ -10,6 +10,9 @@
 #include "include/ViewBorder.h"
 #include "include/Consumable.h"
 #include "include/Textures.h"
+#include "include/Portal.h"
+
+bool goToNext = false;
 
 void controllPlayer(Player* player) {
     player->setState(STAY);
@@ -60,6 +63,8 @@ int main()
     Player* player = new Player(PLAYER_START_X, PLAYER_START_Y, VOLKOV, RIGHT, player_textures, volkov_ult_texture);
 
     EnemiesManager e_manager;
+
+    Portal* portal = new Portal(500, 350, portal_textures);
 
     e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
     e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
@@ -127,6 +132,9 @@ int main()
             e_manager.setKilledToNull();
             m.changeMap();
             m.setMap(range_enemy_texture, melee_enemy_texture);
+            for (Consumable* c : consumables) {
+                c->setUsed(false);
+            }
             if (m.getIndex() == 0) {
                 e_manager.Clear();
                 e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
@@ -160,6 +168,10 @@ int main()
             }
         }
 
+        portal->takePlayer(player);
+        portal->isIntersectsWithPlayer();
+        portal->Update();
+
         for (int i = 0; i < BULLETS_AMOUNT; i++) {
             window.draw(bullets[i]->getSprite());
 
@@ -184,6 +196,8 @@ int main()
 
         window.draw(turret->getSprite());
         window.draw(player->getSprite());
+
+        window.draw(portal->getSprite());
 
         window.draw(player->getUltTimer().getSprite());
         window.draw(player->getUltTimer().getRect());

@@ -13,6 +13,8 @@ sf::Texture range_enemy_texture;
 
 std::map<State, sf::Texture> player_textures;
 
+std::map<State, sf::Texture> portal_textures;
+
 void setTextures() {
     heart_texture.loadFromFile("assets/heart.png");
     
@@ -31,4 +33,8 @@ void setTextures() {
     player_textures[STAY].loadFromFile("assets/character/Idle4.png");
     player_textures[RUN].loadFromFile("assets/character/Walk.png");
     player_textures[ATTACK].loadFromFile("assets/character/Attack.png");
+
+    portal_textures[STAY].loadFromFile("assets/Portal/Idle.png");
+    portal_textures[OPEN].loadFromFile("assets/Portal/Open.png");
+    portal_textures[CLOSE].loadFromFile("assets/Portal/Close.png");
 }

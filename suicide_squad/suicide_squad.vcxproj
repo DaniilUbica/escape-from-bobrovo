@@ -148,6 +148,7 @@
     <ClCompile Include="src\HealthBar.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Portal.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Turret.cpp" />
     <ClCompile Include="src\ViewBorder.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="include\Map.h" />
     <ClInclude Include="include\MapObject.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\Portal.h" />
     <ClInclude Include="include\Textures.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Turret.h" />

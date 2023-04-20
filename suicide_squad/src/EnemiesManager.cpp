@@ -75,12 +75,12 @@ void EnemiesManager::drawEnemies(sf::RenderWindow& window) {
 		}
 
 		window.draw(e->getSprite());
-		window.draw(e->getHealthBar()->getRect());
+		e->getHealthBar()->drawHealthBar(window);
 	}
 
 	for (MeleeEnemy* e : m_enemies) {
 		window.draw(e->getSprite());
-		window.draw(e->getHealthBar()->getRect());
+		e->getHealthBar()->drawHealthBar(window);
 	}
 }
 

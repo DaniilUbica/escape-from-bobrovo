@@ -61,3 +61,7 @@ ConsType Consumable::getType() {
 bool Consumable::getUsed() {
 	return isUsed;
 }
+
+void Consumable::setUsed(bool u) {
+	isUsed = u;
+}

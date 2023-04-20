@@ -39,24 +39,20 @@ Player::~Player() {
 
 void Player::Update() {
 
-	//if (s_direction == RIGHT && state == RUN) {
-	//	coordX -= PLAYER_SPEED;
-	//	coordY += PLAYER_SPEED * nx;
-	//}
+	if (s_direction == RIGHT && state == RUN) {
+		coordX += PLAYER_SPEED;
+	}
 
-	//if (s_direction == LEFT && state == RUN) {
-	//	coordX += PLAYER_SPEED;
-	//	coordY -= PLAYER_SPEED * nx;
-	//}
+	if (s_direction == LEFT && state == RUN) {
+		coordX -= PLAYER_SPEED;
+	}
 
 	if (direction == UP && state == RUN) {
-		coordX += PLAYER_SPEED * nx;
-		coordY += PLAYER_SPEED * ny;
+		coordY -= PLAYER_SPEED;
 	}
 
 	if (direction == DOWN && state == RUN) {
-		coordX -= PLAYER_SPEED * nx;
-		coordY -= PLAYER_SPEED * ny;
+		coordY += PLAYER_SPEED;
 	}
 
 	if (isAttacking && canShoot) {

@@ -21,6 +21,8 @@ enum State {
 	RUN,
 	STAY,
 	ATTACK,
+	CLOSE,
+	OPEN,
 };
 
 class GameObject {

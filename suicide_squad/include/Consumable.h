@@ -22,6 +22,8 @@ public:
 	void Update();
 	void Destroy();
 
+	void setUsed(bool u);
+
 	ConsType getType();
 	bool getUsed();
 };

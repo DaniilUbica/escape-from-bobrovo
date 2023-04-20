@@ -18,8 +18,10 @@ public:
 	void Update() override;
 	void takePlayer(Player* player);
 	bool isIntersectsWithPlayer();
+	void Restart(float x, float y);
 
 	void setState(State st);
 
 	State getState();
+	Animation* getCloseAnimation();
 };

@@ -33,5 +33,6 @@ sf::Sprite Animation::Tick(bool rotate) {
 	if (rotate) {
 		sprite.setTextureRect(r_frames[i]);
 	}
+
 	return sprite;
 }

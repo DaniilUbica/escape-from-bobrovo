@@ -64,13 +64,13 @@ int main()
 
     EnemiesManager e_manager;
 
-    Portal* portal = new Portal(500, 350, portal_textures);
+    Portal* portal = new Portal(PLAYER_START_X, PLAYER_START_Y, portal_textures);
 
     e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-    e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-    e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
-    e_manager.addEnemy(MELEE, 600, 300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
-    e_manager.addEnemy(MELEE, 1200, 224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
+    //e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
+    //e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
+    //e_manager.addEnemy(MELEE, 600, 300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
+    //e_manager.addEnemy(MELEE, 1200, 224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
 
     Turret* turret = new Turret(500, 100, turret_texture);
 
@@ -99,7 +99,7 @@ int main()
     while (window.isOpen())
     {
         window.clear(sf::Color::White);
-
+        m.drawMap(window);
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -122,44 +122,50 @@ int main()
             player->checkBulletCollision(m.getObjects(), e);
         }
 
+        portal->takePlayer(player);
+
         player->checkCollisionConsumable(consumables);
 
         e_manager.UpdateEnemies(player);
         e_manager.checkCollision(m.getObjects());
 
         if (e_manager.getKilledEnemies() == e_manager.getEnemiesAmount()) {
-            player->setPosition(PLAYER_START_X, PLAYER_START_Y);
-            e_manager.setKilledToNull();
-            m.changeMap();
-            m.setMap(range_enemy_texture, melee_enemy_texture);
-            for (Consumable* c : consumables) {
-                c->setUsed(false);
+            window.draw(portal->getSprite());
+            portal->Update();
+            portal->isIntersectsWithPlayer();
+            if (int(portal->getCloseAnimation()->currentFrame) == 6) {
+                portal->Restart(PLAYER_START_X, PLAYER_START_Y);
+                player->setPosition(player->getPosition().x, player->getPosition().y);
+                e_manager.setKilledToNull();
+                m.changeMap();
+                m.setMap(range_enemy_texture, melee_enemy_texture);
+                for (Consumable* c : consumables) {
+                    c->setUsed(false);
+                }
+                if (m.getIndex() == 0) {
+                    e_manager.Clear();
+                    e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
+                    e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
+                    e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
+                    e_manager.addEnemy(MELEE, 600, 300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
+                    e_manager.addEnemy(MELEE, 1200, 224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
+                }
+                else if (m.getIndex() == 1) {
+                    e_manager.Clear();
+                    e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
+                    e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
+                    e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
+                }
+                else if (m.getIndex() == 2) {
+                    e_manager.Clear();
+                    e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
+                    e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
+                }
+                e_manager.setBulletsTextures(bullet_texture);
             }
-            if (m.getIndex() == 0) {
-                e_manager.Clear();
-                e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-                e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-                e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
-                e_manager.addEnemy(MELEE, 600, 300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
-                e_manager.addEnemy(MELEE, 1200, 224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
-            }
-            else if (m.getIndex() == 1) {
-                e_manager.Clear();
-                e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-                e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-                e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
-            }
-            else if (m.getIndex() == 2) {
-                e_manager.Clear();
-                e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-                e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-            }
-            e_manager.setBulletsTextures(bullet_texture);
         }
 
         turret->Update(m.getObjects(), player);
-
-        m.drawMap(window);
 
         for (Consumable* c : consumables) {
             if (!c->getUsed()) {
@@ -167,10 +173,6 @@ int main()
                 window.draw(c->getSprite());
             }
         }
-
-        portal->takePlayer(player);
-        portal->isIntersectsWithPlayer();
-        portal->Update();
 
         for (int i = 0; i < BULLETS_AMOUNT; i++) {
             window.draw(bullets[i]->getSprite());
@@ -196,8 +198,6 @@ int main()
 
         window.draw(turret->getSprite());
         window.draw(player->getSprite());
-
-        window.draw(portal->getSprite());
 
         window.draw(player->getUltTimer().getSprite());
         window.draw(player->getUltTimer().getRect());

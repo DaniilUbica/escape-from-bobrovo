@@ -16,18 +16,20 @@ void EnemiesManager::UpdateEnemies(Player* player) {
 	for (RangeEnemy* e : r_enemies) {
 		e->takePlayer(player);
 		e->Update();
-		if (e->getHP() <= 0) {
+		if (e->getHP() <= 0 && e->getPosition().x != -1000) {
 			killed_enemies++;
-			r_enemies.erase(find(r_enemies.begin(),r_enemies.end(),e));
+			//r_enemies.erase(find(r_enemies.begin(),r_enemies.end(),e));
+			e->setPosition(-1000, -1000);
 		}
 	}
 
 	for (MeleeEnemy* e : m_enemies) {
 		e->takePlayer(player);
 		e->Update();
-		if (e->getHP() <= 0) {
+		if (e->getHP() <= 0 && e->getPosition().x != -1000) {
 			killed_enemies++;
-			m_enemies.erase(find(m_enemies.begin(), m_enemies.end(), e));
+			//m_enemies.erase(find(m_enemies.begin(), m_enemies.end(), e));
+			e->setPosition(-1000, -1000);
 		}
 	}
 }
@@ -98,7 +100,6 @@ void EnemiesManager::Clear() {
 }
 
 void EnemiesManager::Copy(EnemiesManager e) {
-	//Clear();
 	r_enemies = e.getRangeEnemies();
 	m_enemies = e.getMeleeEnemies();
 }

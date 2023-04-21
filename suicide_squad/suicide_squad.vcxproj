@@ -149,6 +149,7 @@
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Portal.cpp" />
+    <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Turret.cpp" />
     <ClCompile Include="src\ViewBorder.cpp" />
@@ -168,10 +169,12 @@
     <ClInclude Include="include\MapObject.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Portal.h" />
+    <ClInclude Include="include\SoundManager.h" />
     <ClInclude Include="include\Textures.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Turret.h" />
     <ClInclude Include="include\ViewBorder.h" />
+    <ClInclude Include="Sounds.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

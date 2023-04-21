@@ -154,12 +154,13 @@ void Player::checkCollisionConsumable(std::vector<Consumable*> consumable) {
 				if (health < 5) {
 					health++;
 					sprite.setColor(sf::Color::Green);
+					c->Destroy();
 				}
 			}
 			if (c->getType() == DAMAGE) {
 				damage++;
+				c->Destroy();
 			}
-			c->Destroy();
 		}
 	}
 }

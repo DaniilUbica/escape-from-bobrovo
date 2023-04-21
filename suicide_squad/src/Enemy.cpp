@@ -154,9 +154,10 @@ void RangeEnemy::Update() {
 				sprite.setRotation(45);
 			}
 		}
-		sprite.setPosition(coordX, coordY);
-		sprite.setColor(sf::Color::White);
 	}
+
+	sprite.setPosition(coordX, coordY);
+	sprite.setColor(sf::Color::White);
 
 	health_bar->Update(coordX - SPRITE_SIZE / 2, coordY - SPRITE_SIZE / 2, health);
 
@@ -511,8 +512,8 @@ void MeleeEnemy::Update() {
 			clock.restart();
 			canAttack = true;
 		}
-		sprite.setPosition(coordX, coordY);
 	}
+	sprite.setPosition(coordX, coordY);
 
 	health_bar->Update(coordX - SPRITE_SIZE/2, coordY-SPRITE_SIZE/2, health);
 }

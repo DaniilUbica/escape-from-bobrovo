@@ -2,12 +2,11 @@
 
 #include <SFML/Audio.hpp>
 
-sf::SoundBuffer volkov_attack_sound;
-
 class SoundManager {
 private:
-
+	sf::Music music;
+	sf::Sound sound;
 public:
-
+	void Shoot(sf::SoundBuffer* s);
 };
 

@@ -11,6 +11,7 @@
 #include "include/Consumable.h"
 #include "include/Textures.h"
 #include "include/Portal.h"
+#include "include/Sounds.h"
 
 bool goToNext = false;
 
@@ -51,6 +52,7 @@ int main()
     sf::Sprite heart_sprites[PLAYER_MAX_HP];
 
     setTextures();
+    setSounds();
 
     for (int i = 0; i < PLAYER_MAX_HP; i++) {
         heart_sprites[i].setTexture(heart_texture);
@@ -65,6 +67,8 @@ int main()
     EnemiesManager e_manager;
 
     Portal* portal = new Portal(PLAYER_START_X, PLAYER_START_Y, portal_textures);
+
+    player->setSounds(revo_shot);
 
     e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 200);
     e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
@@ -128,8 +132,6 @@ int main()
 
         e_manager.UpdateEnemies(player);
         e_manager.checkCollision(m.getObjects());
-
-        std::cout << e_manager.getEnemiesAmount() << " " << e_manager.getKilledEnemies() << "\n";
 
         if (e_manager.getKilledEnemies() == e_manager.getEnemiesAmount()) {
             window.draw(portal->getSprite());

@@ -178,6 +178,10 @@ void Player::setVisible(bool v) {
 	isVisible = v;
 }
 
+void Player::setSounds(sf::SoundBuffer& attack) {
+	attack_sound = &attack;
+}
+
 Person Player::getPerson() {
 	return person;
 }
@@ -204,6 +208,7 @@ void Player::Shoot() {
 		bullets.back()->setIsLaunchedByPlayer(true);
 		bullets.pop();
 	}
+	s_manager.Shoot(attack_sound);
 }
 
 void Player::useUltimate() {

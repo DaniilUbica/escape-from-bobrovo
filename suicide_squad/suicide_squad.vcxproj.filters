@@ -116,7 +116,7 @@
     <ClInclude Include="include\SoundManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Sounds.h">
+    <ClInclude Include="include\Sounds.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

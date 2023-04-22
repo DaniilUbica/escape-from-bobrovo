@@ -170,11 +170,11 @@
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Portal.h" />
     <ClInclude Include="include\SoundManager.h" />
+    <ClInclude Include="include\Sounds.h" />
     <ClInclude Include="include\Textures.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Turret.h" />
     <ClInclude Include="include\ViewBorder.h" />
-    <ClInclude Include="Sounds.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

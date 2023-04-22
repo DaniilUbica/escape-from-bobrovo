@@ -25,6 +25,10 @@ protected:
 
 	int point1_x, point2_x, point1_y, point2_y;
 
+	SoundManager s_manager;
+
+	sf::SoundBuffer* attack_sound;
+
 	void lookForPlayer(float speed);
 	void Patrol(float speed);
 

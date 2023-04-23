@@ -3,6 +3,7 @@
 void GameObject::takeDamage(int damage) {
     health-=damage;
     sprite.setColor(sf::Color::Red);
+    sprite.setColor(sf::Color::White);
 }
 
 Direction GameObject::getDirection() {

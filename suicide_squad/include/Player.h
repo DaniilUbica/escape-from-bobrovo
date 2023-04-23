@@ -25,6 +25,7 @@ private:
 
 	bool canShoot = true;
 	bool canTakeDamage = true;
+	bool canTakeDamageFromTrap = true;
 	bool isVisible = true;
 	bool canUseUltimate = false;
 	bool isUltimateWorking = false;
@@ -36,6 +37,7 @@ private:
 	sf::Clock buffs_clock;
 	sf::Clock ultimate_duration;
 	sf::Clock ultimate_cooldown;
+	sf::Clock damage_clock;
 
 	sf::RenderWindow window;
 
@@ -63,6 +65,8 @@ public:
 	void countAngle(sf::RenderWindow& window);
 	void countNxNy(sf::RenderWindow& window);
 	void setSounds(sf::SoundBuffer& attack, sf::SoundBuffer& ult);
+	void checkDamaged();
+	void takeDamage(int damage) override;
 
 	std::deque<Bullet*> getBullets();
 

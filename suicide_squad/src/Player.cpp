@@ -87,8 +87,11 @@ void Player::Update() {
 	if (!isUltimateWorking && damage == 1) {
 		sprite.setColor(sf::Color::White);
 	}
+
 	bullets.back()->setStartPoint(coordX, coordY);
 	controllUltimate();
+
+	checkDamaged();
 
 	sprite.setRotation(angle);
 	sprite.setPosition(coordX, coordY);
@@ -120,15 +123,15 @@ void Player::checkCollision(std::vector<Object> objects) {
 				}
 			}
 			if (obj.type == TRAP) {
-				if (canTakeDamage) {
+				if (canTakeDamageFromTrap) {
 					health--;
 					sprite.setColor(sf::Color::Red);
-					canTakeDamage = false;
+					canTakeDamageFromTrap = false;
 				}
 			}
 		}
 		if (!rect.intersects(obj.r.getGlobalBounds()) && obj.type == TRAP) {
-			canTakeDamage = true;
+			canTakeDamageFromTrap = true;
 		}
 	}
 }
@@ -181,6 +184,29 @@ void Player::setVisible(bool v) {
 void Player::setSounds(sf::SoundBuffer& attack, sf::SoundBuffer& ult) {
 	attack_sound = &attack;
 	ult_sound = &ult;
+}
+
+void Player::checkDamaged() {
+	sf::Time damage_timer;
+	damage_timer = damage_clock.getElapsedTime();
+	if (!canTakeDamage) {
+		sprite.setColor(sf::Color::Red);
+	}
+
+	if (damage_timer.asSeconds() >= 0.3) {
+		damage_clock.restart();
+		canTakeDamage = true;
+		if (damage == 1 && !isUltimateWorking) {
+			sprite.setColor(sf::Color::White);
+		}
+	}
+}
+
+void Player::takeDamage(int damage) {
+	if (canTakeDamage) {
+		health--;
+		canTakeDamage = false;
+	}
 }
 
 Person Player::getPerson() {
@@ -249,7 +275,6 @@ void Player::controllUltimate() {
 		ultimate_duration.restart();
 		isVisible = true;
 		isUltimateWorking = false;
-
 	}
 
 	sf::Time ult_cooldown_timer;

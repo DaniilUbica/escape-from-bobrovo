@@ -178,8 +178,9 @@ void Player::setVisible(bool v) {
 	isVisible = v;
 }
 
-void Player::setSounds(sf::SoundBuffer& attack) {
+void Player::setSounds(sf::SoundBuffer& attack, sf::SoundBuffer& ult) {
 	attack_sound = &attack;
+	ult_sound = &ult;
 }
 
 Person Player::getPerson() {
@@ -220,6 +221,7 @@ void Player::useUltimate() {
 			isVisible = false;
 			isUltimateWorking = true;
 			canUseUltimate = false;
+			s_manager.Ult(ult_sound);
 		}
 	}
 }
@@ -247,6 +249,7 @@ void Player::controllUltimate() {
 		ultimate_duration.restart();
 		isVisible = true;
 		isUltimateWorking = false;
+
 	}
 
 	sf::Time ult_cooldown_timer;

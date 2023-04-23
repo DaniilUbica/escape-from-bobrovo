@@ -18,6 +18,7 @@ void RangeEnemy::Shoot() {
 		bullets.back()->setDirection(direction);
 		bullets.pop();
 	}
+	s_manager.Shoot(attack_sound);
 }
 
 RangeEnemy::RangeEnemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health) {
@@ -205,6 +206,10 @@ void Enemy::checkCollision(std::vector<Object> objects) {
 			}
 		}
 	}
+}
+
+void Enemy::setSounds(sf::SoundBuffer& attack) {
+	attack_sound = &attack;
 }
 
 void RangeEnemy::initBullets() {
@@ -407,6 +412,7 @@ HealthBar* Enemy::getHealthBar() {
 void MeleeEnemy::Hit() {
 	state = ATTACK;
 	player->takeDamage(1);
+	s_manager.Shoot(attack_sound);
 }
 
 MeleeEnemy::MeleeEnemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health) {

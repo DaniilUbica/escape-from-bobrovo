@@ -8,5 +8,6 @@ private:
 	sf::Sound sound;
 public:
 	void Shoot(sf::SoundBuffer* s);
+	void Ult(sf::SoundBuffer* s);
 };
 

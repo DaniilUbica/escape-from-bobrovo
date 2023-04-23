@@ -104,6 +104,15 @@ void EnemiesManager::Copy(EnemiesManager e) {
 	m_enemies = e.getMeleeEnemies();
 }
 
+void EnemiesManager::setSounds(sf::SoundBuffer& attack, sf::SoundBuffer& hit) {
+	for (RangeEnemy* e : r_enemies) {
+		e->setSounds(attack);
+	}
+	for (MeleeEnemy* e : m_enemies) {
+		e->setSounds(hit);
+	}
+}
+
 void EnemiesManager::setKilledToNull() {
 	killed_enemies = 0;
 }

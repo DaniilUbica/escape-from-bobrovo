@@ -29,7 +29,7 @@ public:
 	void setBulletsTextures(sf::Texture& texture);
 	void Clear();
 	void Copy(EnemiesManager e);
-
+	void setSounds(sf::SoundBuffer& shoot, sf::SoundBuffer& hit);
 	void setKilledToNull();
 
 	std::vector<RangeEnemy*> getRangeEnemies();

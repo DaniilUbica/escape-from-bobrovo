@@ -42,6 +42,7 @@ public:
 	void takePlayer(Player* player);
 	void setPatrolPoints(int x1, int y1, int x2, int y2);
 	void checkCollision(std::vector<Object> objects);
+	void setSounds(sf::SoundBuffer& attack);
 
 	HealthBar* getHealthBar();
 };

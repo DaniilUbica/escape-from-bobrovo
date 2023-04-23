@@ -45,7 +45,7 @@ private:
 
 	SoundManager s_manager;
 
-	sf::SoundBuffer* attack_sound;
+	sf::SoundBuffer* attack_sound, *ult_sound;
 
 	void Shoot();
 	void controllUltimate();
@@ -62,7 +62,7 @@ public:
 	void useUltimate();
 	void countAngle(sf::RenderWindow& window);
 	void countNxNy(sf::RenderWindow& window);
-	void setSounds(sf::SoundBuffer& attack);
+	void setSounds(sf::SoundBuffer& attack, sf::SoundBuffer& ult);
 
 	std::deque<Bullet*> getBullets();
 

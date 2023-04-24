@@ -6,19 +6,23 @@
 
 #include "MeleeEnemy.h"
 #include "RangeEnemy.h"
+#include "Boss.h"
 
 enum e_type {
 	RANGE,
 	MELEE,
+	BOSS,
 };
 
 class EnemiesManager {
 private:
 	std::vector<RangeEnemy*> r_enemies;
 	std::vector<MeleeEnemy*> m_enemies;
+	Boss* boss = NULL;
 	int enemies_amount;
 	int killed_enemies = 0;
 public:
+
 	EnemiesManager() = default;
 	~EnemiesManager();
 
@@ -37,5 +41,6 @@ public:
 	std::vector<MeleeEnemy*> getMeleeEnemies();
 	int getEnemiesAmount();
 	int getKilledEnemies();
+	Boss* getBoss();
 };
 

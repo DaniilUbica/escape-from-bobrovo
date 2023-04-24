@@ -76,31 +76,30 @@ void MeleeEnemy::Update() {
 
 		if (state == RUN) {
 			if (direction == UP) {
-				sprite.setRotation(0);
-			}
-			if (direction == DOWN) {
-				sprite.setRotation(180);
-			}
-
-			if (direction == LEFT) {
 				sprite.setRotation(270);
 			}
-			if (direction == RIGHT) {
+			if (direction == DOWN) {
 				sprite.setRotation(90);
 			}
 
-			if (direction == TOP_LEFT) {
-				sprite.setRotation(315);
+			if (direction == LEFT) {
+				sprite.setRotation(180);
 			}
-			if (direction == BOT_LEFT) {
-				sprite.setRotation(225);
+			if (direction == RIGHT) {
+				sprite.setRotation(0);
 			}
 
+			if (direction == TOP_LEFT) {
+				sprite.setRotation(225);
+			}
+			if (direction == BOT_LEFT) {
+				sprite.setRotation(135);
+			}
 			if (direction == TOP_RIGHT) {
-				sprite.setRotation(45);
+				sprite.setRotation(315);
 			}
 			if (direction == BOT_RIGHT) {
-				sprite.setRotation(135);
+				sprite.setRotation(45);
 			}
 		}
 

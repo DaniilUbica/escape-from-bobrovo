@@ -118,7 +118,7 @@ void Map::fillObjectTypes() {
 void Map::changeMap() {
 	srand(time(NULL));
 	int t = map_index;
-	map_index = rand() % 3 + 0;
+	map_index = rand() % (MAPS_AMOUNT-1) + 0;
 }
 
 void Map::setMap(sf::Texture& range_enemy_texture, sf::Texture& melee_enemy_texture) {
@@ -138,6 +138,10 @@ void Map::drawMap(sf::RenderWindow& window) {
 	for (Object obj : objects) {
 		window.draw(obj.r);
 	}
+}
+
+void Map::setBossMap() {
+	map_index = 0;
 }
 
 std::vector<Object> Map::getObjects() {

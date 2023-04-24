@@ -24,6 +24,7 @@ public:
 	void checkBulletsCollision(std::vector<Object> objects);
 	void Update() override;
 	void checkCollision(std::vector<Object> objects);
+	void lookForPlayer(float speed);
 
 	void setBulletsTextures(sf::Texture* textures);
 

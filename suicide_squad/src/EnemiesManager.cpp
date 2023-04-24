@@ -10,6 +10,7 @@ EnemiesManager::~EnemiesManager() {
 	for (MeleeEnemy* e : m_enemies) {
 		delete e;
 	}
+	delete boss;
 }
 
 void EnemiesManager::UpdateEnemies(Player* player) {
@@ -32,6 +33,13 @@ void EnemiesManager::UpdateEnemies(Player* player) {
 			e->setPosition(-1000, -1000);
 		}
 	}
+	if (boss != NULL) {
+		boss->takePlayer(player);
+		boss->Update();
+		if (boss->getHP() <= 0 && boss->getPosition().x != -1000) {
+			boss->setPosition(-1000, -1000);
+		}
+	}
 }
 
 void EnemiesManager::checkCollision(std::vector<Object> objects) {
@@ -42,6 +50,10 @@ void EnemiesManager::checkCollision(std::vector<Object> objects) {
 
 	for (MeleeEnemy* e : m_enemies) {
 		e->checkCollision(objects);
+	}
+	if (boss != NULL) {
+		boss->checkCollision(objects);
+		boss->checkBulletsCollision(objects);
 	}
 }
 
@@ -54,6 +66,10 @@ void EnemiesManager::addEnemy(e_type type, float x, float y, Direction direction
 		m_enemies.push_back(new MeleeEnemy(x, y, direction, textures, health));
 		m_enemies[m_enemies.size() - 1]->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
 	}
+	if (type == BOSS) {
+		boss = new Boss(x, y, direction, textures, health);
+		boss->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
+	}
 	enemies_amount = r_enemies.size() + m_enemies.size();
 }
 
@@ -65,6 +81,10 @@ void EnemiesManager::addEnemy(e_type type, float x, float y, Direction direction
 	if (type == MELEE) {
 		m_enemies.push_back(new MeleeEnemy(x, y, direction, texture, health));
 		m_enemies[m_enemies.size() - 1]->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
+	}
+	if (type == BOSS) {
+		boss = new Boss(x, y, direction, texture, health);
+		boss->setPatrolPoints(p1_x, p1_y, p2_x, p2_y);
 	}
 	enemies_amount = r_enemies.size() + m_enemies.size();
 }
@@ -83,6 +103,13 @@ void EnemiesManager::drawEnemies(sf::RenderWindow& window) {
 	for (MeleeEnemy* e : m_enemies) {
 		window.draw(e->getSprite());
 		e->getHealthBar()->drawHealthBar(window);
+	}
+	if (boss != NULL) {
+		window.draw(boss->getSprite());
+		boss->getHealthBar()->drawHealthBar(window);
+		for (int i = 0; i < BULLETS_AMOUNT; i++) {
+			window.draw(boss->getBullets()[i]->getSprite());
+		}
 	}
 }
 
@@ -111,6 +138,9 @@ void EnemiesManager::setSounds(sf::SoundBuffer& attack, sf::SoundBuffer& hit) {
 	for (MeleeEnemy* e : m_enemies) {
 		e->setSounds(hit);
 	}
+	if (boss != NULL) {
+		boss->setSounds(attack);
+	}
 }
 
 void EnemiesManager::setKilledToNull() {
@@ -133,4 +163,8 @@ int EnemiesManager::getEnemiesAmount() {
 
 int EnemiesManager::getKilledEnemies() {
 	return killed_enemies;
+}
+
+Boss* EnemiesManager::getBoss() {
+	return boss;
 }

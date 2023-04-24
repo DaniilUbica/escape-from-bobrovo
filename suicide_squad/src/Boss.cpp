@@ -51,8 +51,8 @@ Boss::Boss(int x, int y, Direction direction, sf::Texture& texture, int health) 
 
 	health_bar = new HealthBar(coordX, coordY, health, width);
 
-	attack_borders = new ViewBorder(coordX, coordY, width, height, 200.0, 230, 100.0);
-	view_borders = new ViewBorder(coordX, coordY, width, height, 300.0, 340.0, 150.0);
+	attack_borders = new ViewBorder(coordX, coordY, width, height, 600.0, 230, 300.0);
+	view_borders = new ViewBorder(coordX, coordY, width, height, 1300.0, 740.0, 650.0);
 	hit_borders = new ViewBorder(coordX, coordY, width, height, 20.0, 52.0, 10.0);
 
 	this->direction = direction;
@@ -93,7 +93,7 @@ void Boss::Update() {
 		}
 		if (view_borders->isIntersects(player)) {
 			if (player->getVisible()) {
-				lookForPlayer(ENEMY_SPEED);
+				lookForPlayer(ENEMY_SPEED/2);
 			}
 		}
 
@@ -194,11 +194,77 @@ void Boss::checkCollision(std::vector<Object> objects) {
 	}
 }
 
+void Boss::lookForPlayer(float speed) {
+	int p_x = player->getPosition().x;
+	int p_y = player->getPosition().y;
+
+	if (!attack_borders->isIntersects(player)) {
+		state = RUN;
+	}
+
+	if (!hit_borders->isIntersects(player)) {
+		if (p_y == int(coordY)) {
+			if (p_x > coordX) {
+				direction = RIGHT;
+				coordX += speed;
+			}
+			if (p_x < coordX) {
+				direction = LEFT;
+				coordX -= speed;
+			}
+		}
+		if (p_x == int(coordX)) {
+			if (p_y > coordY) {
+				direction = DOWN;
+				coordY += speed;
+			}
+			if (p_y < coordY) {
+				direction = UP;
+				coordY -= speed;
+			}
+		}
+		if (p_y == int(coordY)) {
+			if (p_x > coordX) {
+				direction = RIGHT;
+				coordX += speed;
+			}
+			if (p_x < coordX) {
+				direction = LEFT;
+				coordX -= speed;
+			}
+		}
+		if (p_x > int(coordX)) {
+			if (p_y > coordY) {
+				direction = BOT_RIGHT;
+				coordY += speed;
+				coordX += speed;
+			}
+			if (p_y < coordY) {
+				direction = TOP_RIGHT;
+				coordY -= speed;
+				coordX += speed;
+			}
+		}
+		if (p_x < int(coordX)) {
+			if (p_y > coordY) {
+				direction = BOT_LEFT;
+				coordY += speed;
+				coordX -= speed;
+			}
+			if (p_y < coordY) {
+				direction = TOP_LEFT;
+				coordY -= speed;
+				coordX -= speed;
+			}
+		}
+	}
+}
+
 void Boss::setBulletsTextures(sf::Texture* textures) {
 	srand(time(NULL));
 
 	for (int i = 0; i < BULLETS_AMOUNT; i++) {
-		bullets.elems[i]->setTexture(textures[0]);
+		bullets.elems[i]->setTexture(textures[rand()%BULLETS_AMOUNT+0]);
 	}
 }
 

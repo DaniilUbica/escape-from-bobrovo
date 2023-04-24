@@ -44,6 +44,7 @@ private:
 	Timer* ult_timer;
 
 	int damage = 1;
+	int maps_passed = 0;
 
 	SoundManager s_manager;
 
@@ -74,8 +75,10 @@ public:
 	void setState(State state);
 	void setVisible(bool v);
 	void setSDirection(Direction d);
+	void incMaps();
 
 	Person getPerson();
 	bool getVisible();
 	Timer getUltTimer();
+	int getMapsPassed();
 };

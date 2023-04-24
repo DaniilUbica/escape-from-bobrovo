@@ -227,8 +227,16 @@ void Player::setSDirection(Direction d) {
 	s_direction = d;
 }
 
+void Player::incMaps() {
+	maps_passed++;
+}
+
 Timer Player::getUltTimer() {
 	return *ult_timer;
+}
+
+int Player::getMapsPassed() {
+	return maps_passed;
 }
 
 void Player::Shoot() {

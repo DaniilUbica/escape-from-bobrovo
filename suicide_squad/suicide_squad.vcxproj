@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\Boss.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Consumable.cpp" />
     <ClCompile Include="src\EnemiesManager.cpp" />
@@ -147,8 +148,10 @@
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\HealthBar.cpp" />
     <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\MeleeEnemy.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Portal.cpp" />
+    <ClCompile Include="src\RangeEnemy.cpp" />
     <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Turret.cpp" />
@@ -156,25 +159,28 @@
     <ClCompile Include="suicide_squad.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\Bullet.h" />
-    <ClInclude Include="include\CircleBuffer.hpp" />
-    <ClInclude Include="include\Consumable.h" />
-    <ClInclude Include="include\EnemiesManager.h" />
-    <ClInclude Include="include\Enemy.h" />
-    <ClInclude Include="include\GameObject.h" />
-    <ClInclude Include="include\Globals.h" />
-    <ClInclude Include="include\HealthBar.h" />
-    <ClInclude Include="include\Map.h" />
-    <ClInclude Include="include\MapObject.h" />
+    <ClInclude Include="include\Enemies\Boss.h" />
+    <ClInclude Include="include\Enemies\EnemiesManager.h" />
+    <ClInclude Include="include\Enemies\Enemy.h" />
+    <ClInclude Include="include\Enemies\MeleeEnemy.h" />
+    <ClInclude Include="include\Enemies\RangeEnemy.h" />
+    <ClInclude Include="include\Enemies\Turret.h" />
+    <ClInclude Include="include\Enemies\ViewBorder.h" />
+    <ClInclude Include="include\Engine\Animation.h" />
+    <ClInclude Include="include\Engine\CircleBuffer.hpp" />
+    <ClInclude Include="include\Engine\GameObject.h" />
+    <ClInclude Include="include\Engine\Globals.h" />
+    <ClInclude Include="include\Engine\Map.h" />
+    <ClInclude Include="include\Engine\MapObject.h" />
+    <ClInclude Include="include\Features\Consumable.h" />
+    <ClInclude Include="include\Features\Portal.h" />
     <ClInclude Include="include\Player.h" />
-    <ClInclude Include="include\Portal.h" />
-    <ClInclude Include="include\SoundManager.h" />
-    <ClInclude Include="include\Sounds.h" />
+    <ClInclude Include="include\Sound\SoundManager.h" />
+    <ClInclude Include="include\Sound\Sounds.h" />
     <ClInclude Include="include\Textures.h" />
-    <ClInclude Include="include\Timer.h" />
-    <ClInclude Include="include\Turret.h" />
-    <ClInclude Include="include\ViewBorder.h" />
+    <ClInclude Include="include\UI\HealthBar.h" />
+    <ClInclude Include="include\UI\Timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

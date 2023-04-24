@@ -18,7 +18,7 @@ const int WINDOW_WIDTH = 1280;
 
 const int TILE_SIZE = 32;
 
-const float BULLET_SPEED = 0.9 * GAME_SPEED*2;
+const float BULLET_SPEED = 0.9 * GAME_SPEED;
 const int BULLETS_AMOUNT = 6;
 
 const float ENEMY_SPEED = 0.2 * GAME_SPEED;

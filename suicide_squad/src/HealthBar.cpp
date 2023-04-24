@@ -1,4 +1,4 @@
-#include "../include/HealthBar.h"
+#include "../include/UI/HealthBar.h"
 
 HealthBar::HealthBar(float coordX, float coordY, int hp, int width) {
 	this->hp = hp;

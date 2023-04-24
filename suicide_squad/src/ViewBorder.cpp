@@ -1,4 +1,4 @@
-#include "../include/ViewBorder.h"
+#include "../include/Enemies/ViewBorder.h"
 
 ViewBorder::ViewBorder(int coordX, int coordY, int width, int height, float border_width, float border_height, float range) {
 		right_border.setSize(sf::Vector2f(-border_width/2, border_height));

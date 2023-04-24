@@ -13,6 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\Engine">
+      <UniqueIdentifier>{8990c8b7-9f98-43e8-9daa-e5e748f8ad2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Sound">
+      <UniqueIdentifier>{fe6298b8-770a-4353-bee1-162947210a47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Enemies">
+      <UniqueIdentifier>{810ba5f0-01a5-4d98-84f7-e07816b66b3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\UI">
+      <UniqueIdentifier>{2cd4dae5-5786-42ad-ab6f-448e8f4b72ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Features">
+      <UniqueIdentifier>{78a88225-f63c-4eb3-8105-402e4db97165}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Animation.cpp">
@@ -60,64 +75,82 @@
     <ClCompile Include="src\SoundManager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\MeleeEnemy.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RangeEnemy.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Boss.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Animation.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameObject.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Globals.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="include\Player.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Map.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="include\Bullet.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="include\CircleBuffer.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Turret.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Enemy.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ViewBorder.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Consumable.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="include\Textures.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="include\HealthBar.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="include\Engine\MapObject.h">
+      <Filter>Файлы заголовков\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\Timer.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="include\Engine\Map.h">
+      <Filter>Файлы заголовков\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\EnemiesManager.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="include\Engine\GameObject.h">
+      <Filter>Файлы заголовков\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\MapObject.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="include\Engine\CircleBuffer.hpp">
+      <Filter>Файлы заголовков\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\Portal.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="include\Engine\Animation.h">
+      <Filter>Файлы заголовков\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="include\SoundManager.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="include\Sound\Sounds.h">
+      <Filter>Файлы заголовков\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="include\Sounds.h">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="include\Sound\SoundManager.h">
+      <Filter>Файлы заголовков\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemies\ViewBorder.h">
+      <Filter>Файлы заголовков\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemies\Turret.h">
+      <Filter>Файлы заголовков\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemies\Enemy.h">
+      <Filter>Файлы заголовков\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemies\EnemiesManager.h">
+      <Filter>Файлы заголовков\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UI\Timer.h">
+      <Filter>Файлы заголовков\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UI\HealthBar.h">
+      <Filter>Файлы заголовков\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\Portal.h">
+      <Filter>Файлы заголовков\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Features\Consumable.h">
+      <Filter>Файлы заголовков\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine\Globals.h">
+      <Filter>Файлы заголовков\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemies\MeleeEnemy.h">
+      <Filter>Файлы заголовков\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemies\RangeEnemy.h">
+      <Filter>Файлы заголовков\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemies\Boss.h">
+      <Filter>Файлы заголовков\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

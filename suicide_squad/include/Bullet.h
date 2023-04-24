@@ -2,10 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "GameObject.h"
-#include "Globals.h"
-#include "MapObject.h"
-#include "GameObject.h"
+#include "Engine/GameObject.h"
+#include "Engine/Globals.h"
+#include "Engine/MapObject.h"
 
 class Bullet : public GameObject {
 private:
@@ -28,8 +27,10 @@ public:
 
 	void Update() override;
 	void Update(float angle);
+	void Update(GameObject* obj);
 	void checkCollision(std::vector<Object> obj);
 	void checkCollision(GameObject* obj);
+	void checkCollision(Bullet* obj);
 	void checkCollision(GameObject* obj, int damage);
 
 	void setTexture(sf::Texture& texture);

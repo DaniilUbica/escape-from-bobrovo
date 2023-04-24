@@ -1,4 +1,4 @@
-#include "../include/Timer.h"
+#include "../include/UI/Timer.h"
 
 Timer::Timer(float time, float coordX, float coordY, float width, float height, sf::Texture& texture) {
 	max_time = time;

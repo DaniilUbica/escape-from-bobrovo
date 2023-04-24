@@ -4,7 +4,8 @@
 #include <vector>
 #include <map>
 
-#include "Enemy.h"
+#include "MeleeEnemy.h"
+#include "RangeEnemy.h"
 
 enum e_type {
 	RANGE,

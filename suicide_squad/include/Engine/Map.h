@@ -6,7 +6,7 @@
 
 #include "Globals.h"
 #include "MapObject.h"
-#include "EnemiesManager.h"
+#include "../Enemies/EnemiesManager.h"
 
 class Map {
 private:

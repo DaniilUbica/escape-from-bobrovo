@@ -102,8 +102,8 @@ void Bullet::Update() {
 void Bullet::Update(float angle) {
 	sf::FloatRect rect = sprite.getGlobalBounds();
 	if (isLaunched) {
-		coordX += nx;
-		coordY += ny;
+		coordX += nx * BULLET_SPEED;
+		coordY += ny * BULLET_SPEED;
 		sprite.setRotation(this->angle);
 	}
 
@@ -111,6 +111,25 @@ void Bullet::Update(float angle) {
 		if (abs(start_x - coordX) >= BULLET_DISTANCE || abs(start_y - coordY) >= BULLET_DISTANCE) {
 			this->Destroy();
 		}
+	}
+
+	sprite.setOrigin(rect.left + rect.width / 2, rect.top + rect.height / 2);
+	sprite.setScale(0.013, 0.013);
+	sprite.setPosition(coordX, coordY);
+}
+
+void Bullet::Update(GameObject* obj) {
+	sf::FloatRect rect = sprite.getGlobalBounds();
+	float dx = obj->getPosition().x - coordX;
+	float dy = obj->getPosition().y - coordY;
+
+	nx = dx / sqrt(dx * dx + dy * dy);
+	ny = dy / sqrt(dx * dx + dy * dy);
+
+	if (isLaunched) {
+		coordX += nx * BULLET_SPEED;
+		coordY += ny * BULLET_SPEED;
+		sprite.setRotation(this->angle);
 	}
 
 	sprite.setOrigin(rect.left + rect.width / 2, rect.top + rect.height / 2);
@@ -132,6 +151,13 @@ void Bullet::checkCollision(GameObject* obj) {
 	if (sprite.getGlobalBounds().intersects(obj->getSprite().getGlobalBounds())) {
 		obj->takeDamage(1);
 		this->Destroy();
+	}
+}
+
+void Bullet::checkCollision(Bullet* obj) {
+	if (sprite.getGlobalBounds().intersects(obj->getSprite().getGlobalBounds())) {
+		this->Destroy();
+		obj->Destroy();
 	}
 }
 

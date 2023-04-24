@@ -1,4 +1,4 @@
-#include "../include/Portal.h"
+#include "../include/Features/Portal.h"
 
 Portal::Portal(float x, float y, std::map<State, sf::Texture>& textures) {
 	coordX = x;

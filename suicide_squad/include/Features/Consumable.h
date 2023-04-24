@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GameObject.h"
-#include "Globals.h"
+#include "../Engine/GameObject.h"
+#include "../Engine/Globals.h"
 
 enum ConsType {
 	DAMAGE,

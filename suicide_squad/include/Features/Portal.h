@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 
-#include "Player.h"
+#include "../Player.h"
 
 class Portal : public GameObject {
 private:

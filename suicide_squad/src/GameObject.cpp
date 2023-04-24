@@ -1,4 +1,4 @@
-#include "../include/GameObject.h"
+#include "../include/Engine/GameObject.h"
 
 void GameObject::takeDamage(int damage) {
     health-=damage;

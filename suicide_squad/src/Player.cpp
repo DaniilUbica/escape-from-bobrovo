@@ -177,6 +177,12 @@ void Player::setState(State state) {
 	this->state = state;
 }
 
+void Player::checkBulletCollision(Bullet* obj) {
+	for (int i = 0; i < BULLETS_AMOUNT; i++) {
+		bullets.elems[i]->checkCollision(obj);
+	}
+}
+
 void Player::setVisible(bool v) {
 	isVisible = v;
 }

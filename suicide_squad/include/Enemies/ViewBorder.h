@@ -2,8 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "GameObject.h"
-#include "Player.h"
+#include "../Player.h"
 
 struct ViewBorder {
 	sf::RectangleShape top_border;

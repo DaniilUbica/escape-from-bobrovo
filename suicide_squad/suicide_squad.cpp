@@ -3,15 +3,16 @@
 #include <map>
 
 #include "include/Player.h"
-#include "include/Map.h"
+#include "include/Engine/Map.h"
 #include "include/Bullet.h"
-#include "include/Turret.h"
-#include "include/EnemiesManager.h"
-#include "include/ViewBorder.h"
-#include "include/Consumable.h"
+#include "include/Enemies/Turret.h"
+#include "include/Enemies/EnemiesManager.h"
+#include "include/Enemies/ViewBorder.h"
+#include "include/Features/Consumable.h"
 #include "include/Textures.h"
-#include "include/Portal.h"
-#include "include/Sounds.h"
+#include "include/Features/Portal.h"
+#include "include/Sound/Sounds.h"
+#include "include/Enemies/Boss.h"
 
 bool goToNext = false;
 
@@ -64,7 +65,11 @@ int main()
 
     Player* player = new Player(PLAYER_START_X, PLAYER_START_Y, VOLKOV, RIGHT, player_textures, volkov_ult_texture);
 
+    Boss* boss = new Boss(500, 300, RIGHT, volkov_boss_texture, 10);
+
     EnemiesManager e_manager;
+
+    boss->setSounds(revo_shot);
 
     Portal* portal = new Portal(PLAYER_START_X, PLAYER_START_Y, portal_textures);
 
@@ -92,6 +97,7 @@ int main()
     auto t_bullets4 = turret->getBullets4();
 
     e_manager.setBulletsTextures(bullet_texture);
+    boss->setBulletsTextures(enemy_bullets_textures);
 
     for (int i = 0; i < BULLETS_AMOUNT; i++) {
         bullets[i]->setTexture(bullet_texture);
@@ -121,11 +127,21 @@ int main()
             player->checkCollision(m.getObjects());
         }
 
-        for (Enemy* e : e_manager.getMeleeEnemies()) {
+        player->checkBulletCollision(m.getObjects(), boss);
+
+        boss->takePlayer(player);
+        boss->Update();
+        boss->checkCollision(m.getObjects());
+        boss->checkBulletsCollision(m.getObjects());
+
+        for (MeleeEnemy* e : e_manager.getMeleeEnemies()) {
             player->checkBulletCollision(m.getObjects(), e);
         }
-        for (Enemy* e : e_manager.getRangeEnemies()) {
+        for (RangeEnemy* e : e_manager.getRangeEnemies()) {
             player->checkBulletCollision(m.getObjects(), e);
+            for (int i = 0; i < BULLETS_AMOUNT; i++) {
+                player->checkBulletCollision(e->getBullets()[i]);
+            }
         }
 
         portal->takePlayer(player);
@@ -193,6 +209,8 @@ int main()
             window.draw(t_bullets3[i]->getSprite());
             window.draw(t_bullets4[i]->getSprite());
 
+            window.draw(boss->getBullets()[i]->getSprite());
+
             //window.draw(r_enemy1->attack_borders->down_border);
             //window.draw(r_enemy1->attack_borders->top_border);
             //window.draw(r_enemy1->attack_borders->right_border);
@@ -212,6 +230,9 @@ int main()
 
         window.draw(player->getUltTimer().getSprite());
         window.draw(player->getUltTimer().getRect());
+
+        window.draw(boss->getSprite());
+        boss->getHealthBar()->drawHealthBar(window);
 
         for (int i = 0; i < player->getHP(); i++) {
             heart_sprites[i].setPosition(10 + 15 * i, 5);

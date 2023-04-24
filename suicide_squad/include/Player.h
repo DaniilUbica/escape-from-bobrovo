@@ -3,13 +3,13 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 
-#include "GameObject.h"
-#include "Globals.h"
-#include "MapObject.h"
+#include "Engine/GameObject.h"
+#include "Engine/Globals.h"
+#include "Engine/MapObject.h"
 #include "Bullet.h"
-#include "CircleBuffer.hpp"
-#include "Consumable.h"
-#include "Timer.h"
+#include "Engine/CircleBuffer.hpp"
+#include "Features/Consumable.h"
+#include "UI/Timer.h"
 
 enum Person {
 	VOLKOV,
@@ -59,6 +59,7 @@ public:
 	void Update() override;
 	void checkCollision(std::vector<Object> objects);
 	void checkBulletCollision(std::vector<Object> objects, GameObject* obj);
+	void checkBulletCollision(Bullet* obj);
 	void checkCollisionConsumable(std::vector<Consumable*> consumable);
 	void initBullets();
 	void useUltimate();

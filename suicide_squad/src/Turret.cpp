@@ -1,4 +1,4 @@
-#include "../include/Turret.h"
+#include "../include/Enemies/Turret.h"
 
 Turret::Turret(int coordX, int coordY, sf::Texture& texture) {
 	bullets1.setSize(BULLETS_AMOUNT);

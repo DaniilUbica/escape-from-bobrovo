@@ -3,11 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <deque>
 
-#include "GameObject.h"
-#include "Globals.h"
-#include "Bullet.h"
-#include "CircleBuffer.hpp"
-#include "Player.h"
+#include "../Player.h"
 
 class Turret : public GameObject {
 private:

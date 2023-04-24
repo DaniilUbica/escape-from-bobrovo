@@ -1,4 +1,4 @@
-#include "../include/SoundManager.h"
+#include "../include/Sound/SoundManager.h"
 
 void SoundManager::Shoot(sf::SoundBuffer* s) {
 	sound.setBuffer(*s);

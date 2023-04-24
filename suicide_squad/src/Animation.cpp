@@ -1,4 +1,4 @@
-#include "../include/Animation.h"
+#include "../include/Engine/Animation.h"
 #include <iostream>
 
 Animation::Animation(sf::Texture& t, int x, int y, int width, int height, int framesCount, float animSpeed, int step) {

@@ -1,4 +1,4 @@
-#include "../include/Consumable.h"
+#include "../include/Features/Consumable.h"
 
 Consumable::Consumable(ConsType type, int x, int y, sf::Texture& texture) {
 	coordX = x;

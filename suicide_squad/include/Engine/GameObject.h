@@ -4,7 +4,7 @@
 
 #include "Animation.h"
 #include "MapObject.h"
-#include "SoundManager.h"
+#include "../Sound/SoundManager.h"
 
 enum Direction {
 	LEFT,

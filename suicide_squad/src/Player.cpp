@@ -7,7 +7,7 @@ Player::Player(int x, int y, Person person, Direction direction, std::map<State,
 	bullets.setSize(BULLETS_AMOUNT);
 	initBullets();
 
-	health = 5;
+	health = PLAYER_MAX_HP;
 	coordX = x;
 	coordY = y;
 	width = 32;

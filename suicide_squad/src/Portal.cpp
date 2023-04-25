@@ -8,9 +8,9 @@ Portal::Portal(float x, float y, std::map<State, sf::Texture>& textures) {
 
 	state = OPEN;
 
-	idle_animation = new Animation(textures[STAY], 0, 0, 31, 43, 7, 0.015, 64);
-	open_animation = new Animation(textures[OPEN], 0, 0, 31, 43, 7, 0.015, 64);
-	close_animation = new Animation(textures[CLOSE], 0, 0, 31, 43, 8, 0.015, 64);
+	idle_animation = new Animation(textures[STAY], 0, 0, 31, 43, 7, 0.015*GAME_SPEED, 64);
+	open_animation = new Animation(textures[OPEN], 0, 0, 31, 43, 7, 0.015 * GAME_SPEED, 64);
+	close_animation = new Animation(textures[CLOSE], 0, 0, 31, 43, 8, 0.015 * GAME_SPEED, 64);
 
 	sprite = idle_animation->Tick(false);
 	sprite.setPosition(coordX, coordY);

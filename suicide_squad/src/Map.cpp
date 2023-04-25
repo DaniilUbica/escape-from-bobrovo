@@ -117,8 +117,10 @@ void Map::fillObjectTypes() {
 
 void Map::changeMap() {
 	srand(time(NULL));
-	int t = map_index;
-	map_index = rand() % (MAPS_AMOUNT-1) + 1;
+	while (map_index == prev_map) {
+		map_index = rand() % (MAPS_AMOUNT-1) + 1;
+	}
+	prev_map = map_index;
 }
 
 void Map::setMap(sf::Texture& range_enemy_texture, sf::Texture& melee_enemy_texture) {

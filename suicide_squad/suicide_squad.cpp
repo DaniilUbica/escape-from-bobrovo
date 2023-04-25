@@ -73,7 +73,12 @@ int main()
 
     e_manager.addEnemy(RANGE, 450, 220, RIGHT, range_enemy_texture, 3, 350, 100, 740, 300);
     e_manager.addEnemy(RANGE, 840, 64, RIGHT, range_enemy_texture, 3, 780, 300, 860, 64);
-    //e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
+    e_manager.addEnemy(RANGE, 192, 650, RIGHT, range_enemy_texture, 3, 64, 600, 300, 630);
+    e_manager.addEnemy(RANGE, 400, 650, RIGHT, range_enemy_texture, 3, 450, 550, 900, 630);
+    e_manager.addEnemy(RANGE, 1000, 320, RIGHT, range_enemy_texture, 3, 1100, 280, 950, 440);
+    e_manager.addEnemy(RANGE, 1000, 64, RIGHT, range_enemy_texture, 3, 1200, 64, 950, 130);
+    e_manager.addEnemy(MELEE, 1000, 650, RIGHT, melee_enemy_texture, 5, 1070, 630, 1200, 570);
+    e_manager.addEnemy(MELEE, 400, 480, RIGHT, melee_enemy_texture, 5, 900, 490, 250, 440);
     e_manager.addEnemy(MELEE, 640, 64, RIGHT, melee_enemy_texture, 5, 540, 64, 740, 64);
     e_manager.addEnemy(MELEE, 450, 400, RIGHT, melee_enemy_texture, 5, 300, 350, 800, 350);
     e_manager.addEnemy(MELEE, 350, 400, RIGHT, melee_enemy_texture, 5, 100, 350, 500, 450);
@@ -83,8 +88,10 @@ int main()
     Turret* turret = new Turret(500, 500, turret_texture);
 
     std::vector<Consumable*> consumables;
-    consumables.push_back(new Consumable(DAMAGE, 600, 300, double_damage_texture));
-    consumables.push_back(new Consumable(HEALTH, 550, 40, heal_texture));
+    consumables.push_back(new Consumable(DAMAGE, 700, 40, double_damage_texture));
+    consumables.push_back(new Consumable(HEALTH, 550, 330, heal_texture));
+    consumables.push_back(new Consumable(HEALTH, 300, 550, heal_texture));
+    consumables.push_back(new Consumable(HEALTH, 900, 600, heal_texture));
 
     auto bullets = player->getBullets();
 
@@ -165,29 +172,78 @@ int main()
                 }
                 if (m.getIndex() == 0) {
                     e_manager.Clear();
-                    e_manager.addEnemy(RANGE, -1000, -200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-                    e_manager.addEnemy(RANGE, -1000, -500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-                    e_manager.addEnemy(RANGE, -1000, -600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
-                    e_manager.addEnemy(MELEE, -6000, -300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
-                    e_manager.addEnemy(MELEE, -1200, -224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
+                    consumables.clear();
+
+                    e_manager.addEnemy(RANGE, -450, -220, RIGHT, range_enemy_texture, 3, 350, 100, 740, 300);
+                    e_manager.addEnemy(RANGE, -840, -64, RIGHT, range_enemy_texture, 3, 780, 300, 860, 64);
+                    e_manager.addEnemy(RANGE, -192, 650, RIGHT, range_enemy_texture, 3, 64, 600, 300, 630);
+                    e_manager.addEnemy(RANGE, -400, 650, RIGHT, range_enemy_texture, 3, 450, 550, 900, 630);
+                    e_manager.addEnemy(RANGE, -1000, 320, RIGHT, range_enemy_texture, 3, 1100, 280, 950, 440);
+                    e_manager.addEnemy(RANGE, -1000, 64, RIGHT, range_enemy_texture, 3, 1200, 64, 950, 130);
+                    e_manager.addEnemy(MELEE, -1000, 650, RIGHT, melee_enemy_texture, 5, 1070, 630, 1200, 570);
+                    e_manager.addEnemy(MELEE, -400, 480, RIGHT, melee_enemy_texture, 5, 900, 490, 250, 440);
+                    e_manager.addEnemy(MELEE, -640, 64, RIGHT, melee_enemy_texture, 5, 540, 64, 740, 64);
+                    e_manager.addEnemy(MELEE, -450, 400, RIGHT, melee_enemy_texture, 5, 300, 350, 800, 350);
+                    e_manager.addEnemy(MELEE, -350, 400, RIGHT, melee_enemy_texture, 5, 100, 350, 500, 450);
                     e_manager.addEnemy(BOSS, 500, 300, RIGHT, volkov_boss_texture, 10, 600, 300, 450, 200);
                     e_manager.getBoss()->setBulletsTextures(enemy_bullets_textures);
                 }
                 else if (m.getIndex() == 1) {
                     e_manager.Clear();
-                    e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-                    e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-                    e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
-                    e_manager.addEnemy(MELEE, 600, 300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
-                    e_manager.addEnemy(MELEE, 1200, 224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
+                    consumables.clear();
+                    consumables.push_back(new Consumable(DAMAGE, 700, 40, double_damage_texture));
+                    consumables.push_back(new Consumable(HEALTH, 550, 330, heal_texture));
+                    consumables.push_back(new Consumable(HEALTH, 1050, 500, heal_texture));
+
+                    e_manager.addEnemy(RANGE, 450, 220, RIGHT, range_enemy_texture, 3, 350, 100, 740, 300);
+                    e_manager.addEnemy(RANGE, 840, 64, RIGHT, range_enemy_texture, 3, 780, 300, 860, 64);
+                    e_manager.addEnemy(RANGE, 192, 650, RIGHT, range_enemy_texture, 3, 64, 600, 300, 630);
+                    e_manager.addEnemy(RANGE, 400, 650, RIGHT, range_enemy_texture, 3, 450, 550, 900, 630);
+                    e_manager.addEnemy(RANGE, 1000, 320, RIGHT, range_enemy_texture, 3, 1100, 280, 950, 440);
+                    e_manager.addEnemy(RANGE, 1000, 64, RIGHT, range_enemy_texture, 3, 1200, 64, 950, 130);
+                    e_manager.addEnemy(MELEE, 1000, 650, RIGHT, melee_enemy_texture, 5, 1070, 630, 1200, 570);
+                    e_manager.addEnemy(MELEE, 400, 480, RIGHT, melee_enemy_texture, 5, 900, 490, 250, 440);
+                    e_manager.addEnemy(MELEE, 640, 64, RIGHT, melee_enemy_texture, 5, 540, 64, 740, 64);
+                    e_manager.addEnemy(MELEE, 450, 400, RIGHT, melee_enemy_texture, 5, 300, 350, 800, 350);
+                    e_manager.addEnemy(MELEE, 350, 400, RIGHT, melee_enemy_texture, 5, 100, 350, 500, 450);
                 }
                 else if (m.getIndex() == 2) {
                     e_manager.Clear();
-                    e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 100);
-                    e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
-                    e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
-                    e_manager.addEnemy(MELEE, 600, 300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
-                    e_manager.addEnemy(MELEE, 1200, 224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
+                    consumables.clear();
+                    consumables.push_back(new Consumable(DAMAGE, 700, 40, double_damage_texture));
+                    consumables.push_back(new Consumable(HEALTH, 550, 330, heal_texture));
+                    consumables.push_back(new Consumable(HEALTH, 1050, 500, heal_texture));
+
+                    e_manager.addEnemy(RANGE, 384, 192, RIGHT, range_enemy_texture, 3, 330, 160, 650, 160);
+                    e_manager.addEnemy(RANGE, 672, 96, RIGHT, range_enemy_texture, 3, 650, 96, 860, 245);
+                    e_manager.addEnemy(RANGE, 192, 650, RIGHT, range_enemy_texture, 3, 64, 570, 220, 630);
+                    e_manager.addEnemy(RANGE, -400, 650, RIGHT, range_enemy_texture, 3, 450, 550, 900, 630);
+                    e_manager.addEnemy(RANGE, -1000, 320, RIGHT, range_enemy_texture, 3, 1100, 280, 950, 440);
+                    e_manager.addEnemy(RANGE, 1000, 64, RIGHT, range_enemy_texture, 3, 1200, 64, 900, 100);
+                    e_manager.addEnemy(MELEE, 128, 256, RIGHT, melee_enemy_texture, 5, 200, 300, 450, 350);
+                    e_manager.addEnemy(MELEE, 1000, 300, RIGHT, melee_enemy_texture, 5, 1200, 200, 900, 400);
+                    e_manager.addEnemy(MELEE, -640, 64, RIGHT, melee_enemy_texture, 5, 540, 64, 740, 64);
+                    e_manager.addEnemy(MELEE, 450, 500, RIGHT, melee_enemy_texture, 5, 300, 450, 800, 450);
+                    e_manager.addEnemy(MELEE, 1000, 650, RIGHT, melee_enemy_texture, 5, 780, 630, 1200, 630);
+                }
+                else if (m.getIndex() == 3) {
+                    e_manager.Clear();
+                    consumables.clear();
+                    consumables.push_back(new Consumable(DAMAGE, 700, 40, double_damage_texture));
+                    consumables.push_back(new Consumable(HEALTH, 550, 330, heal_texture));
+                    consumables.push_back(new Consumable(HEALTH, 1050, 500, heal_texture));
+
+                    e_manager.addEnemy(RANGE, 384, 192, RIGHT, range_enemy_texture, 3, 330, 160, 650, 160);
+                    e_manager.addEnemy(RANGE, 672, 96, RIGHT, range_enemy_texture, 3, 650, 96, 860, 245);
+                    e_manager.addEnemy(RANGE, 192, 650, RIGHT, range_enemy_texture, 3, 64, 570, 220, 630);
+                    e_manager.addEnemy(RANGE, -400, 650, RIGHT, range_enemy_texture, 3, 450, 550, 900, 630);
+                    e_manager.addEnemy(RANGE, -1000, 320, RIGHT, range_enemy_texture, 3, 1100, 280, 950, 440);
+                    e_manager.addEnemy(RANGE, 1000, 64, RIGHT, range_enemy_texture, 3, 1200, 64, 900, 100);
+                    e_manager.addEnemy(MELEE, 128, 256, RIGHT, melee_enemy_texture, 5, 200, 300, 450, 350);
+                    e_manager.addEnemy(MELEE, 1000, 300, RIGHT, melee_enemy_texture, 5, 1200, 200, 900, 400);
+                    e_manager.addEnemy(MELEE, -640, 64, RIGHT, melee_enemy_texture, 5, 540, 64, 740, 64);
+                    e_manager.addEnemy(MELEE, 450, 500, RIGHT, melee_enemy_texture, 5, 300, 450, 800, 450);
+                    e_manager.addEnemy(MELEE, 1000, 650, RIGHT, melee_enemy_texture, 5, 780, 630, 1200, 630);
                 }
                 e_manager.setBulletsTextures(bullet_texture);
                 e_manager.setSounds(revo_shot, hit);

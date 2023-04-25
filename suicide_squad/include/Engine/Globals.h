@@ -2,7 +2,7 @@
 
 const float PI = 3.14;
 
-const float GAME_SPEED = 1;
+const float GAME_SPEED = 2.2;
 
 const float JUMP_HEIGHT = 1;
 const float JUMP_SPEED = 1.0 * GAME_SPEED;
@@ -30,9 +30,9 @@ const int SPRITE_SIZE = 32;
 
 const float BULLET_DISTANCE = 200.0;
 
-const int MAPS_AMOUNT = 3;
+const int MAPS_AMOUNT = 4;
 
-const int PLAYER_START_X = 640;
-const int PLAYER_START_Y = 608;
+const int PLAYER_START_X = 40;
+const int PLAYER_START_Y = 64;
 
-const int LEVELS_BEFORE_BOSS = 3;
+const int LEVELS_BEFORE_BOSS = 2;

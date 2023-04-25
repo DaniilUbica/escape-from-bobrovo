@@ -71,15 +71,16 @@ int main()
 
     player->setSounds(revo_shot, volkov_ult);
 
-    e_manager.addEnemy(RANGE, 100, 200, RIGHT, range_enemy_texture, 3, 150, 300, 50, 200);
-    //e_manager.addEnemy(RANGE, 1000, 500, RIGHT, range_enemy_texture, 3, 1100, 500, 850, 600);
+    e_manager.addEnemy(RANGE, 450, 220, RIGHT, range_enemy_texture, 3, 350, 100, 740, 300);
+    e_manager.addEnemy(RANGE, 840, 64, RIGHT, range_enemy_texture, 3, 780, 300, 860, 64);
     //e_manager.addEnemy(RANGE, 100, 600, RIGHT, range_enemy_texture, 3, 50, 630, 250, 630);
-    //e_manager.addEnemy(MELEE, 600, 300, RIGHT, melee_enemy_texture, 5, 600, 300, 450, 200);
-    //e_manager.addEnemy(MELEE, 1200, 224, RIGHT, melee_enemy_texture, 5, 1050, 282, 1200, 200);
+    e_manager.addEnemy(MELEE, 640, 64, RIGHT, melee_enemy_texture, 5, 540, 64, 740, 64);
+    e_manager.addEnemy(MELEE, 450, 400, RIGHT, melee_enemy_texture, 5, 300, 350, 800, 350);
+    e_manager.addEnemy(MELEE, 350, 400, RIGHT, melee_enemy_texture, 5, 100, 350, 500, 450);
 
     e_manager.setSounds(revo_shot, hit);
 
-    Turret* turret = new Turret(500, 100, turret_texture);
+    Turret* turret = new Turret(500, 500, turret_texture);
 
     std::vector<Consumable*> consumables;
     consumables.push_back(new Consumable(DAMAGE, 600, 300, double_damage_texture));
@@ -151,7 +152,7 @@ int main()
                 player->incMaps();
                 e_manager.setKilledToNull();
 
-                if (player->getMapsPassed() == 1) {
+                if (player->getMapsPassed() == LEVELS_BEFORE_BOSS) {
                     m.setBossMap();
                 }
                 else {

@@ -71,17 +71,17 @@ int main()
 
     player->setSounds(revo_shot, volkov_ult);
 
-    e_manager.addEnemy(RANGE, 450, 220, RIGHT, range_enemy_texture, 3, 350, 100, 740, 300);
-    e_manager.addEnemy(RANGE, 840, 64, RIGHT, range_enemy_texture, 3, 780, 300, 860, 64);
-    e_manager.addEnemy(RANGE, 192, 650, RIGHT, range_enemy_texture, 3, 64, 600, 300, 630);
-    e_manager.addEnemy(RANGE, 400, 650, RIGHT, range_enemy_texture, 3, 450, 550, 900, 630);
-    e_manager.addEnemy(RANGE, 1000, 320, RIGHT, range_enemy_texture, 3, 1100, 280, 950, 440);
-    e_manager.addEnemy(RANGE, 1000, 64, RIGHT, range_enemy_texture, 3, 1200, 64, 950, 130);
-    e_manager.addEnemy(MELEE, 1000, 650, RIGHT, melee_enemy_texture, 5, 1070, 630, 1200, 570);
-    e_manager.addEnemy(MELEE, 400, 480, RIGHT, melee_enemy_texture, 5, 900, 490, 250, 440);
-    e_manager.addEnemy(MELEE, 640, 64, RIGHT, melee_enemy_texture, 5, 540, 64, 740, 64);
-    e_manager.addEnemy(MELEE, 450, 400, RIGHT, melee_enemy_texture, 5, 300, 350, 800, 350);
-    e_manager.addEnemy(MELEE, 350, 400, RIGHT, melee_enemy_texture, 5, 100, 350, 500, 450);
+    //e_manager.addEnemy(RANGE, 450, 220, RIGHT, range_enemy_texture, 3, 350, 100, 740, 300);
+    //e_manager.addEnemy(RANGE, 840, 64, RIGHT, range_enemy_texture, 3, 780, 300, 860, 64);
+    //e_manager.addEnemy(RANGE, 192, 650, RIGHT, range_enemy_texture, 3, 64, 600, 300, 630);
+    //e_manager.addEnemy(RANGE, 400, 650, RIGHT, range_enemy_texture, 3, 450, 550, 900, 630);
+    //e_manager.addEnemy(RANGE, 1000, 320, RIGHT, range_enemy_texture, 3, 1100, 280, 950, 440);
+    //e_manager.addEnemy(RANGE, 1000, 64, RIGHT, range_enemy_texture, 3, 1200, 64, 950, 130);
+    //e_manager.addEnemy(MELEE, 1000, 650, RIGHT, melee_enemy_texture, 5, 1070, 630, 1200, 570);
+    //e_manager.addEnemy(MELEE, 400, 480, RIGHT, melee_enemy_texture, 5, 900, 490, 250, 440);
+    //e_manager.addEnemy(MELEE, 640, 64, RIGHT, melee_enemy_texture, 5, 540, 64, 740, 64);
+    //e_manager.addEnemy(MELEE, 450, 400, RIGHT, melee_enemy_texture, 5, 300, 350, 800, 350);
+    //e_manager.addEnemy(MELEE, 350, 400, RIGHT, melee_enemy_texture, 5, 100, 350, 500, 450);
 
     e_manager.setSounds(revo_shot, hit);
 

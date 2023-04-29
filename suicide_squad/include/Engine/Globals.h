@@ -35,4 +35,4 @@ const int MAPS_AMOUNT = 4;
 const int PLAYER_START_X = 40;
 const int PLAYER_START_Y = 64;
 
-const int LEVELS_BEFORE_BOSS = 2;
+const int LEVELS_BEFORE_BOSS = 1;

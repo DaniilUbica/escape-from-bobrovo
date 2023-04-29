@@ -154,7 +154,7 @@ void Player::checkCollisionConsumable(std::vector<Consumable*> consumable) {
 		if (sprite.getGlobalBounds().intersects(c->getSprite().getGlobalBounds()) && !c->getUsed()) {
 			buffs_clock.restart();
 			if (c->getType() == HEALTH) {
-				if (health < 5) {
+				if (health < PLAYER_MAX_HP) {
 					health++;
 					sprite.setColor(sf::Color::Green);
 					c->Destroy();

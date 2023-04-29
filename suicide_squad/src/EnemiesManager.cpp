@@ -36,6 +36,7 @@ void EnemiesManager::UpdateEnemies(Player* player, std::vector<Object> objects) 
 		}
 	}
 	if (boss != NULL) {
+		boss->takePlayer(player);
 		boss->takeObjects(objects);
 		boss->Update();
 		if (boss->getHP() <= 0 && boss->getPosition().x != -1000) {
@@ -112,11 +113,14 @@ void EnemiesManager::drawEnemies(sf::RenderWindow& window) {
 		e->getHealthBar()->drawHealthBar(window);
 	}
 	if (boss != NULL) {
-		window.draw(boss->getSprite());
-		boss->getHealthBar()->drawHealthBar(window);
 		for (int i = 0; i < BULLETS_AMOUNT; i++) {
 			window.draw(boss->getBullets()[i]->getSprite());
 		}
+		//for (int i = 0; i < 32; i++) {
+		//	window.draw(boss->view_borders->getSticks()[i]);
+		//}
+		window.draw(boss->getSprite());
+		boss->getHealthBar()->drawHealthBar(window);
 	}
 }
 

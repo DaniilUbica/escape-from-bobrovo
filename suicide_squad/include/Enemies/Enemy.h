@@ -6,6 +6,7 @@
 
 #include "../Player.h"
 #include "ViewBorder.h"
+#include "View.h"
 #include "../UI/HealthBar.h"
 
 class Enemy : public GameObject {
@@ -24,17 +25,20 @@ protected:
 
 	sf::SoundBuffer* attack_sound;
 
+	std::vector<Object> objects;
+
 	void lookForPlayer(float speed);
 	void Patrol(float speed);
 
 public:
 	ViewBorder* attack_borders;
-	ViewBorder* view_borders;
+	View* view_borders;
 
 	~Enemy();
 
 	virtual void Update() = 0;
 	void takePlayer(Player* player);
+	void takeObjects(std::vector<Object>& objects);
 	void setPatrolPoints(int x1, int y1, int x2, int y2);
 	void checkCollision(std::vector<Object> objects);
 	void setSounds(sf::SoundBuffer& attack);

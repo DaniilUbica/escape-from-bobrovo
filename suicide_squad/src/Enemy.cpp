@@ -13,6 +13,10 @@ void Enemy::takePlayer(Player* p) {
 	player = p;
 }
 
+void Enemy::takeObjects(std::vector<Object>& objects) {
+	this->objects = objects;
+}
+
 void Enemy::setPatrolPoints(int x1, int y1, int x2, int y2) {
 	this->point1_x = x1;
 	this->point2_x = x2;

@@ -13,9 +13,10 @@ EnemiesManager::~EnemiesManager() {
 	delete boss;
 }
 
-void EnemiesManager::UpdateEnemies(Player* player) {
+void EnemiesManager::UpdateEnemies(Player* player, std::vector<Object> objects) {
 	for (RangeEnemy* e : r_enemies) {
 		e->takePlayer(player);
+		e->takeObjects(objects);
 		e->Update();
 		if (e->getHP() <= 0 && e->getPosition().x != -1000) {
 			killed_enemies++;
@@ -26,6 +27,7 @@ void EnemiesManager::UpdateEnemies(Player* player) {
 
 	for (MeleeEnemy* e : m_enemies) {
 		e->takePlayer(player);
+		e->takeObjects(objects);
 		e->Update();
 		if (e->getHP() <= 0 && e->getPosition().x != -1000) {
 			killed_enemies++;
@@ -34,7 +36,7 @@ void EnemiesManager::UpdateEnemies(Player* player) {
 		}
 	}
 	if (boss != NULL) {
-		boss->takePlayer(player);
+		boss->takeObjects(objects);
 		boss->Update();
 		if (boss->getHP() <= 0 && boss->getPosition().x != -1000) {
 			boss->setPosition(-1000, -1000);
@@ -95,13 +97,18 @@ void EnemiesManager::drawEnemies(sf::RenderWindow& window) {
 		for (int i = 0; i < BULLETS_AMOUNT; i++) {
 			window.draw(b[i]->getSprite());
 		}
-
+		//for (int i = 0; i < 32; i++) {
+		//	window.draw(e->view_borders->getSticks()[i]);
+		//}
 		window.draw(e->getSprite());
 		e->getHealthBar()->drawHealthBar(window);
 	}
 
 	for (MeleeEnemy* e : m_enemies) {
 		window.draw(e->getSprite());
+		//for (int i = 0; i < 32; i++) {
+		//	window.draw(e->view_borders->getSticks()[i]);
+		//}
 		e->getHealthBar()->drawHealthBar(window);
 	}
 	if (boss != NULL) {

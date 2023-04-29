@@ -84,6 +84,9 @@
     <ClCompile Include="src\Boss.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\View.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Player.h">
@@ -150,6 +153,9 @@
       <Filter>Файлы заголовков\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="include\Enemies\Boss.h">
+      <Filter>Файлы заголовков\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enemies\View.h">
       <Filter>Файлы заголовков\Enemies</Filter>
     </ClInclude>
   </ItemGroup>

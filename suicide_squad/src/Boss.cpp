@@ -52,7 +52,7 @@ Boss::Boss(int x, int y, Direction direction, sf::Texture& texture, int health) 
 	health_bar = new HealthBar(coordX, coordY, health, width);
 
 	attack_borders = new ViewBorder(coordX, coordY, width, height, 900.0, 330, 450.0);
-	view_borders = new ViewBorder(coordX, coordY, width, height, 1300.0, 740.0, 650.0);
+	view_borders = new View(10.0, 650.0);
 	hit_borders = new ViewBorder(coordX, coordY, width, height, 20.0, 52.0, 10.0);
 
 	this->direction = direction;
@@ -98,7 +98,7 @@ void Boss::Update() {
 		}
 
 		attack_borders->Update(coordX, coordY, width, height, 100.0);
-		view_borders->Update(coordX, coordY, width, height, 150.0);
+		view_borders->Update(coordX, coordY, objects);
 
 		if (canAttack && attack_borders->isIntersects(player)) {
 			if (player->getVisible()) {

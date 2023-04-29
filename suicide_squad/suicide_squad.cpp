@@ -145,7 +145,7 @@ int main()
 
         player->checkCollisionConsumable(consumables);
 
-        e_manager.UpdateEnemies(player);
+        e_manager.UpdateEnemies(player, m.getObjects());
         e_manager.checkCollision(m.getObjects());
 
         if (e_manager.getKilledEnemies() == e_manager.getEnemiesAmount()) {

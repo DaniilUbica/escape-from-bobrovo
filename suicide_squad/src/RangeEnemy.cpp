@@ -36,7 +36,7 @@ RangeEnemy::RangeEnemy(int x, int y, Direction direction, std::map<State, sf::Te
 	health_bar = new HealthBar(coordX - SPRITE_SIZE / 2, coordY - SPRITE_SIZE / 2, health, width);
 
 	attack_borders = new ViewBorder(coordX, coordY, width, height, 100.0, 130, 50.0);
-	view_borders = new ViewBorder(coordX, coordY, width, height, 300.0, 340.0, 150.0);
+	view_borders = new View(10.0, 200.0);
 
 	this->direction = direction;
 	state = STAY;
@@ -64,8 +64,8 @@ RangeEnemy::RangeEnemy(int x, int y, Direction direction, sf::Texture& texture, 
 
 	health_bar = new HealthBar(coordX, coordY, health, width);
 
-	attack_borders = new ViewBorder(coordX, coordY, width, height, 200.0, 230, 100.0);
-	view_borders = new ViewBorder(coordX, coordY, width, height, 300.0, 340.0, 150.0);
+	attack_borders = new ViewBorder(coordX, coordY, width, height, 140, 170, 70.0);
+	view_borders = new View(10.0, 250.0);
 
 	this->direction = direction;
 	state = STAY;
@@ -81,9 +81,7 @@ void RangeEnemy::Update() {
 	if (health > 0) {
 
 		if (!view_borders->isIntersects(player) || !player->getVisible()) {
-			if (!attack_borders->isIntersects(player)) {
-				Patrol(ENEMY_SPEED);
-			}
+			Patrol(ENEMY_SPEED);
 		}
 		if (view_borders->isIntersects(player)) {
 			if (player->getVisible()) {
@@ -92,9 +90,9 @@ void RangeEnemy::Update() {
 		}
 
 		attack_borders->Update(coordX, coordY, width, height, 100.0);
-		view_borders->Update(coordX, coordY, width, height, 150.0);
+		view_borders->Update(coordX, coordY, objects);
 
-		if (canAttack && attack_borders->isIntersects(player)) {
+		if (canAttack && attack_borders->isIntersects(player) && view_borders->isIntersects(player)) {
 			if (player->getVisible()) {
 				state = ATTACK;
 				direction = attack_borders->getDirection(coordX, coordY, width, height, player);

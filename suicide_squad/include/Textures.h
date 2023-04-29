@@ -30,8 +30,8 @@ void setTextures() {
 
     volkov_ult_texture.loadFromFile("assets/character/volkov_ult.png");
 
-    melee_enemy_texture.loadFromFile("assets/Knight.png");
-    range_enemy_texture.loadFromFile("assets/r_enemy.png");
+    melee_enemy_texture.loadFromFile("assets/m_enemy1.png");
+    range_enemy_texture.loadFromFile("assets/r_enemy1.png");
 
     volkov_boss_texture.loadFromFile("assets/Volkov_boss.png");
 

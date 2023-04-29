@@ -8,6 +8,7 @@ void MeleeEnemy::Hit() {
 }
 
 MeleeEnemy::MeleeEnemy(int x, int y, Direction direction, std::map<State, sf::Texture>& textures, int health) {
+
 }
 
 MeleeEnemy::MeleeEnemy(int x, int y, Direction direction, sf::Texture& texture, int health) {
@@ -22,7 +23,7 @@ MeleeEnemy::MeleeEnemy(int x, int y, Direction direction, sf::Texture& texture, 
 	health_bar = new HealthBar(coordX, coordY, health, width);
 
 	attack_borders = new ViewBorder(coordX, coordY, width, height, 20.0, 52.0, 10.0);
-	view_borders = new ViewBorder(coordX, coordY, width, height, 300.0, 332.0, 150.0);
+	view_borders = new View(10.0, 150.0);
 
 	this->direction = direction;
 	state = STAY;
@@ -55,7 +56,7 @@ void MeleeEnemy::Update() {
 		}
 
 		attack_borders->Update(coordX, coordY, width, height, 10.0);
-		view_borders->Update(coordX, coordY, width, height, 150.0);
+		view_borders->Update(coordX, coordY, objects);
 
 		if (canAttack && attack_borders->isIntersects(player)) {
 			if (player->getVisible()) {

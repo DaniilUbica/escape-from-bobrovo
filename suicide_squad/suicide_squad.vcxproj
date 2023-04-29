@@ -155,6 +155,7 @@
     <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Turret.cpp" />
+    <ClCompile Include="src\View.cpp" />
     <ClCompile Include="src\ViewBorder.cpp" />
     <ClCompile Include="suicide_squad.cpp" />
   </ItemGroup>
@@ -166,6 +167,7 @@
     <ClInclude Include="include\Enemies\MeleeEnemy.h" />
     <ClInclude Include="include\Enemies\RangeEnemy.h" />
     <ClInclude Include="include\Enemies\Turret.h" />
+    <ClInclude Include="include\Enemies\View.h" />
     <ClInclude Include="include\Enemies\ViewBorder.h" />
     <ClInclude Include="include\Engine\Animation.h" />
     <ClInclude Include="include\Engine\CircleBuffer.hpp" />

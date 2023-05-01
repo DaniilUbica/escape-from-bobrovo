@@ -142,6 +142,7 @@
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Boss.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
+    <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\Consumable.cpp" />
     <ClCompile Include="src\EnemiesManager.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="include\Sound\SoundManager.h" />
     <ClInclude Include="include\Sound\Sounds.h" />
     <ClInclude Include="include\Textures.h" />
+    <ClInclude Include="include\UI\Button.h" />
     <ClInclude Include="include\UI\HealthBar.h" />
     <ClInclude Include="include\UI\Timer.h" />
   </ItemGroup>

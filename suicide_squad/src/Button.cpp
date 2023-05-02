@@ -4,7 +4,7 @@ bool Button::checkMouseInButton(sf::Vector2i coords) {
     sf::FloatRect border_rect = border.getGlobalBounds();
 
     return coords.x > border_rect.left && coords.x < border_rect.width + border_rect.left
-        && coords.y > border_rect.top && coords.y < border_rect.top + border_rect.height;
+        && coords.y > border_rect.top && coords.y < border_rect.top + border_rect.height && isActive;
 }
 
 Button::Button(float x, float y, float w, float h, sf::Vector3i border_color, sf::Vector3i button_color, sf::Vector3i text_color, sf::Text text) {
@@ -29,7 +29,7 @@ Button::Button(float x, float y, float w, float h, sf::Vector3i border_color, sf
 }
 
 void Button::Update(sf::RenderWindow& window) {
-    if (checkMouseInButton(sf::Mouse::getPosition(window))) {
+    if (checkMouseInButton(sf::Mouse::getPosition(window)) || !isActive) {
         border.setFillColor(sf::Color(border_color.x, border_color.y, border_color.z, 127));
         button.setFillColor(sf::Color(button_color.x, button_color.y, button_color.z, 127));
         text.setFillColor(sf::Color(text_color.x, text_color.y, text_color.z, 127));
@@ -53,4 +53,12 @@ void Button::drawButton(sf::RenderWindow& window) {
     window.draw(border);
     window.draw(button);
     window.draw(text);
+}
+
+void Button::setActive(bool a) {
+    isActive = a;
+}
+
+bool Button::getActive() {
+    return isActive;
 }

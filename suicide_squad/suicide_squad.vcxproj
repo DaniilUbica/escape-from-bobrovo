@@ -24,6 +24,7 @@
     <ProjectGuid>{eed6c182-15aa-40df-a714-11b70ad0713c}</ProjectGuid>
     <RootNamespace>suicidesquad</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>suicide_squad</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -150,6 +151,7 @@
     <ClCompile Include="src\HealthBar.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\MeleeEnemy.cpp" />
+    <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Portal.cpp" />
     <ClCompile Include="src\RangeEnemy.cpp" />

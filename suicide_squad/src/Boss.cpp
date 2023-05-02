@@ -51,7 +51,7 @@ Boss::Boss(int x, int y, Direction direction, sf::Texture& texture, int health) 
 
 	health_bar = new HealthBar(coordX, coordY, health, width);
 
-	attack_borders = new ViewBorder(coordX, coordY, width, height, 500, 330, 250.0);
+	attack_borders = new ViewBorder(coordX, coordY, width, height, 840, 400, 420.0);
 	view_borders = new View(10.0, 650.0);
 	hit_borders = new ViewBorder(coordX, coordY, width, height, 20.0, 52.0, 10.0);
 

@@ -6,6 +6,7 @@ class Button {
 private:
     float coordX, coordY;
     float height, width;
+    bool isActive = true;
     sf::Text text;
     sf::RectangleShape border;
     sf::RectangleShape button;
@@ -26,4 +27,8 @@ public:
     bool checkClick(sf::RenderWindow& window, sf::Event& event);
 
     void drawButton(sf::RenderWindow& window);
+
+    void setActive(bool a);
+
+    bool getActive();
 };

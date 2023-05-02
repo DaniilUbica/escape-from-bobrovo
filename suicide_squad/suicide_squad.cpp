@@ -13,8 +13,9 @@
 #include "include/Features/Portal.h"
 #include "include/Sound/Sounds.h"
 #include "include/Enemies/Boss.h"
+#include "include/UI/Button.h"
 
-bool goToNext = false;
+bool isPLaying = false;
 
 void controllPlayer(Player* player) {
     player->setState(STAY);
@@ -48,6 +49,13 @@ void controllPlayer(Player* player) {
 
 int main()
 {
+    sf::Font font;
+    font.loadFromFile("assets/font.TTF");
+
+    //float x, float y, float w, float h, sf::Vector3i border_color, sf::Vector3i button_color, sf::Vector3i text_color, sf::Text text
+    Button start(WINDOW_WIDTH/2 -60.0, WINDOW_HEIGHT/2-100.0,120.0,50.0, sf::Vector3i(215, 70, 70), sf::Vector3i(158, 84, 84), sf::Vector3i(255, 255, 255), sf::Text("Play", font));
+    Button exit(WINDOW_WIDTH / 2 -60.0, WINDOW_HEIGHT / 2 + 100.0, 120.0, 50.0, sf::Vector3i(215, 70, 70), sf::Vector3i(158, 84, 84), sf::Vector3i(255, 255, 255), sf::Text("Exit", font));
+
     sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "SS!");
 
     sf::Sprite heart_sprites[PLAYER_MAX_HP];
@@ -70,18 +78,6 @@ int main()
     Portal* portal = new Portal(PLAYER_START_X, PLAYER_START_Y, portal_textures);
 
     player->setSounds(revo_shot, volkov_ult);
-
-    //e_manager.addEnemy(RANGE, 450, 220, RIGHT, range_enemy_texture, 3, 350, 100, 740, 300);
-    //e_manager.addEnemy(RANGE, 840, 64, RIGHT, range_enemy_texture, 3, 780, 300, 860, 64);
-    //e_manager.addEnemy(RANGE, 192, 650, RIGHT, range_enemy_texture, 3, 64, 600, 300, 630);
-    //e_manager.addEnemy(RANGE, 400, 650, RIGHT, range_enemy_texture, 3, 450, 550, 900, 630);
-    //e_manager.addEnemy(RANGE, 1000, 320, RIGHT, range_enemy_texture, 3, 1100, 280, 950, 440);
-    //e_manager.addEnemy(RANGE, 1000, 64, RIGHT, range_enemy_texture, 3, 1200, 64, 950, 130);
-    //e_manager.addEnemy(MELEE, 1000, 650, RIGHT, melee_enemy_texture, 5, 1070, 630, 1200, 570);
-    //e_manager.addEnemy(MELEE, 400, 480, RIGHT, melee_enemy_texture, 5, 900, 490, 250, 440);
-    //e_manager.addEnemy(MELEE, 640, 64, RIGHT, melee_enemy_texture, 5, 540, 64, 740, 64);
-    //e_manager.addEnemy(MELEE, 450, 400, RIGHT, melee_enemy_texture, 5, 300, 350, 800, 350);
-    //e_manager.addEnemy(MELEE, 350, 400, RIGHT, melee_enemy_texture, 5, 100, 350, 500, 450);
 
     e_manager.setSounds(revo_shot, hit);
 
@@ -113,19 +109,28 @@ int main()
 
     while (window.isOpen())
     {
+        start.Update(window);
+        exit.Update(window);
+
         window.clear(sf::Color::White);
         m.drawMap(window);
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed || exit.checkClick(window, event))
                 window.close();
         }
 
+        if (start.checkClick(window, event)) {
+            isPLaying = true;
+        }
+
         if (player->getHP() > 0) {
-            controllPlayer(player);
-            player->countAngle(window);
-            player->countNxNy(window);
+            if (isPLaying) {
+                controllPlayer(player);
+                player->countAngle(window);
+                player->countNxNy(window);
+            }
             player->Update();
             player->checkCollision(m.getObjects());
         }
@@ -290,6 +295,11 @@ int main()
         for (int i = 0; i < player->getHP(); i++) {
             heart_sprites[i].setPosition(10 + 15 * i, 5);
             window.draw(heart_sprites[i]);
+        }
+
+        if (!isPLaying) {
+            start.drawButton(window);
+            exit.drawButton(window);
         }
 
         window.display();

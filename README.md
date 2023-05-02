@@ -8,6 +8,8 @@
 
 ![2023-04-29-13-38-52_Trim_Trim](https://user-images.githubusercontent.com/102466617/235606067-de021e0e-d863-4baf-9553-ab7715771d6a.gif)
 
+## play it!
+you can download archive with game from google drive - https://drive.google.com/file/d/1GVT7yEVmIJxBMDYBiPXPLe0PjBa0tAfL/view?usp=sharing
 
 ## controlls
 
